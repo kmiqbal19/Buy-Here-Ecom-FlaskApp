@@ -30,3 +30,19 @@ def addcategory():
         db.session.commit()
         return redirect(url_for('addbrand'))
     return render_template('products/addbrand.html')
+
+
+@app.route('/updatebrand/<int:id>', methods=['GET', 'POST'])
+def updatebrand(id):
+    if 'email' not in session:
+        flash('Login first please', 'danger')
+        return redirect(url_for('login'))
+    updatebrand = Brand.query.get_or_404(id)
+    brand = request.form.get('brand')
+    if request.method == "POST":
+        updatebrand.name = brand
+        flash(f'The brand {updatebrand.name} was changed to {brand}', 'success')
+        db.session.commit()
+        return redirect(url_for('brands'))
+    brand = updatebrand.name
+    return render_template('products/updatebrand.html', title='Update brand', brands='brands', updatebrand=updatebrand)

@@ -6,19 +6,20 @@
     <div class="col-md-6">
         {% include "_messages.html" %}
         {% if brands %}
-        <h1 class="text-center mt-5">Add a brand</h1>
+        <h1 class="text-center mt-5">Add a {{brands}}</h1>
         <form action="" method="POST">
             <input type="text" name="brand" class="form-control">
             <input type="submit" value="Add brand" class="btn btn-info mt-2">
+            <!-- <button type="submit"class="btn btn-info mt-2">Add {{brands}}</button> -->
         </form>
         {% else%}
         </div>
     <div class="col-md-3"></div>
 </div>
-<h1 class="text-center mt-5">Add a category</h1>
+<h1 class="text-center mt-5">Add a Category</h1>
 <form action="" method="POST">
     <input type="text" name="category" class="form-control">
-    <input type="submit" value="Add category" class="btn btn-info mt-2">
+    <input type="submit" value="Add Category" class="btn btn-info mt-2">
 </form>
 {% endif %}
 

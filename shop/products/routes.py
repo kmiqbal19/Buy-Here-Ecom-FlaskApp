@@ -46,3 +46,4 @@ def updatebrand(id):
         return redirect(url_for('brands'))
     brand = updatebrand.name
     return render_template('products/updatebrand.html', title='Update brand', brands='brands', updatebrand=updatebrand)
+# NEED to add model template for this route

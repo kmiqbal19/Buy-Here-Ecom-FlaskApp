@@ -1,14 +1,14 @@
 from flask import render_template, request, session, redirect, url_for, flash
 from shop import app, db, bcrypt
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 from .models import User
-
 
 
 # ---- ROUTES ------
 @app.route('/')
 def home():
     return render_template('admin/index.html', title='Admin')
+
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -21,5 +21,20 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(f'Welcome {form.name.data} Thank you for registering', 'success')
-        return redirect(url_for('home'))
-    return render_template('admin/register.html', form=form, title="Registration Page")
+        return redirect(url_for('login'))
+    return render_template('admin/register.html', form=form, title="Registration page")
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm(request.form)
+    if request.method == "POST" and form.validate():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            session["email"] = form.email.data
+            flash(
+                f'Welcome {form.email.data} You are logged in now', 'success')
+            return redirect(request.args.get('next') or url_for('home'))
+        else:
+            flash('Wrong credentials. Please try again', 'danger')
+            return redirect(url_for('login'))
+    return render_template('admin/login.html', form=form, title="Login page")

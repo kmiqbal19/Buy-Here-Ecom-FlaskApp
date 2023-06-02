@@ -22,19 +22,7 @@ def addbrand():
     return render_template('products/addbrand.html', brands='brand')
 
 
-@app.route('/addcategory', methods=['GET', 'POST'])
-def addcategory():
-    if 'email' not in session:
-        flash(f'Please login first', 'danger')
-        return redirect(url_for('login'))
-    if request.method == "POST":
-        getcat = request.form.get('category')
-        cat = Category(name=getcat)
-        db.session.add(cat)
-        flash(f'The Category {getcat} was added to your database', 'success')
-        db.session.commit()
-        return redirect(url_for('addbrand'))
-    return render_template('products/addbrand.html')
+
 
 
 @app.route('/updatebrand/<int:id>', methods=['GET', 'POST'])
@@ -53,6 +41,19 @@ def updatebrand(id):
     brand = updatebrand.name
     return render_template('products/updatebrand.html', title='Update brand', brands='brands', updatebrand=updatebrand)
 
+@app.route('/addcategory', methods=['GET', 'POST'])
+def addcategory():
+    if 'email' not in session:
+        flash(f'Please login first', 'danger')
+        return redirect(url_for('login'))
+    if request.method == "POST":
+        getcat = request.form.get('category')
+        cat = Category(name=getcat)
+        db.session.add(cat)
+        flash(f'The Category {getcat} was added to your database', 'success')
+        db.session.commit()
+        return redirect(url_for('addbrand'))
+    return render_template('products/addbrand.html')
 
 @app.route('/addproduct', methods=['POST', 'GET'])
 def addproduct():
@@ -83,6 +84,6 @@ def addproduct():
         db.session.add(addproduct)
         flash(f'The product {name} was added in database', 'success')
         db.session.commit()
-        return redirect(url_for('addbrand'))
+        return redirect(url_for('admin'))
 
     return render_template('products/addproduct.html', form=form, title='Add Product', brands=brands, categories=categories)

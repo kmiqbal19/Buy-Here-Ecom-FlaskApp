@@ -17,6 +17,14 @@ def admin():
     products = Addproduct.query.all()
     return render_template('admin/admin.html', title='Admin page', products=products)
 
+@app.route('/brands')
+def brands():
+    if 'email' not in session:
+        flash(f'Please login first', 'danger')
+        return redirect(url_for('login'))
+    brands = Brand.query.order_by(Brand.id.desc()).all()
+    return render_template('admin/brand.html', title='brands', brands=brands)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
@@ -42,5 +50,5 @@ def login():
             return redirect(request.args.get('next') or url_for('home'))
         else:
             flash('Wrong credentials. Please try again', 'danger')
-            return redirect(url_for('login'))
+            return redirect(url_for('admin'))
     return render_template('admin/login.html', form=form, title="Login page")

@@ -1,15 +1,14 @@
-from shop import app, db
+from flask import render_template, request, session, redirect, url_for, flash
+from shop import app, db, bcrypt
 from .forms import RegistrationForm
-from flask import render_template, session, request, redirect, url_for, flash
-from flask_bcrypt import Bcrypt
 from .models import User
-bcrypt = Bcrypt(app)
+
 
 
 # ---- ROUTES ------
 @app.route('/')
 def home():
-    return "Home page"
+    return render_template('admin/index.html', title='Admin')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -20,6 +19,7 @@ def register():
         user = User(name=form.name.data, username=form.username.data, email=form.email.data,
                     password=hash_password)
         db.session.add(user)
-        flash('Thanks for registering')
+        db.session.commit()
+        flash(f'Welcome {form.name.data} Thank you for registering', 'success')
         return redirect(url_for('home'))
-    return render_template('admin/register.html', form=form, title="Registeration Page")
+    return render_template('admin/register.html', form=form, title="Registration Page")

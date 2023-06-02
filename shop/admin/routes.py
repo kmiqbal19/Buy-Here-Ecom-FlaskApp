@@ -2,7 +2,7 @@ from flask import render_template, request, session, redirect, url_for, flash
 from shop import app, db, bcrypt
 from .forms import RegistrationForm, LoginForm
 from .models import User
-
+from shop.products.models import Addproduct,Category,Brand
 
 # ---- ROUTES ------
 @app.route('/')

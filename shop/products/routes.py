@@ -5,6 +5,8 @@ from .forms import Addproducts
 import secrets
 
 # ---- ROUTES ----
+
+
 @app.route('/addbrand', methods=['GET', 'POST'])
 def addbrand():
     if 'email' not in session:
@@ -19,8 +21,8 @@ def addbrand():
         return redirect(url_for('addbrand'))
     return render_template('products/addbrand.html', brands='brand')
 
-@app.route('/addcategory', methods=['GET', 'POST'])
 
+@app.route('/addcategory', methods=['GET', 'POST'])
 def addcategory():
     if 'email' not in session:
         flash(f'Please login first', 'danger')
@@ -44,7 +46,8 @@ def updatebrand(id):
     brand = request.form.get('brand')
     if request.method == "POST":
         updatebrand.name = brand
-        flash(f'The brand {updatebrand.name} was changed to {brand}', 'success')
+        flash(
+            f'The brand {updatebrand.name} was changed to {brand}', 'success')
         db.session.commit()
         return redirect(url_for('brands'))
     brand = updatebrand.name
@@ -68,16 +71,18 @@ def addproduct():
         desc = form.description.data
         brand = request.form.get('brand')
         category = request.form.get('category')
-        image_1 = photos.save(request.files.get('image_1'), name=secrets.token_hex(10) + ".")
-        image_2 = photos.save(request.files.get('image_2'), name=secrets.token_hex(10) + ".")
-        image_3 = photos.save(request.files.get('image_3'), name=secrets.token_hex(10) + ".")
-        addproduct = Addproduct(name=name, price=price, discount=discount, stock=stock, colors=colors, desc=desc,
-                                category_id=category, brand_id=brand,
-        image_1=image_1, image_2=image_2, image_3=image_3)
+        image_1 = photos.save(request.files.get(
+            'image_1'), name=secrets.token_hex(10) + ".")
+        image_2 = photos.save(request.files.get(
+            'image_2'), name=secrets.token_hex(10) + ".")
+        image_3 = photos.save(request.files.get(
+            'image_3'), name=secrets.token_hex(10) + ".")
+        addproduct = Addproduct(name=name, price=price, discount=discount, stock=stock,
+                                colors=colors, desc=desc, category_id=category, brand_id=brand,
+                                image_1=image_1, image_2=image_2, image_3=image_3)
         db.session.add(addproduct)
         flash(f'The product {name} was added in database', 'success')
         db.session.commit()
         return redirect(url_for('admin'))
 
-    return render_template('products/addproduct.html', form=form, title='Add Product', brands=brands,
-                           categories=categories)
+    return render_template('products/addproduct.html', form=form, title='Add Product', brands=brands, categories=categories)

@@ -42,5 +42,5 @@ def login():
             return redirect(request.args.get('next') or url_for('home'))
         else:
             flash('Wrong credentials. Please try again', 'danger')
-            return redirect(url_for('login'))
+            return redirect(url_for('admin'))
     return render_template('admin/login.html', form=form, title="Login page")

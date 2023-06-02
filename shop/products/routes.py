@@ -83,6 +83,6 @@ def addproduct():
         db.session.add(addproduct)
         flash(f'The product {name} was added in database', 'success')
         db.session.commit()
-        return redirect(url_for('addbrand'))
+        return redirect(url_for('admin'))
 
     return render_template('products/addproduct.html', form=form, title='Add Product', brands=brands, categories=categories)

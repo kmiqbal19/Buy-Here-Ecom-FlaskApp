@@ -9,7 +9,13 @@ from .models import User
 def home():
     return render_template('admin/index.html', title='Admin')
 
-
+@app.route('/admin')
+def admin():
+    if 'email' not in session:
+        flash(f'Please login first', 'danger')
+        return redirect(url_for('login'))
+    products = Addproduct.query.all()
+    return render_template('admin/admin.html', title='Admin page', products=products)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

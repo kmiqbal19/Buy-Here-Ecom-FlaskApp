@@ -7,7 +7,7 @@ from shop.products.models import Addproduct,Category,Brand
 # ---- ROUTES ------
 @app.route('/')
 def home():
-    return render_template('admin/index.html', title='Admin')
+    return render_template('admin/index.html', title='Home page')
 
 @app.route('/admin')
 def admin():
@@ -15,7 +15,9 @@ def admin():
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     products = Addproduct.query.all()
-    return render_template('admin/admin.html', title='Admin page', products=products)
+    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
+    return render_template('admin/admin.html', title='Admin page', products=products, brands=brands, categories=categories)
 
 @app.route('/brands')
 def brands():
@@ -23,7 +25,7 @@ def brands():
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     brands = Brand.query.order_by(Brand.id.desc()).all()
-    return render_template('admin/brand.html', title='brands', brands=brands)
+    return render_template('admin/brand.html', title='Brands', brands=brands)
 
 
 @app.route('/categories')
@@ -32,7 +34,7 @@ def categories():
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     categories = Category.query.order_by(Category.id.desc()).all()
-    return render_template('admin/category.html', title='categories',categories=categories)
+    return render_template('admin/category.html', title='Categories',categories=categories)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

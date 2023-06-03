@@ -54,7 +54,7 @@ def addbrand():
         flash(f'The Brand {getbrand} was added to your database', 'success')
         db.session.commit()
         return redirect(url_for('brands'))
-    return render_template('products/addbrand.html',title='Add brand',brands='brands')
+    return render_template('products/addbrand.html', brands='brands')
 
 
 @app.route('/updatebrand/<int:id>', methods=['GET', 'POST'])

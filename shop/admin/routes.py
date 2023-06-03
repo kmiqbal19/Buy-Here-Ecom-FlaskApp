@@ -25,6 +25,15 @@ def brands():
     brands = Brand.query.order_by(Brand.id.desc()).all()
     return render_template('admin/brand.html', title='brands', brands=brands)
 
+
+@app.route('/categories')
+def categories():
+    if 'email' not in session:
+        flash(f'Please login first', 'danger')
+        return redirect(url_for('login'))
+    categories = Category.query.order_by(Category.id.desc()).all()
+    return render_template('admin/category.html', title='categories',categories=categories)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)

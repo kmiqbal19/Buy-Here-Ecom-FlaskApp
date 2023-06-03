@@ -6,6 +6,18 @@ import secrets
 import os
 # ---- ROUTES ----
 
+@app.route('/result')
+def result():
+    searchword = request.args.get('q')
+    products = Addproduct.query.msearch(searchword, fields=['name', 'desc'], limit=6)
+    return render_template('products/result.html', products=products)
+
+@app.route('/product/<int:id>')
+def single_page(id):
+    product = Addproduct.query.get_or_404(id)
+    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
+    return render_template('products/single_page.html', product=product, brands=brands, categories=categories)
 
 @app.route('/addbrand', methods=['GET', 'POST'])
 def addbrand():

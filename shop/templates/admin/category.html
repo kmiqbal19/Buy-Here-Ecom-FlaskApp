@@ -25,6 +25,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{url_for('categories')}}">categories</a>
+        </li>
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -68,11 +69,11 @@
       <th>Delete</th>
     </thead>
     <tbody>
-      {% for brand in brands %}
+      {% for category in categories %}
       <tr>
         <td>{{loop.index}}</td>
 
-        <td>{{ brand.name }}</td>
+        <td>{{ category.name }}</td>
 
         <td>
           <a href="" class="btn btn-sm btn-info">Edit</a>
@@ -85,7 +86,7 @@
       <!--============= MODEL ===================-->
       <div
         class="modal fade"
-        id="exampleModal-{{brand.id}}"
+        id="exampleModal-{{category.id}}"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -95,7 +96,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">
-                {{brand.name }}
+                {{category.name }}
               </h5>
               <button
                 type="button"
@@ -109,7 +110,7 @@
             <div class="modal-body">
               <p class="text-danger">
                 Are you Sure that you want to delete this Category ({{
-                brand.name }})
+                category.name }})
               </p>
             </div>
             <div class="modal-footer">
@@ -127,7 +128,6 @@
       <!--==============MODEL ===================-->
 
       {% endfor %}
-
     </tbody>
   </table>
 </div>

@@ -32,7 +32,7 @@ def get_brand(id):
     brand = Addproduct.query.filter_by(brand_id=id)
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
     categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-    return render_template('./products/index.html', brand=brand, brands=brands(), categories=categories())
+    return render_template('products/index.html', brand=brand, brands=brands,categories=categories)
 
 
 @app.route('/categories/<int:id>')
@@ -40,7 +40,7 @@ def get_category(id):
     get_cat_prod = Addproduct.query.filter_by(category_id=id)
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
     categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-    return render_template('products/index.html', get_cat_prod=get_cat_prod, categories=categories(), brands=brands())
+    return render_template('products/index.html', get_cat_prod=get_cat_prod, categories=categories, brands=brands)
 
 @app.route('/addbrand', methods=['GET', 'POST'])
 def addbrand():
@@ -54,7 +54,7 @@ def addbrand():
         flash(f'The Brand {getbrand} was added to your database', 'success')
         db.session.commit()
         return redirect(url_for('brands'))
-    return render_template('products/addbrand.html', brands='brands')
+    return render_template('products/addbrand.html',title='Add brand',brands='brands')
 
 
 @app.route('/updatebrand/<int:id>', methods=['GET', 'POST'])
@@ -96,7 +96,7 @@ def addcategory():
         flash(f'The Category {getcat} was added to your database', 'success')
         db.session.commit()
         return redirect(url_for('addbrand'))
-    return render_template('products/addbrand.html')
+    return render_template('products/addbrand.html', title='Add category')
 
 
 @app.route('/updatecat/<int:id>',methods=['GET','POST'])

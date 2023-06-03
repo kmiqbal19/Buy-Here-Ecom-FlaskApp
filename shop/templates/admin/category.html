@@ -76,7 +76,7 @@
         <td>{{ category.name }}</td>
 
         <td>
-          <a href="" class="btn btn-sm btn-info">Edit</a>
+          <a href="{{url_for('updatecat', id=category.id)}}" class="btn btn-sm btn-info">Edit</a>
         </td>
         <td>
           <a href="" class="btn btn-danger btn-sm">Delete</a>

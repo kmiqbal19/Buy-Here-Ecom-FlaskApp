@@ -55,9 +55,9 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             session["email"] = form.email.data
             flash(
-                f'Welcome {form.email.data} You are logged in now', 'success')
-            return redirect(request.args.get('next') or url_for('home'))
+                f'Welcome {form.email.data}, You are logged in now!', 'success')
+            return redirect(request.args.get('next') or url_for('admin'))
         else:
             flash('Wrong credentials. Please try again', 'danger')
-            return redirect(url_for('admin'))
+            return redirect(url_for('login'))
     return render_template('admin/login.html', form=form, title="Login page")

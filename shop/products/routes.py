@@ -41,6 +41,17 @@ def updatebrand(id):
     brand = updatebrand.name
     return render_template('products/updatebrand.html', title='Update brand', brands='brands', updatebrand=updatebrand)
 
+@app.route('/deletebrand/<int:id>', methods=['GET','POST'])
+def deletebrand(id):
+    brand = Brand.query.get_or_404(id)
+    if request.method=="POST":
+        db.session.delete(brand)
+        flash(f"The brand {brand.name} was deleted from your database","success")
+        db.session.commit()
+        return redirect(url_for('admin'))
+    flash(f"The brand {brand.name} can't be  deleted from your database","warning")
+    return redirect(url_for('admin'))
+
 @app.route('/addcategory', methods=['GET', 'POST'])
 def addcategory():
     if 'email' not in session:

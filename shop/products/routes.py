@@ -18,7 +18,7 @@ def addbrand():
         db.session.add(brand)
         flash(f'The Brand {getbrand} was added to your database', 'success')
         db.session.commit()
-        return redirect(url_for('addbrand'))
+        return redirect(url_for('brands'))
     return render_template('products/addbrand.html', brands='brand')
 
 

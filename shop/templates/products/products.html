@@ -96,7 +96,7 @@
             >Details</a
           >
           <!--          <a href="#" class="float-right btn btn-sm btn-primary"> Add to cart</a>-->
-          <form action="{{url_for('addproduct')}}" method="POST">
+          <form action="{{url_for('AddCart')}}" method="POST">
             <input type="hidden" name="product_id" value="{{product.id}}" />
             <button type="submit" class="btn btn-sm btn-warning float-right">
               Add to Cart

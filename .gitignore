@@ -1,1 +1,5 @@
 myvenv
+shop/products/__pycache__
+shop/admin/__pycache__
+shop/carts/__pycache__
+instance

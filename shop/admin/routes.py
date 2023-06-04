@@ -25,6 +25,7 @@ def brands():
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     brands = Brand.query.order_by(Brand.id.desc()).all()
+    categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
     return render_template('admin/brand.html', title='Brands', brands=brands)
 
 
@@ -33,8 +34,9 @@ def categories():
     if 'email' not in session:
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
+    brands = Brand.query.order_by(Brand.id.desc()).all()
     categories = Category.query.order_by(Category.id.desc()).all()
-    return render_template('admin/category.html', title='Categories',categories=categories)
+    return render_template('admin/brand.html', title='Categories', categories=categories)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

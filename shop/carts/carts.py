@@ -2,7 +2,6 @@ from flask import render_template, session, request, redirect, url_for, flash, c
 from shop import app, db
 from shop.products.models import Addproduct
 
-
 def MagerDicts(dict1, dict2):
     if isinstance(dict1, list) and isinstance(dict2, list):
         return dict1 + dict2
@@ -77,6 +76,19 @@ def updatecart(code):
             print(e)
             return redirect(url_for('getCart'))
 
+@app.route('/deletecartitem/<int:id>')
+def deletecartitem(id):
+    if 'Shoppingcart' not in session or len(session['Shoppingcart']) <= 0:
+        return redirect(url_for('home'))
+    try:
+        session.modified = True
+        for key , item in session['Shoppingcart'].items():
+            if int(key) == id:
+                session['Shoppingcart'].pop(key, None)
+                return redirect(url_for('getCart'))
+    except Exception as e:
+        print(e)
+        return redirect(url_for('getCart'))
 
 # ====> FOR EMPTY SESSION === DON'T USE <<<
 # @app.route('/empty')

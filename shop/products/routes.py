@@ -6,6 +6,41 @@ import secrets
 import os
 # ---- ROUTES ----
 
+@app.route('/products')
+def products():
+    products = Addproduct.query.filter(Addproduct.stock > 0)
+    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
+    return render_template('./products/products.html', products=products, brands=brands, categories=categories)
+
+
+@app.route('/result')
+def result():
+    searchword = request.args.get('q')
+    products = Addproduct.query.msearch(searchword, fields=['name', 'desc'], limit=6)
+    return render_template('products/result.html', products=products)
+
+@app.route('/product/<int:id>')
+def single_page(id):
+    product = Addproduct.query.get_or_404(id)
+    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
+    return render_template('products/single_page.html', product=product, brands=brands, categories=categories)
+
+@app.route('/brand/<int:id>')
+def get_brand(id):
+    brand = Addproduct.query.filter_by(brand_id=id)
+    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
+    return render_template('products/index.html', brand=brand, brands=brands,categories=categories)
+
+
+@app.route('/categories/<int:id>')
+def get_category(id):
+    get_cat_prod = Addproduct.query.filter_by(category_id=id)
+    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
+    return render_template('products/index.html', get_cat_prod=get_cat_prod, categories=categories, brands=brands)
 
 @app.route('/addbrand', methods=['GET', 'POST'])
 def addbrand():

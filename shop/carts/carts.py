@@ -19,8 +19,7 @@ def AddCart():
         product = Addproduct.query.filter_by(id=product_id).first()
 
         if request.method == "POST":
-            DictItems = {product_id: {'name': product.name, 'price': product.price, 'discount': product.discount,
-                                      'color': color, 'quantity': quantity}}
+            DictItems = {product_id:{'name':product.name,'price':float(product.price),'discount':product.discount,'color':color,'quantity':quantity,'image':product.image_1, 'colors':product.colors}}
             if 'Shoppingcart' in session:
                 print(session['Shoppingcart'])
                 if product_id in session['Shoppingcart']:
@@ -29,7 +28,8 @@ def AddCart():
                             session.modified = True
                             item['quantity'] += 1
                 else:
-                    session['Shoppingcart'] = MagerDicts(session['Shoppingcart'], DictItems)
+                    session['Shoppingcart'] = MagerDicts(
+                        session['Shoppingcart'], DictItems)
                     return redirect(request.referrer)
             else:
                 session['Shoppingcart'] = DictItems
@@ -40,17 +40,49 @@ def AddCart():
     finally:
         return redirect(request.referrer)
 
+
 @app.route('/carts')
 def getCart():
     if 'Shoppingcart' not in session or len(session['Shoppingcart']) <= 0:
         return redirect(url_for('home'))
     subtotal = 0
     grandtotal = 0
-    for key,product in session['Shoppingcart'].items():
+    for key, product in session['Shoppingcart'].items():
         discount = (product['discount']/100) * float(product['price'])
         subtotal += float(product['price']) * int(product['quantity'])
         subtotal -= discount
-        tax =("%.2f" %(.06 * float(subtotal)))
+        tax = ("%.2f" % (.06 * float(subtotal)))
         grandtotal = float("%.2f" % (1.06 * subtotal))
     # return render_template('products/carts.html',tax=tax, grandtotal=grandtotal,brands=brands(),categories=categories())
-    return render_template('products/carts.html', tax=tax, grandtotal=grandtotal)
+    return render_template('products/carts.html', tax=tax, grandtotal=grandtotal )
+
+
+
+@app.route('/updatecart/<int:code>', methods=['POST'])
+def updatecart(code):
+    if 'Shoppingcart' not in session or len(session['Shoppingcart']) <= 0:
+        return redirect(url_for('home'))
+    if request.method =="POST":
+        quantity = request.form.get('quantity')
+        color = request.form.get('color')
+        try:
+            session.modified = True
+            for key , item in session['Shoppingcart'].items():
+                if int(key) == code:
+                    item['quantity'] = quantity
+                    item['color'] = color
+                    flash('Item is updated!')
+                    return redirect(url_for('getCart'))
+        except Exception as e:
+            print(e)
+            return redirect(url_for('getCart'))
+
+
+# ====> FOR EMPTY SESSION === DON'T USE <<<
+# @app.route('/empty')
+# def empty_cart():
+#     try:
+#         session.clear()
+#         return redirect(url_for('admin'))
+#     except Exception as e:
+#         print(e)

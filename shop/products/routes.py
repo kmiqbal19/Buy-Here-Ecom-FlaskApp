@@ -11,7 +11,7 @@ def products():
     products = Addproduct.query.filter(Addproduct.stock > 0)
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
     categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-    return render_template('./products/index.html', products=products, brands=brands, categories=categories)
+    return render_template('./products/products.html', products=products, brands=brands, categories=categories)
 
 
 @app.route('/result')
@@ -54,7 +54,7 @@ def addbrand():
         flash(f'The Brand {getbrand} was added to your database', 'success')
         db.session.commit()
         return redirect(url_for('brands'))
-    return render_template('products/addbrand.html', brands='brands')
+    return render_template('products/addbrand.html',brands='brands')
 
 
 @app.route('/updatebrand/<int:id>', methods=['GET', 'POST'])
@@ -96,7 +96,7 @@ def addcategory():
         flash(f'The Category {getcat} was added to your database', 'success')
         db.session.commit()
         return redirect(url_for('categories'))
-    return render_template('products/addbrand.html', title='Add category')
+    return render_template('products/addbrand.html')
 
 
 @app.route('/updatecat/<int:id>',methods=['GET','POST'])

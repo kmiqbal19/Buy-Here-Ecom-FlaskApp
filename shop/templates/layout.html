@@ -106,8 +106,9 @@
                                  </button>
                                  </form>
                               </li>
-                              <a class="nav-link" href="#"><i class="fa fa-fw fa-cart-arrow-down mr-1" aria-hidden="true"></i>
-                              {{session['Shoppingcart']|length }}</a>
+                              <a href="#" class="nav-link">
+                              <div class="nav-link" style="display: flex; justify-content: center; align-items: center;"  href="#"><i class="fa fa-fw fa-cart-arrow-down mr-1" aria-hidden="true"></i>
+                              {{session['Shoppingcart']|length }}</div></a>
                               </li>
                               <li class="nav-item d_none">
                                  <a class="nav-link" href="/login">Login</a>
@@ -190,3 +191,4 @@
       <script src="./static/js/custom.js"></script>
    </body>
 </html>
+

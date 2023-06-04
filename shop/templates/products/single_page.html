@@ -49,7 +49,7 @@
             <hr>
             <b>Product description</b>
             <p>{{product.desc}}</p>
-            <form action="{{url_for('addproduct')}}" method="post">
+            <form action="{{url_for('addcart')}}" method="post">
                 <input type="hidden" name="product_id" value="{{product.id}}">
                 <button type="submit" class="btn btn-sm btn-warning">Add to Cart</button>
                 <label for="">Quantity: </label>
@@ -66,7 +66,26 @@
         </div>
     </div>
     <hr>
+    <div class="row">
+        <div class="col-md-12" id="s_image">
+            <img src="{{url_for('static',filename='images/'+ product.image_1)}}" alt="{{product.name}}" width="100" height="100">
+            <img src="{{url_for('static',filename='images/'+ product.image_2)}}" alt="{{product.name}}" width="100" height="100" class="ml-5">
+            <img src="{{url_for('static',filename='images/'+ product.image_3)}}" alt="{{product.name}}" width="100" height="100" class="ml-5">
+        </div>
+    </div>
 </div>
+<script>
+    var b_image = document.getElementById('b_image');
+    var s_image = document.getElementById('s_image').getElementsByTagName('img');
+     for(var i = 0; i < s_image.length; i++){
+ 
+         s_image[i].addEventListener('click', full_image);
+     }
+     function full_image(){
+         var ImageSRC = this.getAttribute('src');
+         b_image.innerHTML = "<img src=" + ImageSRC + " width='400' height='400'>";
+     }
+ </script>
 {% endblock content %}
 <!--<script src="{{url_for('static', filename='js/jquery-3.4.1.slim.min_new.js')}}" ></script>-->
 <!--    <script src="{{url_for('static', filename='js/popper.min_new.js')}}"></script>-->

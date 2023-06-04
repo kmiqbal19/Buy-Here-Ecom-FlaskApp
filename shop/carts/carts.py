@@ -53,4 +53,4 @@ def getCart():
         tax =("%.2f" %(.06 * float(subtotal)))
         grandtotal = float("%.2f" % (1.06 * subtotal))
     # return render_template('products/carts.html',tax=tax, grandtotal=grandtotal,brands=brands(),categories=categories())
-    return render_template('products/carts.html')
+    return render_template('products/carts.html', tax=tax, grandtotal=grandtotal)

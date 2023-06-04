@@ -4,9 +4,7 @@
   <table class="table tbale-sm table-condensed table-striped table-hover">
     <thead>
       <th>Nr</th>
-
       <th>Name</th>
-
       <th>Edit</th>
       <th>Delete</th>
     </thead>
@@ -15,9 +13,7 @@
       {% for brand in brands %}
       <tr>
         <td>{{loop.index}}</td>
-
         <td>{{ brand.name }}</td>
-
         <td>
           <a
             href="{{url_for('updatebrand' , id=brand.id)}}"

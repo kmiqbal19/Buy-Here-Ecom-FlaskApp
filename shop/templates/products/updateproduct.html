@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="container">
+<!-- <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{{url_for('admin')}}">Buy Here</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,11 +31,11 @@
           </ul>
         </div>
       </nav>
-</div>
+</div> -->
 
 <!--==========END NAVBAR ==============-->
 
-<div class="container">
+<!-- <div class="container">
     <div class="row">
         <div class="col-md-1"></div>
             <div class="col-md-10">
@@ -103,9 +103,164 @@
                 </div>
                 <p><input type="submit" value="{% if getproduct %}Update {% else %}Add{% endif %} product" class="btn-outline-info">
                 </form>
-                <a  href="{{url_for('admin')}}">Cancel</a>
+                <a style="background-color: aqua; padding: 0.5rem 1rem; color: red" href="{{url_for('admin')}}">Cancel</a>
             </div>
       <div class="col-md-1"></div>
     </div>
+</div> -->
+<style>
+  .container {
+      margin: 0 auto;
+      max-width: 800px;
+  }
+
+  .text-center {
+      text-align: center;
+  }
+
+  .bg-info {
+      background-color: lightblue;
+  }
+
+  .p-2 {
+      padding: 8px;
+  }
+
+  .h4 {
+      font-size: 18px;
+      font-weight: bold;
+  }
+
+  .form-control {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+  }
+
+  .container .row {
+      display: flex;
+      flex-wrap: wrap;
+  }
+
+  .container .row::after {
+      content: "";
+      clear: both;
+      display: table;
+  }
+
+  .container .row [class^="col-"] {
+      width: 100%;
+  }
+
+  @media (min-width: 768px) {
+      .container .row [class^="col-"] {
+          width: 50%;
+      }
+  }
+
+  .container .row [class^="col-"] input[type="file"] {
+      margin-top: 10px;
+  }
+
+  .container .row [class^="col-"] a {
+      display: block;
+      margin-top: 10px;
+  }
+
+  input[type="submit"] {
+      background-color: lightblue;
+      padding: 8px 16px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+  }
+
+  a {
+    
+      padding: 8px 16px;
+     
+      text-decoration: none;
+      font-size: 14px;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+      <div style="width: 0;"></div>
+      <div style="width: 100%;">
+          <div class="text-center bg-info p-2 h4">Add a product</div>
+          <form method="post" enctype="multipart/form-data">
+              <div>
+                  <input type="text" name="name" class="form-control" placeholder="Product Name" required>
+                  <input type="number" name="price" class="form-control" placeholder="Price" required>
+                  <input type="number" name="discount" class="form-control" placeholder="Discount" required>
+                  <input type="number" name="stock" class="form-control" placeholder="Stock" required>
+
+                  <label for="brand">Add a brand</label>
+                  <select name="brand" id="brand" class="form-control" required>
+                      {% if getproduct %}
+                          <option value="{{getproduct.brand_id}}" style="display: none;">{{getproduct.brand.name}}</option>
+                          {% for brand in brands %}
+                              <option value="{{brand.id}}">{{brand.name}}</option>
+                          {% endfor %}
+                      {% else %}
+                          <option value=""> Select A brand</option>
+                          {% for brand in brands %}
+                              <option value="{{brand.id}}">{{brand.name}}</option>
+                          {% endfor %}
+                      {% endif %}
+                  </select>
+
+                  <label for="category">Add a category</label>
+                  <select name="category" id="category" class="form-control" required>
+                      {% if getproduct %}
+                          <option value="{{getproduct.category_id}}" style="display: none;">{{getproduct.category.name}}</option>
+                          {% for category in categories %}
+                              <option value="{{category.id}}">{{category.name}}</option>
+                          {% endfor %}
+                      {% else %}
+                          <option value=""> Select A category</option>
+                          {% for category in categories %}
+                              <option value="{{category.id}}">{{category.name}}</option>
+                          {% endfor %}
+                      {% endif %}
+                  </select>
+
+                  <input type="text" name="colors" class="form-control" placeholder="Colors" required>
+                  <textarea name="description" class="form-control" rows="10" placeholder="Description" required></textarea>
+              </div>
+              <div class="container">
+                  <div class="row">
+                      {% if getproduct %}
+                          <div style="width: 33%;">
+                              <input type="file" name="image_1" id="image_1">
+                              <a href="{{url_for('static',filename='images/' + getproduct.image_1)}}"> images/{{ getproduct.image_1}}</a>
+                          </div>
+                          <div style="width: 33%;">
+                              <input type="file" name="image_2" id="image_2">
+                              <a href="{{url_for('static',filename='images/' + getproduct.image_2)}}">images/{{ getproduct.image_2}}</a>
+                          </div>
+                          <div style="width: 33%;">
+                              <input type="file" name="image_3" id="image_3">
+                              <a href="{{url_for('static',filename='images/' + getproduct.image_3)}}"> image/{{ getproduct.image_3}}</a>
+                          </div>
+                      {% else %}
+                          <div style="width: 33%;"><input type="file" name="image_1" id="image_1"></div>
+                          <div style="width: 33%;"><input type="file" name="image_2" id="image_2"></div>
+                          <div style="width: 33%;"><input type="file" name="image_3" id="image_3"></div>
+                      {% endif %}
+                  </div>
+              </div>
+              <p><input type="submit" value="{% if getproduct %}Update{% else %}Add{% endif %} product"></p>
+          </form>
+          <a href="{{url_for('admin')}}">Cancel</a>
+      </div>
+      <div style="width: 0;"></div>
+  </div>
 </div>
+
 {% endblock content %}

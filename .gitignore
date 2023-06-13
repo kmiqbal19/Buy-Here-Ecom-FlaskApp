@@ -1,4 +1,5 @@
 myvenv
+migrations
 shop/__pycache__
 shop/products/__pycache__
 shop/admin/__pycache__

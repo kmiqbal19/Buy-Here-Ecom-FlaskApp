@@ -108,16 +108,32 @@
                                  </button>
                                  </form>
                               </li>
+                              {% if current_user.is_authenticated  %}
+                              <li class="nav-item">
+                                 <a class="nav-link" href="{{url_for('customer_logout')}}">{{current_user.name}}</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" href="{{url_for('customer_logout')}}">Logout</a>
+                              </li>
+                              {% else %}
+                              <li class="nav-item">
+                                 <a class="nav-link" href="{{url_for('customerLogin')}}">LogIn</a>
+                              </li>
+                              <li class="nav-item d_none">
+                                 <a class="nav-link" href="{{url_for('customer_register')}}">SignIn</a>
+                              </li>
+                              {% endif %}
+                              <li class="nav-item">
                               <a href="{{url_for('getCart')}}" class="nav-link">
                               <div class="nav-link" style="display: flex; justify-content: center; align-items: center;"  href="#"><i class="fa fa-fw fa-cart-arrow-down mr-1" aria-hidden="true"></i>
                               {{session['Shoppingcart']|length }}</div></a>
                               </li>
-                              <li class="nav-item d_none">
+                              <!-- <li class="nav-item d_none">
                                  <a class="nav-link" href="/login">Login</a>
                               </li>
                               <li class="nav-item d_none">
                                  <a class="nav-link" href="/register">Register</a>
-                              </li>
+                              </li> -->
                            </ul>
                         </div>
                      </nav>

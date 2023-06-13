@@ -33,3 +33,8 @@ def customerLogin():
         return redirect(url_for('customerLogin'))
             
     return render_template('customer/login.html', form=form)
+
+@app.route('/customer/logout')
+def customer_logout():
+    logout_user()
+    return redirect(url_for('home'))

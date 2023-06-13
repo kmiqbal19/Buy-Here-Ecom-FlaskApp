@@ -90,6 +90,13 @@ def deletecartitem(id):
         print(e)
         return redirect(url_for('getCart'))
 
+@app.route('/clearcart')
+def clearcart():
+    try:
+        session.pop('Shoppingcart', None)
+        return redirect(url_for('home'))
+    except Exception as e:
+        print(e)
 # ====> FOR EMPTY SESSION === DON'T USE <<<
 # @app.route('/empty')
 # def empty_cart():

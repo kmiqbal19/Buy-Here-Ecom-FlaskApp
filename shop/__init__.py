@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 import os
 from flask_msearch import Search
+from flask_login import LoginManager
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
@@ -18,6 +19,12 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 search = Search()
 search.init_app(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view='customerLogin'
+login_manager.needs_refresh_message_category='danger'
+login_manager.login_message = u"Please login first"
 
 from shop.admin import routes
 from shop.products import routes

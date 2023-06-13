@@ -1,6 +1,10 @@
-from shop import app, db
+from shop import app, db, login_manager
 from datetime import datetime
+from flask_login import UserMixin
 
+@login_manager.user_loader
+def user_loader(user_id):
+    return Register.query.get(user_id)
 
 class Register(db.Model):
     id = db.Column(db.Integer, primary_key= True)
@@ -16,7 +20,19 @@ class Register(db.Model):
     zipcode = db.Column(db.String(50), unique= False)
     profile = db.Column(db.String(200), unique= False , default='profile.jpg')
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    # Flask-Login integration
+    def is_authenticated(self):
+        return True
 
+    def is_active(self): 
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
+    
     def __repr__(self):
         return '<Register %r>' % self.name
 

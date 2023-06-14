@@ -6,6 +6,37 @@ from .model import Register, CustomerOrder
 import secrets
 import os
 import pdfkit
+import stripe
+
+
+publishable_key = 'pk_test_51J7N96CH8llqJB9dqp7u0xQvumQMaWlBjcaAJ25VAc0WG8SuO1GcDB0IUFUlagL4mWzzMrgLC6TSTNWSXAIsGm6C00EStrIgIR'
+
+stripe.api_key = 'sk_test_51J7N96CH8llqJB9drVqyTw0sNectOpYZhyFVR0rUuOAxd4amdEURF7o8b1za2ChDyBU8CLeGqk2V3LF9B6dzT7Wu000YrO1bdO'
+
+
+@app.route('/payment',methods=['POST'])
+def payment():
+    invoice = request.form.get('invoice')
+    amount = request.form.get('amount')
+    customer = stripe.Customer.create(
+      email=request.form['stripeEmail'],
+      source=request.form['stripeToken'],
+    )
+    charge = stripe.Charge.create(
+      customer=customer.id,
+      description='Myshop',
+      amount=amount,
+      currency='usd',
+    )
+    orders =  CustomerOrder.query.filter_by(customer_id = current_user.id,invoice=invoice).order_by(CustomerOrder.id.desc()).first()
+    orders.status = 'Paid'
+    db.session.commit()
+    return redirect(url_for('thanks'))
+
+@app.route('/thanks')
+def thanks():
+    return render_template('customer/thanks.html')
+
 
 @app.route('/customer/register', methods=['GET','POST'])
 def customer_register():
@@ -53,7 +84,7 @@ def get_order():
     if current_user.is_authenticated:
         customer_id = current_user.id
         invoice = secrets.token_hex(5)
-        updateshoppingcart
+        updateshoppingcart()
         try:
             order = CustomerOrder(invoice=invoice,customer_id=customer_id,orders=session['Shoppingcart'])
             db.session.add(order)

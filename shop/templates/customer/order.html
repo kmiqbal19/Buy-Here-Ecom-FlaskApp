@@ -55,15 +55,15 @@
                <td>   
                    {% if orders.status =='Paid' %}
                    {% else %}
-                <form action="{{url_for('admin')}}" method="POST">
+                <form action="{{url_for('payment')}}" method="POST">
                 {% set amount =  grandTotal.replace('.','') %}
                 <input type="hidden" name="amount" value="{{amount}}">
                 <input type="hidden" name="invoice" value="{{orders.invoice}}">
                 <script src="https://checkout.stripe.com/checkout.js"
                   class="stripe-button"
-                  data-key="pk_test_MaILxTYQ15v5Uhd6NKI9wPdD00qdL0QZSl"
+                  data-key="pk_test_51J7N96CH8llqJB9dqp7u0xQvumQMaWlBjcaAJ25VAc0WG8SuO1GcDB0IUFUlagL4mWzzMrgLC6TSTNWSXAIsGm6C00EStrIgIR"
                   data-name="{{customer.name}}"
-                  data-description="myshop parchase"
+                  data-description="Buy Here Ltd"
                   data-amount="{{amount}}"
                   data-currency="usd">
                 </script>

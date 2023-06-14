@@ -62,5 +62,25 @@ def get_order():
             return redirect(url_for('orders',invoice=invoice))
         except Exception as e:
             print(e)
-            flash('Some thing went wrong while get order!', 'danger')
+            flash('Some thing went wrong while ordering!', 'danger')
             return redirect(url_for('getCart'))
+        
+@app.route('/orders/<invoice>')
+@login_required
+def orders(invoice):
+    if current_user.is_authenticated:
+        grandTotal = 0
+        subTotal = 0
+        customer_id = current_user.id
+        customer = Register.query.filter_by(id=customer_id).first()
+        orders = CustomerOrder.query.filter_by(customer_id=customer_id, invoice=invoice).order_by(CustomerOrder.id.desc()).first()
+        for _key, product in orders.orders.items():
+            discount = (product['discount']/100) * float(product['price'])
+            subTotal += float(product['price']) * int(product['quantity'])
+            subTotal -= discount
+            tax = ("%.2f" % (.06 * float(subTotal)))
+            grandTotal = ("%.2f" % (1.06 * float(subTotal)))
+
+    else:
+        return redirect(url_for('customerLogin'))
+    return render_template('customer/order.html', invoice=invoice, tax=tax,subTotal=subTotal,grandTotal=grandTotal,customer=customer,orders=orders)

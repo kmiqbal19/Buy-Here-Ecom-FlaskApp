@@ -1,3 +1,4 @@
+from sqlalchemy import func
 from shop import db, app
 from datetime import datetime
 
@@ -12,7 +13,7 @@ class Addproduct(db.Model):
     colors = db.Column(db.Text, nullable=False)
     desc = db.Column(db.Text, nullable=False)
     pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
+    discount_expiration = db.Column(db.DateTime, nullable=True)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     category = db.relationship('Category', backref=db.backref('categories', lazy=True))
 
@@ -25,6 +26,11 @@ class Addproduct(db.Model):
 
     def __repr__(self):
         return '<Addproduct %r>' % self.name
+    
+    def is_discount_expired(self):
+        if self.discount_expiration is not None:
+            return self.discount_expiration < func.now()
+        return False
 
 
 

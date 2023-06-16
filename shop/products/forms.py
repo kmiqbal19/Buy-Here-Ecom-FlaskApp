@@ -6,6 +6,7 @@ class Addproducts(Form):
     name = StringField('Name', [validators.DataRequired()])
     price = FloatField('Price', [validators.DataRequired()])
     discount = IntegerField('Discount', default=0)
+    discount_days = IntegerField('Discount Expiration (Days)', default=0)
     stock = IntegerField('Stock', [validators.DataRequired()])
     colors = StringField('Colors', [validators.DataRequired()])
     description = TextAreaField('Description', [validators.DataRequired()])

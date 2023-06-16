@@ -10,6 +10,7 @@
             <th>Name</th>
             <th>Price</th>
             <th>Discount</th>
+            <th>Discount Ends</th>
             <th>Brand</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -22,6 +23,7 @@
             <td>{{ product.name }}</td>
             <td>{{ product.price }}</td>
             <td>{{ product.discount }}</td>
+            <td>On {{ product.discount_expiration }} </td>
             <td>{{ product.brand.name}}</td>
             <td><a href="{{url_for('updateproduct', id=product.id)}}" class="btn btn-sm btn-info">Edit </a></td>
             <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal-{{product.id}}">

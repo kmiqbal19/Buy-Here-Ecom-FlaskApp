@@ -37,12 +37,12 @@
 <div class="container">
   <div class="row">
     {% if brand %}
-    {% for b in brand%}
+    {% for b in brand %}
     <div class="col-md-3 mt-3">
       <div class="card">
         <img src="{{url_for('static', filename='images/' + b.image_1)}}" class="card-img-top" alt="{{b.name}}" height="200" width="300">
         <div class="card-body"></div>
-        {%if b.discount > 0%}
+        {% if b.discount > 0 %}
         <h5 style="text-shadow: 1px 1px 2px #000; color: #F00; position:bottom;"> Discount {{b.discount}} %</h5>
         {%endif%}
              <h5 class="text-center">{{b.name}}</h5>
@@ -55,16 +55,16 @@
     </div>
     {% endfor %}
 
-    {%elif get_cat_prod%}
+    {% elif get_cat_prod %}
 
     {% for get_cat in get_cat_prod %}
     <div class="col-md-3 mt-3">
       <div class="card">
         <img src="{{url_for('static', filename='images/' + get_cat.image_1)}}" class="card-img-top" alt="{{get_cat.name}}" height="200" width="200">
         <div class="card-body"></div>
-        {%if get_cat.discount > 0%}
+        {% if get_cat.discount > 0%}
         <h5 style="text-shadow: 1px 1px 2px #000; color: #F00; position:bottom;"> Discount {{get_cat.discount}} %</h5>
-        {%endif%}
+        {% endif %}
         <h5 class="text-center">{{get_cat.name}}</h5>
         <p class="text-center">Price ${{get_cat.price}}</p>
         <div class="card-footer">
@@ -77,13 +77,13 @@
 
     {% else %}
 
-    {% for product in products%}
+    {% for product in products %}
     <div class="col-md-3 mt-3">
       <div class="card"><img src="{{url_for('static', filename='images/' + product.image_1)}}" class="card-img-top" alt="{{product.name}}" height="200" width="200">
         <div class="card-body"></div>
-        {%if product.discount > 0 %}
+        {% if product.discount > 0 %}
         <h5 style="text-shadow: 1px 1px 2px #000; color: #F00; position:bottom;"> Discount {{product.discount}} %</h5>
-        {%endif%}
+        {% endif %}
              <h5 class="text-center">{{product.name}}</h5>
         <p class="text-center">Price ${{product.price}}</p>
         </div>

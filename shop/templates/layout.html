@@ -128,12 +128,10 @@
                               <div class="nav-link" style="display: flex; justify-content: center; align-items: center;"  href="#"><i class="fa fa-fw fa-cart-arrow-down mr-1" aria-hidden="true"></i>
                               {{session['Shoppingcart']|length }}</div></a>
                               </li>
-                              <!-- <li class="nav-item d_none">
-                                 <a class="nav-link" href="/login">Login</a>
+                               <li class="nav-item d_none">
+                                 <a class="nav-link" href="{{url_for('discount_products')}}">Discounts</a>
                               </li>
-                              <li class="nav-item d_none">
-                                 <a class="nav-link" href="/register">Register</a>
-                              </li> -->
+                            
                            </ul>
                         </div>
                      </nav>

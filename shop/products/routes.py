@@ -23,7 +23,14 @@ def categories():
 @app.route('/products')
 def products():
     products = Addproduct.query.filter(Addproduct.stock > 0)
-    return render_template('./products/products.html', products=products, brands=brands(), categories=categories())
+    return render_template('products/products.html', products=products, brands=brands(), categories=categories())
+
+@app.route('/dicountedproducts')
+def discount_products():
+    products = Addproduct.query.filter(Addproduct.discount > 0)
+    if products is None:
+        flash(f'There are no products with discount!')
+    return render_template('products/discountedProducts.html', products=products, brands=brands(), categories=categories())
 
 
 @app.route('/result')
@@ -262,3 +269,6 @@ def deleteproduct(id):
         return redirect(url_for('admin'))
     flash(f'Can not delete the product', 'success')
     return redirect(url_for('admin'))
+
+
+

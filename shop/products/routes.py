@@ -30,9 +30,11 @@ def products():
 @app.route('/dicountedproducts')
 def discount_products():
     products = Addproduct.query.filter(Addproduct.discount > 0)
+    previous_discounts = DiscountExpiredOffer.query.all()
     if products is None:
+        redirect(url_for('products'))
         flash(f'There are no products with discount!')
-    return render_template('products/discountedProducts.html', products=products, brands=brands(), categories=categories())
+    return render_template('products/discountedProducts.html', products=products, brands=brands(), categories=categories(), previous_discounts=previous_discounts)
 
 
 @app.route('/result')
@@ -189,7 +191,7 @@ def addproduct():
         if product.is_discount_expired():
             product = Addproduct.query.filter_by(name=name).first()
             previous_discount = DiscountExpiredOffer(
-                discount_percentage=product.discount, discount_ended=product.discount_expiration, product_id=product.id)
+                discount_percentage=product.discount, discount_ended=product.discount_expiration, product_name=product.name, product_id=product.id)
             db.session.add(previous_discount)
             db.session.commit()
         db.session.add(product)

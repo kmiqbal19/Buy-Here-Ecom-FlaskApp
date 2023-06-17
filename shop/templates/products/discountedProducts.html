@@ -52,7 +52,7 @@
           >
             Discount {{get_cat.discount}} %
           </h5>
-          {%endif%}
+          {% endif %}
           <h5 class="text-center">{{get_cat.name}}</h5>
           <p class="text-center">Price ${{get_cat.price}}</p>
           <div class="card-footer">
@@ -120,5 +120,29 @@
       {% endfor %} {% endif %}
     </div>
   </div>
+</section>
+<section>
+  <h1 class="text-center">SEE OFFERS YOU MISSED! 😮</h1>
+  <table class="table table-sm">
+    <thead>
+      <th>Nr</th>
+      <th>Product Name</th>
+      <th>Discount </th>
+      <th>Offer Ended On</th>
+      <th>Link</th>
+    </thead>
+    <tbody>
+      {% for previous_discount in previous_discounts %}
+      <tr>
+        <td>{{loop.index}}</td>
+        <td>{{previous_discount.product_name}}</td>
+        <td>{{previous_discount.discount_percentage}} %</td>
+        <td>{{previous_discount.discount_ended}}</td>
+        <td><a class="float-left btn btn-sm btn-primary"  href="{{url_for('single_page', id=previous_discount.product_id)}}">Check Product</a></td>
+      
+      {% endfor %}
+    </tbody>
+  </table>
+
 </section>
 {% endblock content %}

@@ -40,6 +40,7 @@ class DiscountExpiredOffer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     discount_percentage = db.Column(db.Integer, nullable=False)
     discount_ended = db.Column(db.DateTime, nullable=False, default=func.now() - timedelta(days=1))
+    product_name =  db.Column(db.String(100), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('addproduct.id'), nullable=False)
 
 class Brand(db.Model):

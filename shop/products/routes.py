@@ -48,7 +48,8 @@ def result():
 @app.route('/product/<int:id>')
 def single_page(id):
     product = Addproduct.query.get_or_404(id)
-    return render_template('products/single_page.html', product=product, brands=brands(), categories=categories())
+    discount_expired = product.is_discount_expired()
+    return render_template('products/single_page.html', product=product, brands=brands(), categories=categories(), discount_expired=discount_expired)
 
 
 @app.route('/brand/<int:id>')

@@ -43,9 +43,13 @@
             <hr>
             <p>Product price: ${{product.price}}</p>
             <hr>
-            {% if product.discount > 0 %}
+            {% if product.discount > 0 and discount_expired == False %}
             <p>Discount: {{product.discount}} % </p>
+            {% else %}
+            <p>Discount: 0 % </p>
             {% endif %}
+            
+
             <hr>
             <b>Product description</b>
             <p>{{product.desc}}</p>

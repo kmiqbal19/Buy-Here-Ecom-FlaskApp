@@ -2,7 +2,7 @@
 <section class="container py-5">
   <div class="container">
     <div class="row">
-      {% if brand %} {% for b in brand%}
+      {% if brand %} {% for b in brand %}
       <div class="col-md-3 mt-3">
         <div class="card">
           <img
@@ -13,7 +13,7 @@
             width="300"
           />
           <div class="card-body"></div>
-          {%if b.discount > 0%}
+          {% if b.discount > 0 %}
           <h5
             style="text-shadow: 1px 1px 2px #000; color: #f00; position: bottom"
           >

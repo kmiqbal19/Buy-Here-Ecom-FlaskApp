@@ -1,4 +1,4 @@
-from wtforms import Form, SubmitField, IntegerField, FloatField, StringField, TextAreaField, validators
+from wtforms import Form, SubmitField, IntegerField, FloatField, StringField,DateField, TextAreaField, validators
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 
 
@@ -6,7 +6,7 @@ class Addproducts(Form):
     name = StringField('Name', [validators.DataRequired()])
     price = FloatField('Price', [validators.DataRequired()])
     discount = IntegerField('Discount', default=0)
-    discount_days = IntegerField('Discount Expiration (Days)', default=0)
+    discount_days = DateField('Discount Expiration', format='%Y-%m-%d')
     stock = IntegerField('Stock', [validators.DataRequired()])
     colors = StringField('Colors', [validators.DataRequired()])
     description = TextAreaField('Description', [validators.DataRequired()])

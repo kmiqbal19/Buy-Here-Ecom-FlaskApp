@@ -1,7 +1,8 @@
 import datetime
 from flask import redirect, render_template, url_for, flash, request, session, current_app
+from sqlalchemy import func
 from shop import db, app, photos
-from .models import Brand, Category, Addproduct
+from .models import Brand, Category, Addproduct, DiscountExpiredOffer
 from .forms import Addproducts
 import secrets
 import os
@@ -24,6 +25,7 @@ def categories():
 def products():
     products = Addproduct.query.filter(Addproduct.stock > 0)
     return render_template('products/products.html', products=products, brands=brands(), categories=categories())
+
 
 @app.route('/dicountedproducts')
 def discount_products():
@@ -175,15 +177,23 @@ def addproduct():
             'image_2'), name=secrets.token_hex(10) + ".")
         image_3 = photos.save(request.files.get(
             'image_3'), name=secrets.token_hex(10) + ".")
-        discount_expiration = None
-        if discount_days > 0:
-            discount_expiration = datetime.datetime.utcnow(
-            ) + datetime.timedelta(days=discount_days)
-        addproduct = Addproduct(name=name, price=price, discount=discount, stock=stock,
-                                colors=colors, desc=desc, category_id=category, brand_id=brand,
-                                image_1=image_1, image_2=image_2, image_3=image_3, discount_expiration=discount_expiration)
-        db.session.add(addproduct)
-        flash(f'The product {name} was added in database', 'success')
+
+        if discount_days != None:
+            discount_expiration = discount_days
+
+        product = Addproduct(name=name, price=price, discount=discount, stock=stock,
+                             colors=colors, desc=desc, category_id=category, brand_id=brand,
+                             image_1=image_1, image_2=image_2, image_3=image_3, discount_expiration=discount_expiration)
+        db.session.add(product)
+        db.session.commit()
+        if product.is_discount_expired():
+            product = Addproduct.query.filter_by(name=name).first()
+            previous_discount = DiscountExpiredOffer(
+                discount_percentage=product.discount, discount_ended=product.discount_expiration, product_id=product.id)
+            db.session.add(previous_discount)
+            db.session.commit()
+        db.session.add(product)
+        flash(f'The product {name} was added in the database', 'success')
         db.session.commit()
         return redirect(url_for('admin'))
 
@@ -269,6 +279,3 @@ def deleteproduct(id):
         return redirect(url_for('admin'))
     flash(f'Can not delete the product', 'success')
     return redirect(url_for('admin'))
-
-
-

@@ -1,8 +1,8 @@
 from flask import redirect, render_template, url_for, flash, request, session, current_app , make_response
 from flask_login import login_required, current_user, logout_user, login_user
 from shop import db, app, photos, search, bcrypt , login_manager
-from .forms import CustomerRegisterForm , CustomerLoginFrom
-from .model import Register, CustomerOrder
+from .forms import CustomerRegisterForm , CustomerLoginFrom, RatingForm
+from .model import Register, CustomerOrder, ProductRating
 import secrets
 import os
 import pdfkit
@@ -143,3 +143,40 @@ def get_pdf(invoice):
             response.headers['content-Disposition'] ='inline; filename='+invoice+'.pdf'
             return response
     return request(url_for('orders'))
+
+
+@app.route('/rate_product/<invoice>/<product_id>', methods=['GET', 'POST'])
+@login_required
+def rate_product(invoice, product_id):
+    order = CustomerOrder.query.filter_by(invoice=invoice, customer_id=current_user.id).first()
+    if not order:
+        flash('Invalid order or product.', 'danger')
+        return redirect(url_for('home'))
+
+    # Check if the product exists in the order
+    product = order.orders.get(product_id)
+    if not product:
+        flash('Invalid product.', 'danger')
+        return redirect(url_for('home'))
+
+    form = RatingForm()
+    if form.validate_on_submit():
+        rating = form.rating.data
+        review = form.review.data
+
+        # Create a new ProductRating object
+        product_rating = ProductRating(
+            customer_order_id=order.id,
+            product_id=product_id,
+            rating=rating,
+            review=review
+        )
+
+        # Save the product rating to the database
+        db.session.add(product_rating)
+        db.session.commit()
+
+        flash('Thank you for rating the product!', 'success')
+        return redirect(url_for('home'))
+
+    return render_template('customer/rate_product.html', form=form, product=product)

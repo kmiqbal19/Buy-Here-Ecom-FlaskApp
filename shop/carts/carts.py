@@ -52,7 +52,6 @@ def getCart():
         subtotal -= discount
         tax = ("%.2f" % (.06 * float(subtotal)))
         grandtotal = float("%.2f" % (1.06 * subtotal))
-    # return render_template('products/carts.html',tax=tax, grandtotal=grandtotal,brands=brands(),categories=categories())
     return render_template('products/carts.html', tax=tax, grandtotal=grandtotal )
 
 
@@ -98,10 +97,10 @@ def clearcart():
     except Exception as e:
         print(e)
 # ====> FOR EMPTY SESSION === DON'T USE <<<
-# @app.route('/empty')
-# def empty_cart():
-#     try:
-#         session.clear()
-#         return redirect(url_for('admin'))
-#     except Exception as e:
-#         print(e)
+@app.route('/empty')
+def empty_cart():
+    try:
+        session.clear()
+        return redirect(url_for('admin'))
+    except Exception as e:
+        print(e)

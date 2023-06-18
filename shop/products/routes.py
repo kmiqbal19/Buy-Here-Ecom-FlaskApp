@@ -1,5 +1,6 @@
 import datetime
 from flask import redirect, render_template, url_for, flash, request, session, current_app
+from flask_login import current_user
 from sqlalchemy import func
 from shop import db, app, photos
 from .models import Brand, Category, Addproduct, DiscountExpiredOffer
@@ -47,9 +48,12 @@ def result():
 
 @app.route('/product/<int:id>')
 def single_page(id):
+    if current_user.is_authenticated:
+        customer_id = current_user.id
+        invoice = secrets.token_hex(5)
     product = Addproduct.query.get_or_404(id)
     discount_expired = product.is_discount_expired()
-    return render_template('products/single_page.html', product=product, brands=brands(), categories=categories(), discount_expired=discount_expired)
+    return render_template('products/single_page.html', product=product, brands=brands(), categories=categories(), discount_expired=discount_expired , invoice=invoice)
 
 
 @app.route('/brand/<int:id>')

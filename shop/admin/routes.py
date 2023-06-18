@@ -7,17 +7,25 @@ from shop.products.models import Addproduct,Category,Brand
 # ---- ROUTES ------
 @app.route('/')
 def home():
-    return render_template('admin/index.html', title='Home page')
+    user_there = True
+    if 'email' not in session:
+        user_there = False
+    products = Addproduct.query.all()
+    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
+    return render_template('admin/index.html', title='Buy Here', user_there=user_there ,products=products, brands=brands, categories=categories)
 
 @app.route('/admin')
 def admin():
+    user_there = True
     if 'email' not in session:
+        user_there = False
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     products = Addproduct.query.all()
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
     categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-    return render_template('admin/admin.html', title='Admin page', products=products, brands=brands, categories=categories)
+    return render_template('admin/admin.html', title='Admin page', products=products, brands=brands, categories=categories , user_there=user_there)
 
 
 @app.route('/brands')
@@ -58,7 +66,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             session["email"] = form.email.data
             flash(
-                f'Welcome {form.email.data}, You are logged in now!', 'success')
+                f'Welcome {form.email.data}, You are logged in as admin now!', 'success')
             return redirect(request.args.get('next') or url_for('admin'))
         else:
             flash('Wrong credentials. Please try again', 'danger')

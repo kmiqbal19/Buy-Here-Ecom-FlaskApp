@@ -53,12 +53,15 @@ def customer_register():
 
 @app.route('/customer/login', methods=['GET','POST'])
 def customerLogin():
+    
     form = CustomerLoginFrom()
     if form.validate_on_submit():
         user = Register.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             flash('You are login now!', 'success')
+            if 'email' in session:
+                del session["email"]
             next = request.args.get('next')
             return redirect(next or url_for('home'))
         flash('Incorrect email and password','danger')

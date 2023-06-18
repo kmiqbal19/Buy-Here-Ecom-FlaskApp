@@ -30,20 +30,24 @@ def admin():
 
 @app.route('/brands')
 def brands():
+    admin_there = True
     if 'email' not in session:
+        admin_there = False
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     brands = Brand.query.order_by(Brand.id.desc()).all()
-    return render_template('admin/brand.html', title='brands', brands=brands)
+    return render_template('admin/brand.html', title='brands', brands=brands, admin_there=admin_there)
 
 
 @app.route('/categories')
 def categories():
+    admin_there = True
     if 'email' not in session:
+        admin_there = False
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     categories = Category.query.order_by(Category.id.desc()).all()
-    return render_template('admin/category.html', title='categories',categories=categories)
+    return render_template('admin/category.html', title='categories',categories=categories, admin_there=admin_there)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

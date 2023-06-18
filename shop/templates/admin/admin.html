@@ -3,6 +3,8 @@
 
 <div class="container">
     {% include '_messages.html' %}
+    <h1 class="text-center" style="margin: 2rem 0rem">Edit Products</h1>
+</hr>
     <table class="table tbale-sm">
         <thead>
             <th>Nr</th>
@@ -19,11 +21,11 @@
           {% for product in products %}
           <tr>
             <td>{{loop.index}}</td>
-            <td> <img src="{{url_for('static',filename='images/' + product.image_1)}}" alt="{{product.name}}" width="50" height="20"></td>
+            <td> <img src="{{url_for('static',filename='images/' + product.image_1)}}" alt="{{product.name}}" width="60" height="30" style="border-radius: 3px;"></td>
             <td>{{ product.name }}</td>
             <td>{{ product.price }}</td>
             <td>{{ product.discount }}</td>
-            <td>On {{ product.discount_expiration }} </td>
+            <td>On {{ product.discount_expiration.strftime('%d %B %Y') }} </td>
             <td>{{ product.brand.name}}</td>
             <td><a href="{{url_for('updateproduct', id=product.id)}}" class="btn btn-sm btn-info">Edit </a></td>
             <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal-{{product.id}}">

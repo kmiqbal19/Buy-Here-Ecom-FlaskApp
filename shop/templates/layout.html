@@ -55,7 +55,13 @@
                            <ul class="navbar-nav mr-auto">
                               {% if admin_there %}
                               <li class="nav-item ">
-                                 <a class="nav-link"  style="color:limegreen; padding: 0.3rem 0.6rem; border: 1px solid lime; border-radius: 4px;"  href="/admin">Admin</a>
+                                 <a class="nav-link"  style="color:limegreen; padding: 0.3rem 0.6rem; border: 1px solid lime; border-radius: 4px;"   href="/admin">Admin</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" href="/brands">Brands</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" href="/categories">Categories</a>
                               </li>
                               {% endif %}
                               <li class="nav-item ">
@@ -66,8 +72,7 @@
                               <li class="nav-item">
                                  <a class="nav-link" href="/products">Products</a>
                               </li>
-                              {% endif %}
-                              {% if admin_there or current_user.is_authenticated %}
+                            
                               <li class="nav-item dropdown" style="cursor: pointer;">
                                  <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" 
                                  aria-haspopup="true" aria-expanded="false">

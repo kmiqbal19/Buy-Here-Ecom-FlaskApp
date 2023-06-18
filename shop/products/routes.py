@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from flask import redirect, render_template, url_for, flash, request, session, current_app
 from flask_login import current_user
 from sqlalchemy import func
@@ -32,10 +32,11 @@ def products():
 def discount_products():
     products = Addproduct.query.filter(Addproduct.discount > 0)
     previous_discounts = DiscountExpiredOffer.query.all()
+    current_date = datetime.today()
     if products is None:
         redirect(url_for('products'))
         flash(f'There are no products with discount!')
-    return render_template('products/discountedProducts.html', products=products, brands=brands(), categories=categories(), previous_discounts=previous_discounts)
+    return render_template('products/discountedProducts.html', products=products, brands=brands(), categories=categories(), previous_discounts=previous_discounts, current_date=current_date)
 
 
 @app.route('/result')

@@ -79,12 +79,18 @@
             width="200"
           />
           <div class="card-body"></div>
-          {%if product.discount > 0 %}
+          {% if product.discount > 0 and  current_date > product.discount_expiration  %}
           <h5
-            style="text-shadow: 1px 1px 2px #000; color: #f00; position: bottom"
+            style="text-shadow: 1px 1px 2px #000; color: #f00; position: bottom; text-decoration: line-through;"
           >
-            Discount {{product.discount}} %
+             Discount {{product.discount}} %
           </h5>
+          {% else %}
+          <h5
+          style="text-shadow: 1px 1px 2px #000; color: #f00; position: bottom; "
+        >
+          Discount {{product.discount}} %
+        </h5>
           {%endif%}
           <h5 class="text-center">{{product.name}}</h5>
           <p class="text-center">Price ${{product.price}}</p>
@@ -137,7 +143,7 @@
         <td>{{loop.index}}</td>
         <td>{{previous_discount.product_name}}</td>
         <td>{{previous_discount.discount_percentage}} %</td>
-        <td>{{previous_discount.discount_ended}}</td>
+        <td>{{previous_discount.discount_ended.strftime('%d %B %Y')}}</td>
         <td><a class="float-left btn btn-sm btn-primary"  href="{{url_for('single_page', id=previous_discount.product_id)}}">Check Product</a></td>
       
       {% endfor %}

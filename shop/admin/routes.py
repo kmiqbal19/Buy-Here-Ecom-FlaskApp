@@ -7,25 +7,25 @@ from shop.products.models import Addproduct,Category,Brand
 # ---- ROUTES ------
 @app.route('/')
 def home():
-    user_there = True
+    admin_there = True
     if 'email' not in session:
-        user_there = False
+        admin_there = False
     products = Addproduct.query.all()
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
     categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-    return render_template('admin/index.html', title='Buy Here', user_there=user_there ,products=products, brands=brands, categories=categories)
+    return render_template('admin/index.html', title='Buy Here', admin_there=admin_there ,products=products, brands=brands, categories=categories)
 
 @app.route('/admin')
 def admin():
-    user_there = True
+    admin_there = True
     if 'email' not in session:
-        user_there = False
+        admin_there = False
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     products = Addproduct.query.all()
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
     categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-    return render_template('admin/admin.html', title='Admin page', products=products, brands=brands, categories=categories , user_there=user_there)
+    return render_template('admin/admin.html', title='Admin page', products=products, brands=brands, categories=categories , admin_there=admin_there)
 
 
 @app.route('/brands')

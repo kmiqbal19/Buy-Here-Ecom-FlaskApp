@@ -53,11 +53,21 @@
             
                         <div class="collapse navbar-collapse" id="navbarsExample04">
                            <ul class="navbar-nav mr-auto">
+                              {% if admin_there %}
+                              <li class="nav-item ">
+                                 <a class="nav-link"  style="color:limegreen; padding: 0.3rem 0.6rem; border: 1px solid lime; border-radius: 4px;"  href="/admin">Admin</a>
+                              </li>
+                              {% endif %}
                               <li class="nav-item ">
                                  <a class="nav-link" href="/">Home</a>
                               </li>
-                            
-                              {% if user_there or current_user.is_authenticated %}
+                              {% if current_user.is_authenticated %}
+                             
+                              <li class="nav-item">
+                                 <a class="nav-link" href="/products">Products</a>
+                              </li>
+                              {% endif %}
+                              {% if admin_there or current_user.is_authenticated %}
                               <li class="nav-item dropdown" style="cursor: pointer;">
                                  <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" 
                                  aria-haspopup="true" aria-expanded="false">
@@ -79,7 +89,7 @@
                               </ul>
                               </li>
                               {% endif %}
-                              {% if user_there %}
+                              {% if admin_there %}
                               <li class="nav-item dropdown" style="cursor: pointer;">
                                  <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
                                  aria-haspopup="true" aria-expanded="false">
@@ -94,13 +104,11 @@
                               
                               {% if current_user.is_authenticated %}
                              
-                              <li class="nav-item">
-                                 <a class="nav-link" href="/products">Products</a>
-                              </li>
+            
                        
                               <li class="nav-item">
                                  <form class="form-inline my-2 my-lg-0" action="{{url_for('result')}}">
-                                 <input class="form-inline my-2 my-lg-6" type="search" placeholder="Search"
+                                 <input class="form-inline my-2 my-lg-6" type="search" placeholder="Search Products"
                                         aria-label="Search" name='q'>
                                  <button class="btn btn-outline-success my-2 my-sm-8" type="submit">Search
                                  </button>
@@ -123,11 +131,21 @@
                                  <a class="nav-link" href="{{url_for('customer_logout')}}">Logout</a>
                               </li>
                               {% else %}
-                              <li class="nav-item">
+                              <!-- <li class="nav-item">
                                  <a class="nav-link" href="{{url_for('customerLogin')}}">Customer LogIn</a>
                               </li>
                               <li class="nav-item d_none">
                                  <a class="nav-link" href="{{url_for('customer_register')}}">Customer SignUp</a>
+                              </li> -->
+                              <li class="nav-item dropdown" style="cursor: pointer;">
+                                 <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                                 aria-haspopup="true" aria-expanded="false">
+                                    Login</a>
+                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                 <a class="dropdown-item" href="{{url_for('customerLogin')}}">Customer</a>
+                                 <a class="dropdown-item" href="{{url_for('login')}}">Admin</a>
+                               
+                                 </ul>
                               </li>
                               {% endif %}
                            </ul>

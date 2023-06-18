@@ -59,7 +59,7 @@ def customerLogin():
         user = Register.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
-            flash('You are login now!', 'success')
+            flash(f'Welcome {user.name}, You are logged in now!', 'success')
             if 'email' in session:
                 del session["email"]
             next = request.args.get('next')

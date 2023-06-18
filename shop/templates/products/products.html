@@ -28,6 +28,11 @@
               class="float-left btn btn-sm btn-primary"
             >
               Details</a
+            <a
+            href="{{ url_for('contactseller') }}"
+              class="float-left btn btn-sm btn-primary"
+            >
+              Contact Seller</a
             >
             <a href="#" class="float-right btn btn-sm btn-primary">
               Add to cart</a
@@ -62,6 +67,12 @@
             >
               details</a
             >
+            <a
+              href="{{ url_for('contactseller') }}"
+              class="float-left btn btn-sm btn-primary"
+            >
+              Contact Seller</a
+            >
             <a href="#" class="float-right btn btn-sm btn-primary">
               Add to cart</a
             >
@@ -94,6 +105,12 @@
             href="{{url_for('single_page', id=product.id)}}"
             class="float-left btn btn-sm btn-primary"
             >Details</a
+          >
+          <a
+              href="{{ url_for('contactseller') }}"
+              class="float-left btn btn-sm btn-primary"
+            >
+              Contact Seller</a
           >
           <!--          <a href="#" class="float-right btn btn-sm btn-primary"> Add to cart</a>-->
           <form action="{{url_for('AddCart')}}" method="POST">

@@ -43,6 +43,12 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False, unique=True)
 
+class Messagea(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    message = db.Column(db.Text)
+
 
 with app.app_context():
     db.create_all()

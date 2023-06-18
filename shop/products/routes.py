@@ -1,8 +1,8 @@
 import datetime
 from flask import redirect, render_template, url_for, flash, request, session, current_app
 from shop import db, app, photos
-from .models import Brand, Category, Addproduct
-from .forms import Addproducts
+from .models import Brand, Category, Addproduct, Messagea
+from .forms import Addproducts, Message
 import secrets
 import os
 # ---- ROUTES ----
@@ -24,6 +24,24 @@ def categories():
 def products():
     products = Addproduct.query.filter(Addproduct.stock > 0)
     return render_template('products/products.html', products=products, brands=brands(), categories=categories())
+
+@app.route('/contactseller', methods=['GET', 'POST'])
+def contactseller():
+    form = Message(request.form)
+    if request.method == 'POST':
+        name = form.name.data
+        email = form.email.data
+        message_text = form.message.data
+
+        message = Messagea(name=name, email=email, message=message_text)
+        db.session.add(message)
+        db.session.commit()
+        flash ('Your message has sent ')
+        #return redirect ('products/products.html')
+
+    # Render the contact seller form
+    #return render_template('products/contact_seller.html', form=form)
+
 
 @app.route('/dicountedproducts')
 def discount_products():

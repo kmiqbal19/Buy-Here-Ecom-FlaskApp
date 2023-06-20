@@ -54,6 +54,7 @@
 
                <td>   
                    {% if orders.status =='Paid' %}
+                   <p>Paid</p>
                    {% else %}
                 <form action="{{url_for('payment')}}" method="POST">
                 {% set amount =  grandTotal.replace('.','') %}

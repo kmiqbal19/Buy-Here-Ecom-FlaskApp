@@ -1,5 +1,29 @@
-{% for customer_order in customer_orders %}
-<p>{{customer_order.invoice}}</p>
-<p>{{customer_order.date_created}}</p>
-<p>{{customer_order.status}}</p>
-{% endfor %}
+
+<table class="table table-md">
+    <thead>
+        <th>Nr</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Rate</th>
+    </thead>
+    <tbody>
+        
+        {% for customer_order in customer_orders %}
+        <div>
+            <tr>
+                <td>{{customer_order.id}}</td>
+                <td>{{customer_order.invoice}}</td>
+                <td>{{customer_order.status}}</td>
+                <td>      {% for key, product in customer_order.orders.items() %}
+                    <p>{{product.name}}</p>
+                    <p>{{product.price}}</p>
+                    <img src="{{url_for('static',filename='images/'+ product.image)}}" alt="{{product.name}}" width="100" height="100">
+                   {% endfor %}</td>
+            </tr>
+      
+        </div>
+        {% endfor %}
+    </tbody>
+</table>

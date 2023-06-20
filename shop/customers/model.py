@@ -66,20 +66,21 @@ class CustomerOrder(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     orders = db.Column(JsonEcodedDict)
     # Define the relationship with ProductRating
-    product_ratings = db.relationship('ProductRating', backref='order', lazy=True)
+    product_ratings = db.relationship('Rating', backref='order', lazy=True)
     def __repr__(self):
         return'<CustomerOrder %r>' % self.invoice
 
 
-class ProductRating(db.Model):
+class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     customer_order_id = db.Column(db.Integer, db.ForeignKey('customer_order.id'), nullable=False)
-    product_id = db.Column(db.Integer, nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('addproduct.id'), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
-    review = db.Column(db.Text, nullable=True)
+    review = db.Column(db.Text(100), nullable=True)
 
     def __repr__(self):
-        return '<ProductRating %r>' % self.id
+        return '<Rating %r>' % self.id
+    
 
 
 

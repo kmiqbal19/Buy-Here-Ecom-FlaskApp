@@ -1,9 +1,7 @@
 <h1>Thank you for shopping with us! </h1>
-<p>Rating: {{ rating }}</p>
-<p>Review: {{ review }}</p>
-<p>Id: {{ orderId }}</p>
-<p>{{product_rating}}</p>
-{% for rate in ratings %}
-<p>{{rate.rating}}</p>
-<p>{{rate.review}}</p>
+
+{% for rating in ratings %}
+<p>{{rating.rating}}</p>
+<p>{{rating.review}}</p>
 {% endfor %}
+<p> {{a}}</p>

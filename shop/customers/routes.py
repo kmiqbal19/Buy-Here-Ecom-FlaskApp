@@ -163,26 +163,27 @@ def rate_product(invoice, product_id):
         return redirect(url_for('home'))
 
     form = RatingForm()
-    if form.validate_on_submit():
-        rating = form.rating.data
-        review = form.review.data
-
-        # Create a new ProductRating object
-        product_rating = ProductRating(
-            customer_order_id=order.id,
+    rating = form.rating.data
+    review = form.review.data
+    orderId = order.id
+    product_rating = ProductRating(
+            customer_order_id=orderId,
             product_id=product_id,
             rating=rating,
             review=review
         )
-
+    if form.validate_on_submit():
+        # Create a new ProductRating object
+     
+       
         # Save the product rating to the database
         db.session.add(product_rating)
         db.session.commit()
 
         flash('Thank you for rating the product!', 'success')
-        return redirect(url_for('home'))
-
-    return render_template('customer/rate_product.html', form=form, product=product)
+  
+    ratings = ProductRating.query.all()
+    return render_template('customer/thanks.html', rating=rating, review=review, orderId=orderId, product_rating=product_rating, ratings=ratings)
 
 @app.route('/customer/<customer_id>')
 @login_required

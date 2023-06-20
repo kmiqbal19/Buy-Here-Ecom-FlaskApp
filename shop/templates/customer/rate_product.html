@@ -1,6 +1,6 @@
-{% extends 'layout.html' %}
 
-{% block content %}
+
+
   <h1>Rate Product</h1>
   <h3>{{ product.name }}</h3>
   <form method="POST" action="{{ url_for('rate_product', invoice=invoice, product_id=product.id) }}">
@@ -21,4 +21,4 @@
       {{ form.submit(class="btn btn-primary") }}
     </div>
   </form>
-{% endblock %}
+

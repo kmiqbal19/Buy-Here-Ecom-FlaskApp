@@ -6,6 +6,10 @@ from flask_login import UserMixin
 @login_manager.user_loader
 def user_loader(user_id):
     return Register.query.get(user_id)
+
+
+
+
 # Customer
 class Register(db.Model, UserMixin):
     __tablename__ = 'register'
@@ -62,9 +66,10 @@ class CustomerOrder(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     orders = db.Column(JsonEcodedDict)
     # Define the relationship with ProductRating
-    product_ratings = db.relationship('ProductRating', backref='customer_order', lazy=True)
+    product_ratings = db.relationship('ProductRating', backref='order', lazy=True)
     def __repr__(self):
         return'<CustomerOrder %r>' % self.invoice
+
 
 class ProductRating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -75,6 +80,8 @@ class ProductRating(db.Model):
 
     def __repr__(self):
         return '<ProductRating %r>' % self.id
+
+
 
 with app.app_context():
     db.create_all()

@@ -183,3 +183,10 @@ def rate_product(invoice, product_id):
         return redirect(url_for('home'))
 
     return render_template('customer/rate_product.html', form=form, product=product)
+
+@app.route('/customer/<customer_id>')
+@login_required
+def customer_page(customer_id):   
+    customer_orders = CustomerOrder.query.filter_by(customer_id=customer_id)
+    print(customer_orders)
+    return render_template('customer/customerPage.html', customer_id=customer_id, customer_orders=customer_orders)

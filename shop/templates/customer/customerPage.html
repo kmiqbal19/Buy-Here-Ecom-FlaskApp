@@ -1,0 +1,5 @@
+{% for customer_order in customer_orders %}
+<p>{{customer_order.invoice}}</p>
+<p>{{customer_order.date_created}}</p>
+<p>{{customer_order.status}}</p>
+{% endfor %}

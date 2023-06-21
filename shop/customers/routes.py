@@ -2,7 +2,7 @@ from flask import redirect, render_template, url_for, flash, request, session, c
 from flask_login import login_required, current_user, logout_user, login_user
 from shop import db, app, photos, search, bcrypt, login_manager
 from .forms import CustomerRegisterForm, CustomerLoginFrom, RatingForm
-from .model import Register, CustomerOrder, Rating
+from .model import Register, CustomerOrder, ProductRating
 import secrets
 import os
 import pdfkit
@@ -161,12 +161,9 @@ def get_pdf(invoice):
                 invoice+'.pdf'
             return response
     return request(url_for('orders'))
-
-
 @app.route('/rate_product/<invoice>/<product_id>', methods=['GET', 'POST'])
 @login_required
 def rate_product(invoice, product_id):
-    a = Rating(customer_order_id=2, product_id=2, rating=3, review='good')
     order = CustomerOrder.query.filter_by(
         invoice=invoice, customer_id=current_user.id).first()
     if not order:
@@ -174,8 +171,7 @@ def rate_product(invoice, product_id):
         return redirect(url_for('home'))
 
     # Check if the product exists in the order
-    product = order.orders.get(product_id)
-    if not product:
+    if product_id not in order.orders:
         flash('Invalid product.', 'danger')
         return redirect(url_for('home'))
 
@@ -185,11 +181,10 @@ def rate_product(invoice, product_id):
             if form.validate_on_submit():
                 rating = form.rating.data
                 review = form.review.data
-                orderId = order.id
 
                 # Create a new Rating object
-                product_rating = Rating(
-                    customer_order_id=orderId,
+                product_rating = ProductRating(
+                    customer_order_id=order.id,
                     product_id=product_id,
                     rating=rating,
                     review=review
@@ -202,10 +197,56 @@ def rate_product(invoice, product_id):
                 return redirect(url_for('home'))
         except Exception as e:
             print(e)
-            flash('Some thing went wrong while rating!', 'danger')
+            flash('Something went wrong while rating!', 'danger')
             return redirect(url_for('home'))
-    rate = Rating.query.all()
-    return render_template('customer/thanks.html', a=a, ratings=rate)
+    a = ProductRating(customer_order_id=2, product_id=2, rating=3, review='good')
+    rate = ProductRating.query.all()
+    return render_template('customer/thanks.html', a=a)
+
+
+# @app.route('/rate_product/<invoice>/<product_id>', methods=['GET', 'POST'])
+# @login_required
+# def rate_product(invoice, product_id):
+#     a = ProductRating(customer_order_id=2, product_id=2, rating=3, review='good')
+#     order = CustomerOrder.query.filter_by(
+#         invoice=invoice, customer_id=current_user.id).first()
+#     if not order:
+#         flash('Invalid order or product.', 'danger')
+#         return redirect(url_for('home'))
+
+#     # Check if the product exists in the order
+#     product = order.orders.get(product_id)
+#     if not product:
+#         flash('Invalid product.', 'danger')
+#         return redirect(url_for('home'))
+
+#     if current_user.is_authenticated:
+#         form = RatingForm()
+#         try:
+#             if form.validate_on_submit():
+#                 rating = form.rating.data
+#                 review = form.review.data
+#                 orderId = order.id
+
+#                 # Create a new Rating object
+#                 product_rating = ProductRating(
+#                     customer_order_id=orderId,
+#                     product_id=product_id,
+#                     rating=rating,
+#                     review=review
+#                 )
+#                 # Save the product rating to the database
+#                 db.session.add(product_rating)
+#                 db.session.commit()
+
+#                 flash('Thank you for rating the product!', 'success')
+#                 return redirect(url_for('home'))
+#         except Exception as e:
+#             print(e)
+#             flash('Some thing went wrong while rating!', 'danger')
+#             return redirect(url_for('home'))
+#     rate = ProductRating.query.all()
+#     return render_template('customer/thanks.html', a=a, ratings=rate)
 
 
 @app.route('/customer/<customer_id>')

@@ -46,6 +46,9 @@
         color: white;
         font-weight: 300;
         transition: all 0.3s ease-in-out;
+        padding: 0.7rem;
+        border-radius: 5px;
+        background-color: #00000051;
       }
       .button-left_slider-custom:hover,
       .button-right_slider-custom:hover {
@@ -70,6 +73,9 @@
         position: absolute;
         bottom: 2rem;
         left: 50%;
+        padding: 1px 0.5rem 0px;
+        border-radius: 15px;
+        background-color: black;
       }
 
       .slider-dots button {
@@ -85,21 +91,24 @@
       }
 
       .slider-dots button.active {
-        background-color: #452727;
+        background-color: #981616;
       }
       .hero-section_text {
         position: absolute;
         top: 30%;
         left: 17%;
-        background-color: rgba(22, 86, 95, 0.551);
-
+        background-color: rgba(103, 168, 177, 0.312);
+        backdrop-filter: blur(4px);
         padding: 4rem 7rem;
+        border-radius: 0.5rem;
       }
       .hero-section_text p {
         font-family: Arial, Helvetica, sans-serif;
-        color: rgb(234, 232, 232);
+        color: rgb(255, 255, 255);
         font-size: calc(2.5rem + 15px);
-        font-weight: bolder;
+
+        text-transform: uppercase;
+        letter-spacing: 2px;
       }
       .hero-section_text p:nth-child(2) {
         margin-top: 4rem;
@@ -132,7 +141,7 @@
       .cards_container-custom {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: space-evenly;
         box-shadow: 1px 1px 5px rgb(215, 206, 206);
         border-radius: 1rem;
         padding: 0.5rem;
@@ -140,7 +149,7 @@
       }
 
       .card-custom {
-        width: calc(43.33% - 20px);
+        width: calc(33.33% - 20px);
         margin: 2rem;
         box-sizing: border-box;
         border: 1px solid #ccc;
@@ -161,7 +170,7 @@
       .bar-custom {
         height: 1rem;
         width: 100vw;
-    background-color: rgb(255, 132, 0);
+        background-color: rgb(255, 132, 0);
       }
       @media (max-width: 768px) {
         .card-custom {
@@ -174,10 +183,17 @@
           width: 100%;
         }
       }
+      @media screen and (max-width: 1920px) {
+        .hero-section_text {
+          left: 100px;
+        }
+        .hero-section_text p {
+          font-size: 2.5rem;
+        }
+      }
     </style>
   </head>
   <body>
-
     {% with messages = get_flashed_messages() %} {% if messages %}
     <ul style="width: 100vw; border-radius: 5px">
       {% for message in messages %}
@@ -326,7 +342,7 @@
 
       // Start the slider
       showImage(currentIndex);
-      setInterval(nextImage, 5000);
+      setInterval(nextImage, 2000);
     </script>
   </body>
 </html>

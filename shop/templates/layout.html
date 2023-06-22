@@ -42,23 +42,34 @@
       crossorigin="anonymous"
     ></script>
     <script src="../static/js/slider.js"></script>
-<style>
-  .nav-link{
-    color: black !important; 
-
-  }
-  .nav-link:hover{
-    transform: scale(1.1);
-    color: rgb(255, 132, 0) !important;
-  }
-</style>
+    <style>
+      .nav-link {
+        color: black !important;
+      }
+      .nav-link:hover {
+        transform: scale(1.1);
+        color: rgb(255, 132, 0) !important;
+      }
+      @media screen and (max-width: 1920px) {
+        .nav-link{
+          font-size: 16px !important;
+        }
+        
+      }
+      .submit-search-btn:hover {
+        background-color: black;
+        color: white;
+        transition: all 0.3s ease-in-out;
+        transform: scale(1.05);
+      }
+    </style>
   </head>
   <!-- body -->
   <body class="main-layout inner_posituong computer_page">
     <div style="min-height: 100vh; min-width: 100vw">
       <header>
         <!-- header inner -->
-        <div class="header" style="background-color: #e6dddd;">
+        <div class="header" style="background-color: #e6dddd">
           <div class="container-fluid">
             <div class="row">
               <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
@@ -78,7 +89,10 @@
                 </div>
               </div>
               <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                <nav class="navigation navbar navbar-expand-md navbar-dark">
+                <nav
+                  class="navigation navbar navbar-expand-md navbar-dark"
+                  style="align-items: center; justify-content: center"
+                >
                   <div class="collapse navbar-collapse" id="navbarsExample04">
                     <ul class="navbar-nav mr-auto">
                       {% if admin_there %}
@@ -199,18 +213,30 @@
 
                       <li class="nav-item">
                         <form
-                          class="form-inline my-2 my-lg-0"
+                          style="display: flex"
                           action="{{url_for('result')}}"
                         >
                           <input
-                            class="form-inline my-2 my-lg-6"
+                            style="
+                              padding: 0.1rem 1rem;
+                              border-radius: 5px;
+                              background-color: rgb(255, 255, 255);
+                              border: none;
+                              outline: none;
+                              width: 180px;
+                            "
                             type="search"
                             placeholder="Search Products"
                             aria-label="Search"
                             name="q"
                           />
                           <button
-                            class="btn btn-outline-success my-2 my-sm-8"
+                            class="submit-search-btn"
+                            style="
+                              margin-left: 5px;
+                              padding: 0rem 0.5rem;
+                              border-radius: 5px;
+                            "
                             type="submit"
                           >
                             Search
@@ -244,9 +270,16 @@
                         >
                       </li>
                       {% endif %} {% if current_user.is_authenticated %}
-                      <li class="nav-item">
+                      <li class="nav-item" style="width: 100px">
                         <a
                           class="nav-link"
+                          style="
+                            padding: 0.2rem 0.3rem;
+                            background-color: white;
+                            border-radius: 5px;
+                            text-align: center;
+                            margin-bottom: 1rem;
+                          "
                           href="{{url_for('customer_page' , customer_id = current_user.id)}}"
                           >{{current_user.name}}</a
                         >
@@ -259,12 +292,7 @@
                         >
                       </li>
                       {% else %}
-                      <!-- <li class="nav-item">
-                                 <a class="nav-link" href="{{url_for('customerLogin')}}">Customer LogIn</a>
-                              </li>
-                              <li class="nav-item d_none">
-                                 <a class="nav-link" href="{{url_for('customer_register')}}">Customer SignUp</a>
-                              </li> -->
+
                       <li class="nav-item dropdown" style="cursor: pointer">
                         <a
                           class="nav-link dropdown-toggle"
@@ -308,7 +336,9 @@
                             href="{{url_for('register')}}"
                             >For Admin</a
                           >
-                          <a class="dropdown-item" href="{{url_for('customer_register')}}"
+                          <a
+                            class="dropdown-item"
+                            href="{{url_for('customer_register')}}"
                             >For Customer</a
                           >
                         </ul>

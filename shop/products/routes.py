@@ -54,7 +54,7 @@ def single_page(id):
         invoice = secrets.token_hex(5)
     product = Addproduct.query.get_or_404(id)
     discount_expired = product.is_discount_expired()
-    return render_template('products/single_page.html', product=product, brands=brands(), categories=categories(), discount_expired=discount_expired , invoice=invoice)
+    return render_template('products/single_page.html', product=product, brands=brands(), categories=categories(), discount_expired=discount_expired, invoice=invoice)
 
 
 @app.route('/brand/<int:id>')

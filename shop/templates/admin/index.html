@@ -1,15 +1,131 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Slider</title>
+  <style>
+    :root{
+        overflow: hidden;
+    }
+    /* Adjust the slider container size and position */
+    .slider-container {
+      width: 100vw;
+      height: 500px;
+      position: relative;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    
+    /* Adjust the size and position of the images */
+    .slider-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      transition: opacity 1s ease-in-out;
+    }
+    
+    /* Style for the slider buttons */
+    .slider-buttons {
+      text-align: center;
+      margin-top: 10px;
+    }
+    
+    .slider-buttons button {
+      padding: 5px 10px;
+      margin: 0 5px;
+      font-size: 14px;
+    }
+    
+    /* Style for the slider dots */
+    .slider-dots {
+      text-align: center;
+      margin-top: 10px;
+    }
+    
+    .slider-dots button {
+      width: 10px;
+      height: 10px;
+      padding: 0;
+      margin: 0 3px;
+      border: none;
+      border-radius: 50%;
+      background-color: #bbb;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .slider-dots button.active {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul class="flashes">
+      {% for message in messages %}
+      <li class="alert alert-{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+  <div class="slider-container" >
+    <img src="../../static/images/ImagesForWeb/slider2.jpg" alt="Image 1">
+    <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 2">
+    <img src="../../static/images/ImagesForWeb/slider4.jpg" alt="Image 3">
+    <img src="../../static/images/ImagesForWeb/slider5.jpg" alt="Image 3">
+  </div>
+  <div class="slider-buttons">
+    <button onclick="previousImage()">Previous</button>
+    <button onclick="nextImage()">Next</button>
+  </div>
+  
+  <div class="slider-dots">
+    <button class="dot" onclick="jumpToImage(0)"></button>
+    <button class="dot" onclick="jumpToImage(1)"></button>
+    <button class="dot" onclick="jumpToImage(2)"></button>
+    <button class="dot" onclick="jumpToImage(3)"></button>
+  </div>
+  <script>
+    var container = document.querySelector('.slider-container');
+    var images = container.getElementsByTagName('img');
+    var currentIndex = 0;
+    var dots = document.getElementsByClassName('dot');
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul class=flashes>
-    {% for message in messages %}
-    <li class="alert alert-{{ category }}">{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
+    function showImage(index) {
+      for (var i = 0; i < images.length; i++) {
+        if (i === index) {
+          images[i].style.opacity = 1;
+          dots[i].classList.add('active');
+        } else {
+          images[i].style.opacity = 0;
+          dots[i].classList.remove('active');
+        }
+      }
+    }
 
+    function previousImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    }
+
+    function jumpToImage(index) {
+      currentIndex = index;
+      showImage(currentIndex);
+    }
+
+    // Start the slider
+    showImage(currentIndex);
+    setInterval(nextImage, 5000);
+  </script>
+</body>
+</html>
 
 {% endblock content %}
+
+

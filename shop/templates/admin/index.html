@@ -91,7 +91,7 @@
         position: absolute;
         top: 30%;
         left: 17%;
-        background-color: rgba(4, 4, 4, 0.551);
+        background-color: rgba(22, 86, 95, 0.551);
 
         padding: 4rem 7rem;
       }
@@ -104,39 +104,36 @@
       .hero-section_text p:nth-child(2) {
         margin-top: 4rem;
       }
-      .middle-section_custom{
-padding: 5rem 7vw;
-background-color:#381f1f;
-background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url('../../static/images/ImagesForWeb/midsec.jpg');
+      .middle-section_custom {
+        padding: 5rem 7vw;
+        background-color: #381f1f;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url("../../static/images/ImagesForWeb/midsec.jpg");
 
-background-attachment: fixed;
+        background-attachment: fixed;
       }
-      .middle-section_custom h1{
+      .middle-section_custom h1 {
         color: white;
-        font-size: calc(1.5rem + 10px );
+        font-size: calc(1.5rem + 10px);
         position: relative;
         text-align: center;
         margin-bottom: 5rem;
-
       }
-      .middle-section_custom h1::before{
-        content: '';
+      .middle-section_custom h1::before {
+        content: "";
         position: absolute;
         width: 100px;
         height: 5px;
         background-color: white;
         bottom: -1rem;
         left: 50%;
-        transform : translateX(-50%);
-
-
-
+        transform: translateX(-50%);
       }
       .cards_container-custom {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        box-shadow: 1px 1px 5px  rgb(215, 206, 206);
+        box-shadow: 1px 1px 5px rgb(215, 206, 206);
         border-radius: 1rem;
         padding: 0.5rem;
         backdrop-filter: blur(8px);
@@ -161,7 +158,11 @@ background-attachment: fixed;
       .card-content-custom {
         margin-top: 10px;
       }
-
+      .bar-custom {
+        height: 1rem;
+        width: 100vw;
+    background-color: rgb(255, 132, 0);
+      }
       @media (max-width: 768px) {
         .card-custom {
           width: calc(50% - 20px);
@@ -176,6 +177,7 @@ background-attachment: fixed;
     </style>
   </head>
   <body>
+
     {% with messages = get_flashed_messages() %} {% if messages %}
     <ul style="width: 100vw; border-radius: 5px">
       {% for message in messages %}
@@ -192,6 +194,7 @@ background-attachment: fixed;
       {% endfor %}
     </ul>
     {% endif %} {% endwith %}
+    <div class="bar-custom"></div>
     <div class="slider-wrapper-custom">
       <div class="slider-container">
         <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 2" />
@@ -217,11 +220,15 @@ background-attachment: fixed;
         <p>breaking the bank...</p>
       </div>
     </div>
+    <div class="bar-custom"></div>
     <section class="middle-section_custom">
       <h1>PRODUCTS YOU MAY LIKE</h1>
       <div class="cards_container-custom">
         <div class="card-custom">
-          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 1" />
+          <img
+            src="../../static/images/ImagesForWeb/slider3.jpg"
+            alt="Image 1"
+          />
           <div class="card-content-custom">
             <h3>Card 1</h3>
             <p>This is the content of card 1.</p>
@@ -229,7 +236,10 @@ background-attachment: fixed;
         </div>
 
         <div class="card-custom">
-          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 2" />
+          <img
+            src="../../static/images/ImagesForWeb/slider3.jpg"
+            alt="Image 2"
+          />
           <div class="card-content-custom">
             <h3>Card 2</h3>
             <p>This is the content of card 2.</p>
@@ -237,7 +247,10 @@ background-attachment: fixed;
         </div>
 
         <div class="card-custom">
-          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 3" />
+          <img
+            src="../../static/images/ImagesForWeb/slider3.jpg"
+            alt="Image 3"
+          />
           <div class="card-content-custom">
             <h3>Card 3</h3>
             <p>This is the content of card 3.</p>
@@ -245,7 +258,10 @@ background-attachment: fixed;
         </div>
 
         <div class="card-custom">
-          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 4" />
+          <img
+            src="../../static/images/ImagesForWeb/slider3.jpg"
+            alt="Image 4"
+          />
           <div class="card-content-custom">
             <h3>Card 4</h3>
             <p>This is the content of card 4.</p>
@@ -253,7 +269,10 @@ background-attachment: fixed;
         </div>
 
         <div class="card-custom">
-          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 5" />
+          <img
+            src="../../static/images/ImagesForWeb/slider3.jpg"
+            alt="Image 5"
+          />
           <div class="card-content-custom">
             <h3>Card 5</h3>
             <p>This is the content of card 5.</p>
@@ -261,7 +280,10 @@ background-attachment: fixed;
         </div>
 
         <div class="card-custom">
-          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 6" />
+          <img
+            src="../../static/images/ImagesForWeb/slider3.jpg"
+            alt="Image 6"
+          />
           <div class="card-content-custom">
             <h3>Card 6</h3>
             <p>This is the content of card 6.</p>

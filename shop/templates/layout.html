@@ -42,14 +42,23 @@
       crossorigin="anonymous"
     ></script>
     <script src="../static/js/slider.js"></script>
+<style>
+  .nav-link{
+    color: black !important; 
 
+  }
+  .nav-link:hover{
+    transform: scale(1.1);
+    color: rgb(255, 132, 0) !important;
+  }
+</style>
   </head>
   <!-- body -->
   <body class="main-layout inner_posituong computer_page">
     <div style="min-height: 100vh; min-width: 100vw">
       <header>
         <!-- header inner -->
-        <div class="header" style="background-color: black;">
+        <div class="header" style="background-color: #e6dddd;">
           <div class="container-fluid">
             <div class="row">
               <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
@@ -277,6 +286,30 @@
                           >
                           <a class="dropdown-item" href="{{url_for('login')}}"
                             >Admin</a
+                          >
+                        </ul>
+                      </li>
+                      <li class="nav-item dropdown" style="cursor: pointer">
+                        <a
+                          class="nav-link dropdown-toggle"
+                          role="button"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          Register</a
+                        >
+                        <ul
+                          class="dropdown-menu"
+                          aria-labelledby="navbarDropdownMenuLink"
+                        >
+                          <a
+                            class="dropdown-item"
+                            href="{{url_for('register')}}"
+                            >For Admin</a
+                          >
+                          <a class="dropdown-item" href="{{url_for('customer_register')}}"
+                            >For Customer</a
                           >
                         </ul>
                       </li>

@@ -5,12 +5,12 @@
     <title>Image Slider</title>
     <style>
       :root {
-        overflow: hidden;
+        overflow-x: hidden;
       }
       /* Adjust the slider container size and position */
       .slider-container {
         width: 100vw;
-        height:calc(30vh + 200px);
+        height: calc(40vh + 200px);
         position: relative;
         margin: 0 auto;
         overflow: hidden;
@@ -46,19 +46,17 @@
         color: white;
         font-weight: 300;
         transition: all 0.3s ease-in-out;
-    
-        
       }
       .button-left_slider-custom:hover,
       .button-right_slider-custom:hover {
-    transform: scale(1.2);
+        transform: scale(1.2);
       }
       .button-left_slider-custom:active,
       .button-right_slider-custom:active {
-    transform: scale(0.95);
+        transform: scale(0.95);
       }
       .button-left_slider-custom {
-        top:45%;
+        top: 45%;
         left: 2rem;
       }
       .button-right_slider-custom {
@@ -87,22 +85,117 @@
       }
 
       .slider-dots button.active {
-        background-color: #c72323;
+        background-color: #452727;
+      }
+      .hero-section_text {
+        position: absolute;
+        top: 30%;
+        left: 17%;
+        background-color: rgba(4, 4, 4, 0.551);
+
+        padding: 4rem 7rem;
+      }
+      .hero-section_text p {
+        font-family: Arial, Helvetica, sans-serif;
+        color: rgb(234, 232, 232);
+        font-size: calc(2.5rem + 15px);
+        font-weight: bolder;
+      }
+      .hero-section_text p:nth-child(2) {
+        margin-top: 4rem;
+      }
+      .middle-section_custom{
+padding: 5rem 7vw;
+background-color:#381f1f;
+background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url('../../static/images/ImagesForWeb/midsec.jpg');
+
+background-attachment: fixed;
+      }
+      .middle-section_custom h1{
+        color: white;
+        font-size: calc(1.5rem + 10px );
+        position: relative;
+        text-align: center;
+        margin-bottom: 5rem;
+
+      }
+      .middle-section_custom h1::before{
+        content: '';
+        position: absolute;
+        width: 100px;
+        height: 5px;
+        background-color: white;
+        bottom: -1rem;
+        left: 50%;
+        transform : translateX(-50%);
+
+
+
+      }
+      .cards_container-custom {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        box-shadow: 1px 1px 5px  rgb(215, 206, 206);
+        border-radius: 1rem;
+        padding: 0.5rem;
+        backdrop-filter: blur(8px);
+      }
+
+      .card-custom {
+        width: calc(43.33% - 20px);
+        margin: 2rem;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 1rem;
+        background-color: #ccc;
+        box-shadow: 2px 2px 5px rgb(81, 91, 91);
+      }
+
+      .card-custom img {
+        width: 100%;
+        border-radius: 5px;
+      }
+
+      .card-content-custom {
+        margin-top: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .card-custom {
+          width: calc(50% - 20px);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .card-custom {
+          width: 100%;
+        }
       }
     </style>
   </head>
   <body>
     {% with messages = get_flashed_messages() %} {% if messages %}
-    <ul class="flashes">
+    <ul style="width: 100vw; border-radius: 5px">
       {% for message in messages %}
-      <li class="alert alert-{{ category }}">{{ message }}</li>
+      <li
+        style="
+          font-size: medium;
+          background-color: #e0115f;
+          color: white;
+          text-align: center;
+        "
+      >
+        {{ message }}
+      </li>
       {% endfor %}
     </ul>
     {% endif %} {% endwith %}
     <div class="slider-wrapper-custom">
       <div class="slider-container">
-        <img src="../../static/images/ImagesForWeb/slider2.jpg" alt="Image 1" />
         <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 2" />
+        <img src="../../static/images/ImagesForWeb/slider2.jpg" alt="Image 1" />
         <img src="../../static/images/ImagesForWeb/slider4.jpg" alt="Image 3" />
         <img src="../../static/images/ImagesForWeb/slider5.jpg" alt="Image 3" />
       </div>
@@ -119,8 +212,63 @@
         <button class="dot" onclick="jumpToImage(2)"></button>
         <button class="dot" onclick="jumpToImage(3)"></button>
       </div>
+      <div class="hero-section_text">
+        <p>Indulge in luxury without</p>
+        <p>breaking the bank...</p>
+      </div>
     </div>
+    <section class="middle-section_custom">
+      <h1>PRODUCTS YOU MAY LIKE</h1>
+      <div class="cards_container-custom">
+        <div class="card-custom">
+          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 1" />
+          <div class="card-content-custom">
+            <h3>Card 1</h3>
+            <p>This is the content of card 1.</p>
+          </div>
+        </div>
 
+        <div class="card-custom">
+          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 2" />
+          <div class="card-content-custom">
+            <h3>Card 2</h3>
+            <p>This is the content of card 2.</p>
+          </div>
+        </div>
+
+        <div class="card-custom">
+          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 3" />
+          <div class="card-content-custom">
+            <h3>Card 3</h3>
+            <p>This is the content of card 3.</p>
+          </div>
+        </div>
+
+        <div class="card-custom">
+          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 4" />
+          <div class="card-content-custom">
+            <h3>Card 4</h3>
+            <p>This is the content of card 4.</p>
+          </div>
+        </div>
+
+        <div class="card-custom">
+          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 5" />
+          <div class="card-content-custom">
+            <h3>Card 5</h3>
+            <p>This is the content of card 5.</p>
+          </div>
+        </div>
+
+        <div class="card-custom">
+          <img src="../../static/images/ImagesForWeb/slider3.jpg" alt="Image 6" />
+          <div class="card-content-custom">
+            <h3>Card 6</h3>
+            <p>This is the content of card 6.</p>
+          </div>
+        </div>
+      </div>
+    </section>
     <script>
       var container = document.querySelector(".slider-container");
       var images = container.getElementsByTagName("img");

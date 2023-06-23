@@ -1,28 +1,80 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="container">
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-<section class="container py-5">
-<div class="container">
-    <div class="row">
-        <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <div class="text-center bg-info p-2 h4">Login</div>
-                {% from "_formhelpers.html" import render_field %}
-                {% include '_messages.html' %}
-                <form method=post>
-                    {{form.csrf_token}}
-                <div>
-                    {{ render_field(form.email, class="form-control") }}
-                    {{ render_field(form.password, class="form-control") }}
-                </div>
-                <p><input type="submit" value="Login" class="btn-info">
-                </form>
-            </div>
-      <div class="col-md-3"></div>
-    </div>
+<style>
+  .login-container {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-form {
+    width: 300px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .login-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+  }
+
+  .form-control:focus {
+    border-color: #80bdff;
+    outline: none;
+  }
+
+  .btn-info {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .btn-info:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="login-container">
+  <div class="login-form">
+    <div style="width: 100%; display: flex; justify-content: center;">
+
+      <img style="width: 50px ;height: 50px;" src="../../static/images/ImagesForWeb/pngwing.com.png"/>
+  </div>
+    <div class="login-title">Admin Login</div>
+    {% from "_formhelpers.html" import render_field %}
+    {% include '_messages.html' %}
+    <form method="post">
+      {{ form.csrf_token }}
+      <div>
+        {{ render_field(form.email, class="form-control") }}
+        {{ render_field(form.password, class="form-control") }}
+      </div>
+      <p><input type="submit" value="Login" class="btn-info"></p>
+    </form>
+  </div>
 </div>
-</section>
+
 {% endblock content %}

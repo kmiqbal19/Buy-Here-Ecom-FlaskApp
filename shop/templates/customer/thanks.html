@@ -1,7 +1,14 @@
-<h1>Thank you for shopping with us! </h1>
+{% extends "layout.html" %}
+{% block content %}
+<div style="height: 60vh; display: flex; justify-content: center; align-items: center;">
+    <h1 style="font-size: 3rem;"> Thank you for shopping with us! 🛍️</h1>
 
-{% for rating in ratings %}
-<p>{{rating.rating}}</p>
-<p>{{rating.review}}</p>
-{% endfor %}
-<p> {{a}}</p>
+    {% for rating in ratings %}
+    <p>{{rating.rating}}</p>
+    <p>{{rating.review}}</p>
+    {% endfor %}
+    <p> {{a}}</p>
+   
+    
+</div>
+{% endblock content %}

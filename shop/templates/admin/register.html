@@ -1,28 +1,102 @@
 {% extends "layout.html" %}
-{% block content%}
-<section class="container py-8">
-<div class="container">
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    {% include '_messages.html' %}
-    <section class="row">
-        <div class="col-md-15"></div>
-            <div class="col-md-6">
-                <div class="text-center bg-info p-2 h4">Register User</div>
-    {% from "_formhelpers.html" import render_field %}
-<form method="post" enctype="multipart/form-data">
-  <div>
-    {{ render_field(form.name, class="form-control") }}
-    {{ render_field(form.username, class="form-control") }}
-    {{ render_field(form.email, class="form-control") }}
-    {{ render_field(form.password, class="form-control") }}
-    {{ render_field(form.confirm, class="form-control") }}
-    {{ render_field(form.accept_tos) }}
-<!--      <input type="file" name="photo">-->
-  </div>
-    <p><input type=submit value="Register" class="btn btn-info"></p>
-</form>
-</div>
-    </section>
-{% endblock content%}
+{% block content %}
+{% include '_messages.html' %}
+
+<style>
+  /* Add your CSS styles here */
+  section {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+  }
+
+  div {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  form {
+    max-width: 400px;
+    margin-top: 20px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: #6c63ff;
+    box-shadow: 0 0 5px #6c63ff;
+  }
+
+  input[type="submit"] {
+    background-color: #6c63ff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #544de2;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .accept-tos-label {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #555;
+  }
+</style>
+
+<section>
+  <div>Register User</div>
+  {% from "_formhelpers.html" import render_field %}
+  <form method="post" enctype="multipart/form-data">
+    <div>
+ 
+      {{ render_field(form.name, class="form-control") }}
+
+ 
+      {{ render_field(form.username, class="form-control") }}
+
+
+      {{ render_field(form.email, class="form-control") }}
+
+
+      {{ render_field(form.password, class="form-control") }}
+
+ 
+      {{ render_field(form.confirm, class="form-control") }}
+
+      <div class="accept-tos-label">
+        {{ render_field(form.accept_tos) }}
+        <label for="{{ form.accept_tos.id }}">I accept the Terms of Service</label>
+      </div>
+    </div>
+    <p><input type="submit" value="Register" /></p>
+  </form>
+</section>
+
+{% endblock content %}

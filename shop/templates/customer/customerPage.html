@@ -9,7 +9,6 @@
     border: 1px solid black;
     padding: 8px;
     text-align: center;
-
   }
 
   th {
@@ -20,7 +19,7 @@
     max-width: 100px;
     max-height: 100px;
 
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
     text-align: center;
   }
 
@@ -29,9 +28,8 @@
     direction: rtl;
     text-align: center;
     cursor: pointer;
-    display: block; 
+    display: block;
   }
-
 
   .rating > span {
     display: inline-block;
@@ -44,7 +42,6 @@
     content: "\2605";
     position: absolute;
     color: rgb(181, 165, 165);
-    
   }
 
   .rating > span.rated:before {
@@ -75,34 +72,40 @@
   .review-form button {
     margin-top: 10px;
   }
-.btn-submit-cp{
-  padding: 0.3rem 1rem; background-color: green; border: none; color: white;cursor: pointer;
-  border-radius: 5px;
-}
-.btn-submit-cp:hover{
-  background-color: rgb(69, 151, 69);
-}
+  .btn-submit-cp {
+    padding: 0.3rem 1rem;
+    background-color: green;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .btn-submit-cp:hover {
+    background-color: rgb(69, 151, 69);
+  }
 </style>
 
 <script>
   function setRating(starsContainer, rating) {
     const stars = starsContainer.children;
 
-    for (let i = stars.length - 1; i >= 0; i--) { /* Update the loop direction */
-      if (stars.length - i <= rating) { /* Update the condition */
-        stars[i].classList.add('rated');
+    for (let i = stars.length - 1; i >= 0; i--) {
+      /* Update the loop direction */
+      if (stars.length - i <= rating) {
+        /* Update the condition */
+        stars[i].classList.add("rated");
       } else {
-        stars[i].classList.remove('rated');
+        stars[i].classList.remove("rated");
       }
     }
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const ratingContainers = document.getElementsByClassName('rating');
+  document.addEventListener("DOMContentLoaded", function () {
+    const ratingContainers = document.getElementsByClassName("rating");
     for (let i = 0; i < ratingContainers.length; i++) {
       const stars = ratingContainers[i].children;
       for (let j = 0; j < stars.length; j++) {
-        stars[j].addEventListener('click', function () {
+        stars[j].addEventListener("click", function () {
           const rating = stars.length - j;
           setRating(ratingContainers[i], rating);
         });
@@ -141,7 +144,7 @@
         {% if customer_order.status == "Paid" %}
         <!-- Rating Display -->
         <h4>Rate this product:</h4>
-        <div   class="rating" data-rating="{{ product.rating or 0 }}">
+        <div class="rating" data-rating="{{ product.rating or 0 }}">
           {% for i in range(5, 0, -1) %}
           <span
             class="star{% if product.rating and product.rating >= i %} rated{% endif %}"
@@ -151,7 +154,6 @@
         </div>
         <!-- Rating Form -->
         <div class="review-form">
-        
           <form
             action="{{ url_for('rate_product', invoice=customer_order.invoice, product_id=product.id) }}"
             method="post"
@@ -160,19 +162,27 @@
             <div class="form-group">
               <label for="review">Review:</label>
               <textarea
-              style="resize: none ; width: 250px ; outline: none; background-color: rgb(243, 239, 235);border-radius: 0.5rem; padding: 1rem; font-size: 0.9rem; border : 1px solid gray "
+                style="
+                  resize: none;
+                  width: 250px;
+                  outline: none;
+                  background-color: rgb(243, 239, 235);
+                  border-radius: 0.5rem;
+                  padding: 1rem;
+                  font-size: 0.9rem;
+                  border: 1px solid gray;
+                  height: 50px;
+                "
                 class="form-control"
                 name="review"
                 id="review"
-                rows="2"
-               
+                rows="1"
               ></textarea>
             </div>
             <button class="btn-submit-cp" type="submit">Submit Rating</button>
           </form>
         </div>
-        {% endif %}
-        {% endfor %}
+        {% endif %} {% endfor %}
       </td>
     </tr>
     {% endfor %}

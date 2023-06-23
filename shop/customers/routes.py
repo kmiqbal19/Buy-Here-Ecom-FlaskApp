@@ -40,7 +40,7 @@ def thanks():
     return render_template('customer/thanks.html')
 
 
-@app.route('/customer/register', methods=['GET', 'POST'])
+@app.route('/customer_register', methods=['GET', 'POST'])
 def customer_register():
     form = CustomerRegisterForm()
     if form.validate_on_submit():
@@ -55,7 +55,7 @@ def customer_register():
     return render_template('customer/register.html', form=form)
 
 
-@app.route('/customer/login', methods=['GET', 'POST'])
+@app.route('/customer_login', methods=['GET', 'POST'])
 def customerLogin():
 
     form = CustomerLoginFrom()

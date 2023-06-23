@@ -1,88 +1,203 @@
-
-
-<div class="container mt-4">
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+  
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+  
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+  
+    th {
+      background-color: #f2f2f2;
+    }
+  
+    img {
+      max-width: 100px;
+      max-height: 100px;
+      display: block;
+      margin-bottom: 10px;
+    }
+  
+    .rating {
+      unicode-bidi: bidi-override;
+      direction: rtl;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+  
+    .rating > span {
+      display: inline-block;
+      position: relative;
+      width: 1.1em;
+      color: silver;
+    }
+  
+    .rating > span:before {
+      content: "\2605";
+      position: absolute;
+      color: gold;
+    }
+  
+    .rating > span.rated:before {
+      content: "\2605";
+      color: gold;
+    }
+  
+    .rating > span:hover:before,
+    .rating > span:hover ~ span:before {
+      content: "\2605";
+      color: gold;
+    }
+  
+    .review-form {
+      margin-top: 10px;
+    }
+  
+    .review-form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+  
+    .review-form textarea {
+      width: 100%;
+      height: 100px;
+    }
+  
+    .review-form button {
+      margin-top: 10px;
+    }
+  
+    .payment-form {
+      margin-top: 20px;
+      text-align: center;
+    }
+  
+    .pdf-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+  
+    .pdf-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  
+  <div class="container">
+    <a href="{{url_for('home')}}" style="position: absolute; left: 30px; top: 30px; border: none; text-decoration: none;" >
+        🔙 Go Home
+      </a>
+    <h1>Order Details</h1>
     {% include '_messages.html' %}
-    <div class="row">
-        <div class="col-md-12">
-            Invoice: {{orders.invoice}}
-            <br>
-            Status: {{orders.status}}
-            <br>
-            Customer name: {{customer.name}}
-            <br>
-            Customer email: {{customer.email}}
-            <br>
-            Customer contact: {{customer.contact}}
-            <br>
-            <br>
-        <table class="table table-sm">
-            <thead>
-                <th>Sr</th>
-                <th>Name</th>
-                <th>Color</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Discount</th>
-                <th>Subtotal</th>
-            </thead>
-            <tbody>
-                {% for key, product in orders.orders.items() %}
-                {% set discount =(product.discount/100) * product.price|float %}
-                <tr>
-                    <td>{{loop.index}}</td>
-                    <td>{{product.name}}</td>
-                    <form action="{{url_for('updatecart', code=key)}}" method="post">
-                    <td> 
-                        {{product.color|capitalize}}
-                    </td>
-                    <td>${{"%.2f"|format(product.price)}}</td>
-                    <td> {{product.quantity}} </td>
-                    {% if product.discount  %}
-                    <td>{{product.discount}} % &nbsp; &nbsp; is {{"%.2f"|format(discount)}}</td>
-                    {% else %}
-                    <td></td>
-                    {% endif %}
-                    {% set subtotal = product.quantity|int * product.price|float  %}
-                    <td>${{"%.2f"|format(subtotal - discount|round(1,'floor')) }}</td>
-                </form>        
-                </tr>
-                {% endfor %}
-            </tbody>
+    <div>
+      <div>
+        <div>
+          <p><strong>Invoice:</strong> {{ orders.invoice }}</p>
+          <p><strong>Status:</strong> {{ orders.status }}</p>
+          <p><strong>Customer name:</strong> {{ customer.name }}</p>
+          <p><strong>Customer email:</strong> {{ customer.email }}</p>
+          <p><strong>Customer contact:</strong> {{ customer.contact }}</p>
+        </div>
+        <table>
+          <thead>
+            <th>Sr</th>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Discount</th>
+            <th>Subtotal</th>
+          </thead>
+          <tbody>
+            {% for key, product in orders.orders.items() %}
+            {% set discount = (product.discount / 100) * product.price | float %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ product.name }}</td>
+              <form action="{{ url_for('updatecart', code=key) }}" method="post">
+                <td>{{ product.color | capitalize }}</td>
+                <td>${{ "%.2f" | format(product.price) }}</td>
+                <td>{{ product.quantity }}</td>
+                {% if product.discount %}
+                <td>{{ product.discount }} % &nbsp; &nbsp; is {{"%.2f" | format(discount) }}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% set subtotal = product.quantity | int * product.price | float %}
+                <td>${{ "%.2f" | format(subtotal - discount | round(1, 'floor')) }}</td>
+              </form>
+            </tr>
+            {% endfor %}
+          </tbody>
         </table>
-        <table class="table table-sm">
-           <tr> 
-
-               <td>   
-                   {% if orders.status =='Paid' %}
-                   <p>Paid</p>
-                   {% else %}
-                <form action="{{url_for('payment')}}" method="POST">
-                {% set amount =  grandTotal.replace('.','') %}
-                <input type="hidden" name="amount" value="{{amount}}">
-                <input type="hidden" name="invoice" value="{{orders.invoice}}">
-                <script src="https://checkout.stripe.com/checkout.js"
-                  class="stripe-button"
-                  data-key="pk_test_51J7N96CH8llqJB9dqp7u0xQvumQMaWlBjcaAJ25VAc0WG8SuO1GcDB0IUFUlagL4mWzzMrgLC6TSTNWSXAIsGm6C00EStrIgIR"
-                  data-name="{{customer.name}}"
-                  data-description="Buy Here Ltd"
-                  data-amount="{{amount}}"
-                  data-currency="usd">
-                </script>
-              </form> 
+        <table>
+          <tr>
+            <td>
+              {% if orders.status == 'Paid' %}
+              <p>Paid</p>
+              {% else %}
+              <div class="payment-form">
+                <form action="{{ url_for('payment') }}" method="POST">
+                  {% set amount = grandTotal.replace('.', '') %}
+                  <input type="hidden" name="amount" value="{{ amount }}">
+                  <input type="hidden" name="invoice" value="{{ orders.invoice }}">
+                  <script src="https://checkout.stripe.com/checkout.js"
+                    class="stripe-button"
+                    data-key="pk_test_51J7N96CH8llqJB9dqp7u0xQvumQMaWlBjcaAJ25VAc0WG8SuO1GcDB0IUFUlagL4mWzzMrgLC6TSTNWSXAIsGm6C00EStrIgIR"
+                    data-name="{{ customer.name }}"
+                    data-description="Buy Here Ltd"
+                    data-amount="{{ amount }}"
+                    data-currency="usd">
+                  </script>
+                </form>
+              </div>
               {% endif %}
             </td>
-               <td width="35%"></td>
-               <td> <h5>Tax: ${{tax}}</h5></td>
-               <td> <h5>Grand total: ${{grandTotal}}</h3> </td>
-               
-                <td> 
-                    <form action="{{url_for('get_pdf', invoice=orders.invoice)}}" method="post">
-                        <button type="submit" class="btn btn-info"> Get pdf</button>
-                    </form>
-                     </td>
-           </tr>
+            <td width="35%"></td>
+            <td>
+              <h5>Tax: ${{ tax }}</h5>
+            </td>
+            <td>
+              <h5>Grand total: ${{ grandTotal }}</h5>
+            </td>
+            <td>
+              <form action="{{ url_for('get_pdf', invoice=orders.invoice) }}" method="post">
+                <button class="pdf-button" type="submit">Get PDF</button>
+              </form>
+            </td>
+          </tr>
         </table>
-     
+      </div>
     </div>
   </div>
-</div>
+  

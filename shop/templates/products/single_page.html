@@ -1,130 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="utf-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>Buy Here Now</title>
-   <link rel="stylesheet" href="./static/css/custom.css">
-   <link rel="icon" href="./static/images/fevicon.png" type="image/gif"/>
-<style>
-    body{
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Buy Here Now</title>
+    <link rel="stylesheet" href="./static/css/custom.css" />
+    <link rel="icon" href="./static/images/fevicon.png" type="image/gif" />
+    <style>
+      body {
         background-color: black;
-    }
-    .container {
+      }
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
 
-   display: flex;
-   align-items: center;
-   justify-content: center;
- 
-   flex-direction: column;
-  background-image: url('../../static/images/ImagesForWeb/josh-calabrese-XXpbdU_31Sg-unsplash.jpg');
-   padding: 2rem;
-}
-.container-img-desc div#b_image img{
-width: calc(50vw + 250px);
-height: calc(40vh + 250px);
-border-radius: 0.5rem;
-box-shadow: 2px 2px 5px rgb(206, 198, 198);
-object-fit: cover;
-}
-.row {
-   margin-bottom: 20px;
-   margin-top: 1rem;
-}
+        flex-direction: column;
+        background-image: url("../../static/images/ImagesForWeb/josh-calabrese-XXpbdU_31Sg-unsplash.jpg");
+        padding: 2rem;
+      }
+      .container a {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        background-color: rgb(244, 238, 232);
+      }
+      .container a:hover {
+        background-color: #bcc0be;
+       
+       
+      }
+      .container-img-desc div#b_image img {
+        
+        width: calc(50vw + 250px);
+        height: calc(40vh + 250px);
+        border-radius: 0.5rem;
+        box-shadow: 2px 2px 5px rgb(206, 198, 198);
+        object-fit: cover;
+      }
+      .row {
+        margin-bottom: 20px;
+        margin-top: 1rem;
+      }
 
-.col-md-6 {
-   width: 50%;
-   float: left;
-}
+      .col-md-6 {
+        width: 50%;
+        float: left;
+      }
 
+      #s_image img {
+        width: 100px;
+        height: 100px;
+        margin-left: 2rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        box-shadow: 2px 2px 5px rgb(206, 198, 198);
+      }
+      #s_image img:hover {
+        transform: scale(1.1);
+        box-shadow: 2px 2px 5px rgb(18, 18, 18);
+      }
+      .btn-addcart {
+        background-color: orange;
+        border: none;
+        padding: 0.5rem 1rem;
+        color: white;
+        border-radius: 5px;
+      }
+      .btn-addcart:hover {
+        background-color: green;
 
+        transition: all 0.4s ease;
+        cursor: pointer;
+      }
+    </style>
+  </head>
 
-#s_image img {
-   width: 100px;
-   height: 100px;
-   margin-left: 2rem;
-   border-radius: 5px;
-   cursor: pointer;
-   transition: all 0.4s ease;
-   box-shadow: 2px 2px 5px rgb(206, 198, 198);
-}
-#s_image img:hover {
- transform: scale(1.1);
- box-shadow: 2px 2px 5px rgb(18, 18, 18);
-}
-.btn-addcart{
-  background-color: orange; border: none; padding: 0.5rem 1rem; color: white;
-  border-radius: 5px;
-
-}
-.btn-addcart:hover{
-    background-color: green;
-
-    transition: all 0.4s ease;
-    cursor: pointer;
-}
-</style>
-
-</head>
-
-<body>
-<div class="container">
-   <div class="container-img-desc">
-      <div id="b_image">
-
-          <img src="{{url_for('static',filename='images/' + product.image_1)}}" alt="{{product.name}}" width="400" height="400">
+  <body>
+    <div class="container">
+      <a class="btn-" href="{{url_for('products')}}" style="position: absolute; left: 30px; top: 30px; border: none; text-decoration: none;" >
+        🔙 Go Back
+      </a>
+      <div class="container-img-desc">
+        <div id="b_image">
+          <img
+            src="{{url_for('static',filename='images/' + product.image_1)}}"
+            alt="{{product.name}}"
+            width="400"
+            height="400"
+          />
         </div>
         <div class="row">
-            <div class="col-md-12" id="s_image">
-               <img src="{{url_for('static',filename='images/'+ product.image_1)}}" alt="{{product.name}}" width="100" height="100">
-               <img src="{{url_for('static',filename='images/'+ product.image_2)}}" alt="{{product.name}}" width="100" height="100" class="ml-5">
-               <img src="{{url_for('static',filename='images/'+ product.image_3)}}" alt="{{product.name}}" width="100" height="100" class="ml-5">
-            </div>
-         </div>
-      <div >
-         <h4 style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif; font-weight: normal;">Product name: <span style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif;  font-weight: bold;">{{product.name}}</span></h4>
-         <hr>
-         <p style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif;">Product price: <span style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif; color: green; font-weight: bold;">${{product.price}}</span></p>
-         <hr>
-         {% if product.discount > 0 and discount_expired == False %}
-         <p style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif;">Discount: {{product.discount}} % </p>
-         {% else %}
-         <p style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif;">Discount: No Discount Available </p>
-         {% endif %}
-         <hr>
-         <p style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif;">Product description:</p>
-         <p style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif;">{{product.desc}}</p>
-         <hr>
-         <form action="{{url_for('AddCart')}}" method="post">
-            <input type="hidden" name="product_id" value="{{product.id}}">
-            <button class="btn-addcart"  type="submit" >Add to Cart</button>
-            <label style="margin-left: 1rem;" for="">Quantity: </label>
-            <input type="number" name="quantity" value="1" min="1" max="{{product.stock}}">
+          <div class="col-md-12" id="s_image">
+            <img
+              src="{{url_for('static',filename='images/'+ product.image_1)}}"
+              alt="{{product.name}}"
+              width="100"
+              height="100"
+            />
+            <img
+              src="{{url_for('static',filename='images/'+ product.image_2)}}"
+              alt="{{product.name}}"
+              width="100"
+              height="100"
+              class="ml-5"
+            />
+            <img
+              src="{{url_for('static',filename='images/'+ product.image_3)}}"
+              alt="{{product.name}}"
+              width="100"
+              height="100"
+              class="ml-5"
+            />
+          </div>
+        </div>
+        <div>
+          <h4
+            style="
+              font-size: 1.5rem;
+              font-family: Arial, Helvetica, sans-serif;
+              font-weight: normal;
+            "
+          >
+            Product name:
+            <span
+              style="
+                font-size: 1.5rem;
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: bold;
+              "
+              >{{product.name}}</span
+            >
+          </h4>
+          <hr />
+          <p
+            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+          >
+            Product price:
+            <span
+              style="
+                font-size: 1.5rem;
+                font-family: Arial, Helvetica, sans-serif;
+                color: green;
+                font-weight: bold;
+              "
+              >${{product.price}}</span
+            >
+          </p>
+          <hr />
+          {% if product.discount > 0 and discount_expired == False %}
+          <p
+            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+          >
+            Discount: {{product.discount}} %
+          </p>
+          {% else %}
+          <p
+            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+          >
+            Discount: No Discount Available
+          </p>
+          {% endif %}
+          <hr />
+          <p
+            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+          >
+            Product description:
+          </p>
+          <p
+            style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
+          >
+            {{product.desc}}
+          </p>
+          <hr />
+          <form action="{{url_for('AddCart')}}" method="post">
+            <input type="hidden" name="product_id" value="{{product.id}}" />
+            <button class="btn-addcart" type="submit">Add to Cart</button>
+            <label style="margin-left: 1rem" for="">Quantity: </label>
+            <input
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
+              max="{{product.stock}}"
+            />
             {% set colors = product.colors.split(',') %}
-            <label style="margin-left: 1rem;" for="colors">Colors: </label>
+            <label style="margin-left: 1rem" for="colors">Colors: </label>
             <select name="colors" id="colors">
-               {% for color in colors %}
-               {% set col = color.split(':') %}
-               <option value="{{col[0]}}">{{col[0] | capitalize }}</option>
-               {% endfor %}
+              {% for color in colors %} {% set col = color.split(':') %}
+              <option value="{{col[0]}}">{{col[0] | capitalize }}</option>
+              {% endfor %}
             </select>
-         </form>
+          </form>
+        </div>
       </div>
-   </div>
-   <hr>
-
-</div>
-<script>
-   var b_image = document.getElementById('b_image');
-   var s_image = document.getElementById('s_image').getElementsByTagName('img');
-   for(var i = 0; i < s_image.length; i++){
-      s_image[i].addEventListener('click', full_image);
-   }
-   function full_image(){
-      var ImageSRC = this.getAttribute('src');
-      b_image.innerHTML = "<img src=" + ImageSRC + " width='400' height='400'>";
-   }
-</script>
-</body>
+      <hr />
+    </div>
+    <script>
+      var b_image = document.getElementById("b_image");
+      var s_image = document
+        .getElementById("s_image")
+        .getElementsByTagName("img");
+      for (var i = 0; i < s_image.length; i++) {
+        s_image[i].addEventListener("click", full_image);
+      }
+      function full_image() {
+        var ImageSRC = this.getAttribute("src");
+        b_image.innerHTML =
+          "<img src=" + ImageSRC + " width='400' height='400'>";
+      }
+    </script>
+  </body>
 </html>

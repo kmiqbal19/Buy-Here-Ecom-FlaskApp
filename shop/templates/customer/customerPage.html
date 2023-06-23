@@ -1,57 +1,180 @@
-<table class="table table-md">
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  img {
+    max-width: 100px;
+    max-height: 100px;
+
+    margin-bottom: 10px; 
+    text-align: center;
+  }
+
+  .rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: center;
+    cursor: pointer;
+    display: block; 
+  }
+
+
+  .rating > span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+    color: silver;
+  }
+
+  .rating > span:before {
+    content: "\2605";
+    position: absolute;
+    color: rgb(181, 165, 165);
+    
+  }
+
+  .rating > span.rated:before {
+    content: "\2605";
+    color: gold;
+  }
+
+  .rating > span:hover:before,
+  .rating > span:hover ~ span:before {
+    content: "\2605";
+    color: gold;
+  }
+
+  .review-form {
+    margin-top: 10px;
+  }
+
+  .review-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .review-form textarea {
+    width: 100%;
+    height: 100px;
+  }
+
+  .review-form button {
+    margin-top: 10px;
+  }
+.btn-submit-cp{
+  padding: 0.3rem 1rem; background-color: green; border: none; color: white;cursor: pointer;
+  border-radius: 5px;
+}
+.btn-submit-cp:hover{
+  background-color: rgb(69, 151, 69);
+}
+</style>
+
+<script>
+  function setRating(starsContainer, rating) {
+    const stars = starsContainer.children;
+
+    for (let i = stars.length - 1; i >= 0; i--) { /* Update the loop direction */
+      if (stars.length - i <= rating) { /* Update the condition */
+        stars[i].classList.add('rated');
+      } else {
+        stars[i].classList.remove('rated');
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const ratingContainers = document.getElementsByClassName('rating');
+    for (let i = 0; i < ratingContainers.length; i++) {
+      const stars = ratingContainers[i].children;
+      for (let j = 0; j < stars.length; j++) {
+        stars[j].addEventListener('click', function () {
+          const rating = stars.length - j;
+          setRating(ratingContainers[i], rating);
+        });
+      }
+
+      const rating = parseInt(ratingContainers[i].dataset.rating) || 0;
+      setRating(ratingContainers[i], rating);
+    }
+  });
+</script>
+<table>
   <thead>
-    <th>Nr</th>
-    <th>Name</th>
-    <th>Image</th>
-    <th>Price</th>
-    <th>Status</th>
-    <th>Rate</th>
+    <tr>
+      <th>Nr</th>
+      <th>Name</th>
+      <th>Image</th>
+      <th>Price</th>
+    </tr>
   </thead>
   <tbody>
-    
     {% for customer_order in customer_orders %}
-    <div>
-    
-      <tr>
-        <td>{{loop.index}}</td>
-        <td>{{customer_order.invoice}}</td>
-        <td>{{customer_order.status}}</td>
-        <td>
-          {% for key, product in customer_order.orders.items() %}
-          <p>{{product.name}}</p>
-          <p>{{product.price}}</p>
-          <img
-            src="{{url_for('static',filename='images/'+ product.image)}}"
-            alt="{{product.name}}"
-            width="100"
-            height="100"
-          />
-            <!-- Rating Form -->
-            <hr>
-            <h4>Rate this product:</h4>
-            <form action="{{ url_for('rate_product' ,invoice=customer_order.invoice, product_id = product.id)}}" method="post">
-                <input type="hidden" name="product_id" value="{{ product.id }}">
-                <div class="form-group">
-                    <label for="rating">Rating:</label>
-                    <select class="form-control" name="rating" id="rating">
-                        <option value="5">5 stars</option>
-                        <option value="4">4 stars</option>
-                        <option value="3">3 stars</option>
-                        <option value="2">2 stars</option>
-                        <option value="1">1 star</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="review">Review:</label>
-                    <textarea class="form-control" name="review" id="review" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit Rating</button>
-            </form>
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ customer_order.invoice }}</td>
+      <td>{{ customer_order.status }}</td>
+      <td>
+        {% for key, product in customer_order.orders.items() %}
+        <p>{{ product.name }}</p>
+        <p>{{ product.price }}</p>
+        <img
+          src="{{ url_for('static', filename='images/' + product.image) }}"
+          alt="{{ product.name }}"
+          width="100"
+          height="100"
+        />
+        {% if customer_order.status == "Paid" %}
+        <!-- Rating Display -->
+        <h4>Rate this product:</h4>
+        <div   class="rating" data-rating="{{ product.rating or 0 }}">
+          {% for i in range(5, 0, -1) %}
+          <span
+            class="star{% if product.rating and product.rating >= i %} rated{% endif %}"
+            >&#x2605;</span
+          >
           {% endfor %}
-        </td>
-      </tr>
-    
-    </div>
+        </div>
+        <!-- Rating Form -->
+        <div class="review-form">
+        
+          <form
+            action="{{ url_for('rate_product', invoice=customer_order.invoice, product_id=product.id) }}"
+            method="post"
+          >
+            <input type="hidden" name="product_id" value="{{ product.id }}" />
+            <div class="form-group">
+              <label for="review">Review:</label>
+              <textarea
+              style="resize: none ; width: 250px ; outline: none; background-color: rgb(243, 239, 235);border-radius: 0.5rem; padding: 1rem; font-size: 0.9rem; border : 1px solid gray "
+                class="form-control"
+                name="review"
+                id="review"
+                rows="2"
+               
+              ></textarea>
+            </div>
+            <button class="btn-submit-cp" type="submit">Submit Rating</button>
+          </form>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </td>
+    </tr>
     {% endfor %}
   </tbody>
 </table>

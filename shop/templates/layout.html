@@ -262,12 +262,29 @@
                           </div></a
                         >
                       </li>
-                      <li class="nav-item d_none">
+                      <li class="nav-item dropdown" style="cursor: pointer">
                         <a
-                          class="nav-link"
-                          href="{{url_for('discount_products')}}"
-                          >Discounts</a
+                          class="nav-link dropdown-toggle"
+                          role="button"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
                         >
+                          Discounts</a
+                        >
+                        <ul
+                          class="dropdown-menu"
+                          aria-labelledby="navbarDropdownMenuLink"
+                        >
+                          <a
+                            class="dropdown-item"
+                            href="{{url_for('discount_products')}}"
+                            >New Offers</a
+                          >
+                          <a class="dropdown-item" href="{{url_for('discount_products')}}"
+                            >Offers Ended</a
+                          >
+                        </ul>
                       </li>
                       {% endif %} {% if current_user.is_authenticated %}
                       <li class="nav-item" style="width: 100px">

@@ -24,8 +24,9 @@ def categories():
 
 @app.route('/products')
 def products():
+    current_date = datetime.today()
     products = Addproduct.query.filter(Addproduct.stock > 0)
-    return render_template('products/products.html', products=products, brands=brands(), categories=categories())
+    return render_template('products/products.html', products=products, brands=brands(), categories=categories(), current_date=current_date)
 
 
 @app.route('/dicountedproducts')

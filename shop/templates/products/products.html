@@ -63,6 +63,12 @@ transform : scale(1.08)
             class="float-left btn btn-sm btn-primary"
             >Details</a
           >
+          <a
+          href="{{ url_for('contactseller') }}"
+            class="float-left btn btn-sm btn-primary"
+          >
+            Contact Seller</a
+
 
           <form action="{{url_for('AddCart')}}" method="POST">
             <input type="hidden" name="product_id" value="{{product.id}}" />

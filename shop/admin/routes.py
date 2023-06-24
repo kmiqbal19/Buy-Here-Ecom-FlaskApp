@@ -2,7 +2,7 @@ from flask import render_template, request, session, redirect, url_for, flash
 from shop import app, db, bcrypt
 from .forms import RegistrationForm, LoginForm
 from .models import User
-from shop.products.models import Addproduct,Category,Brand
+from shop.products.models import Addproduct,Category,Brand, Messagea
 
 # ---- ROUTES ------
 @app.route('/')
@@ -14,6 +14,13 @@ def home():
     brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
     categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
     return render_template('admin/index.html', title='Buy Here', admin_there=admin_there ,products=products, brands=brands, categories=categories)
+
+@app.route('/chat')
+def chat():
+    messages = Messagea.query.all()
+    return render_template('admin/chat.html', messages=messages)
+
+
 
 @app.route('/admin')
 def admin():

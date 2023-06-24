@@ -3,8 +3,8 @@ from flask import redirect, render_template, url_for, flash, request, session, c
 from flask_login import current_user
 from sqlalchemy import func
 from shop import db, app, photos
-from .models import Brand, Category, Addproduct, DiscountExpiredOffer
-from .forms import Addproducts
+from .models import Brand, Category, Addproduct, DiscountExpiredOffer, Messagea
+from .forms import Addproducts, Message
 import secrets
 import os
 # ---- ROUTES ----
@@ -20,6 +20,23 @@ def categories():
     categories = Category.query.join(
         Addproduct, (Category.id == Addproduct.category_id)).all()
     return categories
+
+@app.route('/contactseller', methods=['GET', 'POST'])
+def contactseller():
+    form = Message(request.form)
+    if request.method == 'POST':
+        name = form.name.data
+        email = form.email.data
+        message_text = form.message.data
+
+        message = Messagea(name=name, email=email, message=message_text)
+        db.session.add(message)
+        db.session.commit()
+        flash ('Your message has sent ')
+        return redirect (url_for('products'))
+
+    # Render the contact seller form
+    return render_template('products/contact_seller.html', form=form)
 
 
 @app.route('/products')

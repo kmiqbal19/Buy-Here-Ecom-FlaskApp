@@ -39,6 +39,16 @@ def discount_products():
         flash(f'There are no products with discount!')
     return render_template('products/discountedProducts.html', products=products, brands=brands(), categories=categories(), previous_discounts=previous_discounts, current_date=current_date)
 
+@app.route('/dicountedEndproducts')
+def discount_end_products():
+    products = Addproduct.query.filter(Addproduct.discount > 0)
+    previous_discounts = DiscountExpiredOffer.query.all()
+    current_date = datetime.today()
+    if products is None:
+        redirect(url_for('products'))
+        flash(f'There are no products with discount!')
+    return render_template('products/discountedEndProducts.html', products=products, brands=brands(), categories=categories(), previous_discounts=previous_discounts, current_date=current_date)
+
 
 @app.route('/result')
 def result():

@@ -1,75 +1,41 @@
 {% extends 'layout.html' %} {% block content %}
+<html>
+
+
+<head>
+  <style>
+    .card{
+      overflow: hidden;
+  background-color: #fbfbfb;
+  border: none;
+  border-radius: 5px 5px 0 0;
+
+    }
+    .card img{
+      transition: all 0.3s ease;
+      filter: sepia(50%);
+      margin-bottom: 0.5rem;
+    }
+    .card img:hover{
+  filter : none;
+  transform : scale(1.08)
+    }
+    .card-footer{
+  
+      background-color: white;
+      height: 60px;
+    }
+    .container{
+    min-height: 70vh;
+  }
+  </style>
+  </head>
+  <body style="background-color: #eeeeee;">
 <section class="container py-5">
   <div class="container">
     <div class="row">
-      {% if brand %} {% for b in brand%}
-      <div class="col-md-3 mt-3">
-        <div class="card">
-          <img
-            src="{{url_for('static', filename='images/' + b.image_1)}}"
-            class="card-img-top"
-            alt="{{b.name}}"
-            height="200"
-            width="300"
-          />
-          <div class="card-body"></div>
-          {%if b.discount > 0%}
-          <h5
-            style="text-shadow: 1px 1px 2px #000; color: #f00; position: bottom"
-          >
-            Discount {{b.discount}} %
-          </h5>
-          {%endif%}
-          <h5 class="text-center">{{b.name}}</h5>
-          <p class="text-center">Price ${{b.price}}</p>
-          <div class="card-footer">
-            <a
-              href="{{url_for('single_page', id=b.id)}}"
-              class="float-left btn btn-sm btn-primary"
-            >
-              Details</a
-            >
-            <a href="#" class="float-right btn btn-sm btn-primary">
-              Add to cart</a
-            >
-          </div>
-        </div>
-      </div>
-      {% endfor %} {% elif get_cat_prod %} {% for get_cat in get_cat_prod %}
-      <div class="col-md-3 mt-3">
-        <div class="card">
-          <img
-            src="{{url_for('static', filename='images/' + get_cat.image_1)}}"
-            class="card-img-top"
-            alt="{{get_cat.name}}"
-            height="200"
-            width="200"
-          />
-          <div class="card-body"></div>
-          {%if get_cat.discount > 0%}
-          <h5
-            style="text-shadow: 1px 1px 2px #000; color: #f00; position: bottom"
-          >
-            Discount {{get_cat.discount}} %
-          </h5>
-          {% endif %}
-          <h5 class="text-center">{{get_cat.name}}</h5>
-          <p class="text-center">Price ${{get_cat.price}}</p>
-          <div class="card-footer">
-            <a
-              href="{{url_for('single_page', id=get_cat.id)}}"
-              class="float-left btn btn-sm btn-primary"
-            >
-              details</a
-            >
-            <a href="#" class="float-right btn btn-sm btn-primary">
-              Add to cart</a
-            >
-          </div>
-        </div>
-      </div>
-      {% endfor %} {% else %} {% for product in products%}
-      <div class="col-md-3 mt-3">
+  {% for product in products%}
+      <div class="col-md-3 mt-3" style="padding: 0 ; margin-left: 1.5rem; height: 100%; border-radius: 1rem; overflow: hidden; box-shadow: 2px 2px 3px rgb(118, 112, 112);">
         <div class="card">
           <img
             src="{{url_for('static', filename='images/' + product.image_1)}}"
@@ -123,32 +89,11 @@
           </form>
         </div>
       </div>
-      {% endfor %} {% endif %}
+      {% endfor %} 
     </div>
   </div>
 </section>
-<section>
-  <h1 class="text-center">SEE OFFERS YOU MISSED! 😮</h1>
-  <table class="table table-sm">
-    <thead>
-      <th>Nr</th>
-      <th>Product Name</th>
-      <th>Discount </th>
-      <th>Offer Ended On</th>
-      <th>Link</th>
-    </thead>
-    <tbody>
-      {% for previous_discount in previous_discounts %}
-      <tr>
-        <td>{{loop.index}}</td>
-        <td>{{previous_discount.product_name}}</td>
-        <td>{{previous_discount.discount_percentage}} %</td>
-        <td>{{previous_discount.discount_ended.strftime('%d %B %Y')}}</td>
-        <td><a class="float-left btn btn-sm btn-primary"  href="{{url_for('single_page', id=previous_discount.product_id)}}">Check Product</a></td>
-      
-      {% endfor %}
-    </tbody>
-  </table>
 
-</section>
+</body>
+</html>
 {% endblock content %}

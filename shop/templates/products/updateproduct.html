@@ -1,89 +1,154 @@
 
 <style>
-  .container {
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+  
+    .container {
       margin: 0 auto;
       max-width: 800px;
-  }
-
-  .text-center {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 40px;
+    }
+  
+    .text-center {
       text-align: center;
-  }
-
-  .bg-info {
-      background-color: lightblue;
-  }
-
-  .p-2 {
+    }
+  
+    .bg-info {
+      background-color: #2196f3;
+      color: #fff;
+    }
+  
+    .p-2 {
       padding: 8px;
-  }
-
-  .h4 {
+    }
+  
+    .h4 {
       font-size: 18px;
       font-weight: bold;
-  }
-
-  .form-control {
+      margin-bottom: 10px;
+    }
+  
+    .form-control {
       width: 100%;
       padding: 8px;
       margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
-  }
-
-  .container .row {
+    }
+  
+    .form-control:focus {
+      outline: none;
+      border-color: #2196f3;
+    }
+  
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+  
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: #fff;
+    }
+  
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+  
+    input[type="file"] {
+      margin-top: 10px;
+    }
+  
+    .container .row {
       display: flex;
       flex-wrap: wrap;
-  }
-
-  .container .row::after {
+      margin-left: -10px;
+      margin-right: -10px;
+    }
+  
+    .container .row::after {
       content: "";
       clear: both;
       display: table;
-  }
-
-  .container .row [class^="col-"] {
+    }
+  
+    .container .row [class^="col-"] {
       width: 100%;
-  }
-
-  @media (min-width: 768px) {
+      padding: 10px;
+      box-sizing: border-box;
+    }
+  
+    @media (min-width: 768px) {
       .container .row [class^="col-"] {
-          width: 50%;
+        width: 50%;
       }
-  }
-
-  .container .row [class^="col-"] input[type="file"] {
+    }
+  
+    .container .row [class^="col-"] input[type="file"] {
       margin-top: 10px;
-  }
-
-  .container .row [class^="col-"] a {
+    }
+  
+    .container .row [class^="col-"] a {
       display: block;
       margin-top: 10px;
-  }
-
-  input[type="submit"] {
-      background-color: lightblue;
+      color: #2196f3;
+      text-decoration: none;
+    }
+  
+    .btn-primary {
+      background-color: #2196f3;
+      color: #fff;
       padding: 8px 16px;
       border: none;
-      color: white;
+      border-radius: 4px;
       cursor: pointer;
       font-size: 14px;
-  }
-
-  a {
-    
-      padding: 8px 16px;
-     
+    }
+  
+    .btn-primary:hover {
+      background-color: #0c7cd5;
+    }
+  
+    .cancel-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #999;
       text-decoration: none;
       font-size: 14px;
-  }
-</style>
+    }
+  
+    .cancel-link:hover {
+      color: #666;
+    }
+  </style>
+  
 
 <div class="container">
   <div class="row">
       <div style="width: 0;"></div>
       <div style="width: 100%;">
-          <div class="text-center bg-info p-2 h4">Add a product</div>
+          <div class="text-center bg-info p-2 h4">✒️ Update Product</div>
           {% from "_formhelpers.html" import render_field %}
           <form method="post" enctype="multipart/form-data">
               <div>
@@ -148,9 +213,9 @@
                       {% endif %}
                   </div>
               </div>
-              <p><input type="submit" value="{% if getproduct %}Update{% else %}Add{% endif %} product"></p>
+              <p><input type="submit" style="padding: 0.4rem 1rem; border: none; color: white; background-color: #5cb85c; border-radius: 5px ; font-size: 0.9rem; cursor: pointer;" value="{% if getproduct %}Update{% else %}Add{% endif %} product"></p>
           </form>
-          <a href="{{url_for('admin')}}">Cancel</a>
+          <a style="padding: 0.4rem 1rem; border: none; color: white; background-color: #859085; border-radius: 5px ; font-size: 0.9rem; cursor: pointer; text-decoration: none;"  href="{{url_for('admin')}}">Cancel</a>
       </div>
       <div style="width: 0;"></div>
   </div>

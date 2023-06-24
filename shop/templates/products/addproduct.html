@@ -44,6 +44,16 @@
     }
   </style>
 <section>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div   class=flashes>
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
   <div class="container"> 
     <div class="add-product">
       <h2 style="text-align: center;">➕ Add Product</h2>

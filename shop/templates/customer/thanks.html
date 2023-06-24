@@ -1,13 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
-<div style="height: 60vh; display: flex; justify-content: center; align-items: center;">
+<style>
+    .c-shopping{
+        padding: 0.4rem 1rem;
+        background-color: rgb(12, 229, 12);
+        color: white;
+        font-size: 1rem;
+        border-radius: 0.6rem;
+    }
+    .c-shopping:hover{
+        color: rgb(19, 18, 18);
+        background-color: rgb(55, 239, 55);
+    }
+</style>
+<div style="height: 60vh; display: flex; justify-content: center; align-items: center;flex-direction: column;">
     <h1 style="font-size: 3rem;"> Thank you for shopping with us! 🛍️</h1>
-
-    {% for rating in ratings %}
+    <a class="c-shopping" href="/products" ><i class="fa-solid fa-cart-shopping"></i> Continue Shopping</a>
+    <!-- {% for rating in ratings %}
     <p>{{rating.rating}}</p>
     <p>{{rating.review}}</p>
     {% endfor %}
-    <p> {{a}}</p>
+    <p> {{a}}</p> -->
    
     
 </div>

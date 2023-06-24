@@ -174,7 +174,9 @@ def deletecat(id):
 
 @app.route('/addproduct', methods=['POST', 'GET'])
 def addproduct():
+    admin_there = True
     if 'email' not in session:
+        admin_there = False
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     brands = Brand.query.all()
@@ -216,7 +218,7 @@ def addproduct():
         db.session.commit()
         return redirect(url_for('admin'))
 
-    return render_template('products/addproduct.html', form=form, title='Add Product', brands=brands, categories=categories)
+    return render_template('products/addproduct.html', form=form, title='Add Product', brands=brands, categories=categories, admin_there=admin_there)
 
 
 @app.route('/updateproduct/<int:id>', methods=['GET', 'POST'])

@@ -97,7 +97,7 @@
         position: absolute;
         top: 30%;
         left: 17%;
-        background-color: rgba(103, 168, 177, 0.312);
+        background-color: rgba(181, 70, 70, 0.312);
         backdrop-filter: blur(4px);
         padding: 4rem 7rem;
         border-radius: 0.5rem;
@@ -116,7 +116,7 @@
       .middle-section_custom {
         padding: 5rem 7vw;
         background-color: #381f1f;
-        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(55, 2, 2, 0.6)),
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(2, 43, 55, 0.6)),
           url("../../static/images/ImagesForWeb/midsec.jpg");
 
         background-attachment: fixed;
@@ -171,6 +171,9 @@
         height: 1rem;
         width: 100vw;
         background-color: rgb(255, 132, 0);
+      }
+      .see-more_custom:hover{
+color: rgb(29, 223, 220) !important;
       }
       @media (max-width: 768px) {
         .card-custom {
@@ -305,6 +308,10 @@
             <p>This is the content of card 6.</p>
           </div>
         </div>
+      </div>
+      <div style="width: 100%; display: flex; justify-content: center;">
+
+        <a class="see-more_custom"  style="color: white; padding: 0.5rem 1rem; font-size: 1.9rem; margin: 1rem;"  href="{{url_for('products')}}">SEE MORE PRODUCTS ⏭️</a>
       </div>
     </section>
     <script>

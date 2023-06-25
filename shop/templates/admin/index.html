@@ -76,6 +76,7 @@
         padding: 1px 0.5rem 0px;
         border-radius: 15px;
         background-color: black;
+        transform: translateX(-50%);
       }
 
       .slider-dots button {
@@ -172,8 +173,8 @@
         width: 100vw;
         background-color: rgb(255, 132, 0);
       }
-      .see-more_custom:hover{
-color: rgb(29, 223, 220) !important;
+      .see-more_custom:hover {
+        color: rgb(29, 223, 220) !important;
       }
       @media (max-width: 768px) {
         .card-custom {
@@ -309,9 +310,18 @@ color: rgb(29, 223, 220) !important;
           </div>
         </div>
       </div>
-      <div style="width: 100%; display: flex; justify-content: center;">
-
-        <a class="see-more_custom"  style="color: white; padding: 0.5rem 1rem; font-size: 1.9rem; margin: 1rem;"  href="{{url_for('products')}}">SEE MORE PRODUCTS ⏭️</a>
+      <div style="width: 100%; display: flex; justify-content: center">
+        <a
+          class="see-more_custom"
+          style="
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 1.9rem;
+            margin: 1rem;
+          "
+          href="{{url_for('products')}}"
+          >SEE MORE PRODUCTS ⏭️</a
+        >
       </div>
     </section>
     <script>

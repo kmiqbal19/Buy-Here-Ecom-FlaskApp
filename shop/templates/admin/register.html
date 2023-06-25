@@ -3,75 +3,80 @@
 {% include '_messages.html' %}
 
 <style>
-  /* Add your CSS styles here */
-  section {
-    margin: 20px;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-  }
+/* Add your CSS styles here */
+section {
+  margin: 20px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  min-height: 60vh;
+  flex-direction: column;
+  align-items: center;
+}
 
-  div {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #333;
-  }
+div {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
 
-  form {
-    max-width: 400px;
-    margin-top: 20px;
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
+form {
+  width: 500px;
+  margin-top: 20px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-  .form-control {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-  }
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
 
-  .form-control:focus {
-    outline: none;
-    border-color: #6c63ff;
-    box-shadow: 0 0 5px #6c63ff;
-  }
+.form-control:focus {
+  outline: none;
+  border-color: #6c63ff;
+  box-shadow: 0 0 5px #6c63ff;
+}
 
-  input[type="submit"] {
-    background-color: #6c63ff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-  }
+input[type="submit"] {
+  background-color: #6c63ff;
+  color: #fff;
+  padding: 5px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
 
-  input[type="submit"]:hover {
-    background-color: #544de2;
-  }
+input[type="submit"]:hover {
+  background-color: #544de2;
+}
 
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-  }
+label {
+  display: block;
+  margin-bottom: 5px;
+ font-size: 14px;
+  color: #333;
+}
 
-  .accept-tos-label {
-    margin-top: 10px;
-    font-size: 14px;
-    line-height: 1.4;
-    color: #555;
-  }
+.accept-tos-label {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #555;
+}
+
 </style>
 
 <section>
-  <div>Register User</div>
+  <h1>📑 Register Admin</h1>
   {% from "_formhelpers.html" import render_field %}
   <form method="post" enctype="multipart/form-data">
     <div>
@@ -92,7 +97,6 @@
 
       <div class="accept-tos-label">
         {{ render_field(form.accept_tos) }}
-        <label for="{{ form.accept_tos.id }}">I accept the Terms of Service</label>
       </div>
     </div>
     <p><input type="submit" value="Register" /></p>

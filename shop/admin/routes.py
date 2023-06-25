@@ -17,7 +17,11 @@ def home():
 
 @app.route('/chat')
 def chat():
+    if 'email' not in session:
+        flash('Please login as Admin!')
+        return redirect(url_for('home'))
     messages = Messagea.query.all()
+    
     return render_template('admin/chat.html', messages=messages)
 
 

@@ -64,6 +64,7 @@ h1::after {
         {% for previous_discount in previous_discounts %}
         <tr>
           <td>{{loop.index}}</td>
+     
           <td>{{previous_discount.product_name}}</td>
           <td>{{previous_discount.discount_percentage}} %</td>
           <td>{{previous_discount.discount_ended.strftime('%d %B %Y')}}</td>

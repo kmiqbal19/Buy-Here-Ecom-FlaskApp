@@ -32,10 +32,10 @@ def contactseller():
         message = Messagea(name=name, email=email, message=message_text)
         db.session.add(message)
         db.session.commit()
-        flash ('Your message has sent ')
+        flash('Your message has sent successfully! We will soon contact you. ')
         return redirect (url_for('products'))
 
-    # Render the contact seller form
+    
     return render_template('products/contact_seller.html', form=form)
 
 

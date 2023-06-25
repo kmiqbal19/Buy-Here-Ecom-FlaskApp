@@ -25,6 +25,28 @@ transform : scale(1.08)
 
     background-color: white;
     height: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+justify-content: center;
+  }
+  .card-footer a{
+    margin-bottom: 0.7rem;
+  }
+  .card-footer a:nth-child(1){
+background-color: rgb(4, 155, 4);
+  margin-left: 1rem;
+  border : 1px solid rgb(4, 155, 4);
+
+
+  }
+  .card-footer a:nth-child(1):hover{
+    background-color: rgb(30, 181, 30);
+  }
+  .card-footer a:nth-child(2){
+
+  margin-left: 1rem;
+
   }
 
 </style>
@@ -33,6 +55,15 @@ transform : scale(1.08)
 
 
 <section class="container py-5">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div style="background-color: #228130; padding: 10px; border-radius: 5px; text-align: center;">
+    {% for category, message in messages %}
+      <p style=" color: #ffffff;">{{ message }}</p>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
   <div class="container">
     <div class="row">
       {% for product in products%}

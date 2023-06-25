@@ -213,6 +213,12 @@
                           >
                         </ul>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('chat')}}">Messages</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/empty">Logout</a>
+                      </li>
                       {% endif %} {% if current_user.is_authenticated %}
 
                       <li class="nav-item">

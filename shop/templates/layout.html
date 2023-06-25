@@ -98,6 +98,9 @@
                 >
                   <div class="collapse navbar-collapse" id="navbarsExample04">
                     <ul class="navbar-nav mr-auto">
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                      </li>
                       {% if admin_there %}
                       <li class="nav-item">
                         <a
@@ -120,9 +123,7 @@
                         <a class="nav-link" href="/categories">Categories</a>
                       </li>
                       {% endif %}
-                      <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                      </li>
+                     
                       {% if current_user.is_authenticated %}
 
                       <li class="nav-item">

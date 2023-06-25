@@ -100,7 +100,9 @@ def get_category(id):
 
 @app.route('/addbrand', methods=['GET', 'POST'])
 def addbrand():
+    admin_there = True
     if 'email' not in session:
+        admin_there = False
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     if request.method == "POST":
@@ -110,7 +112,7 @@ def addbrand():
         flash(f'The Brand {getbrand} was added to your database', 'success')
         db.session.commit()
         return redirect(url_for('brands'))
-    return render_template('products/addbrand.html', brands='brand')
+    return render_template('products/addbrand.html', brands='brand' , admin_there=admin_there)
 
 
 @app.route('/updatebrand/<int:id>', methods=['GET', 'POST'])
@@ -146,9 +148,10 @@ def deletebrand(id):
 
 @app.route('/addcategory', methods=['GET', 'POST'])
 def addcategory():
+    admin_there = True
     if 'email' not in session:
+        admin_there = False
         flash(f'Please login first', 'danger')
-        return redirect(url_for('login'))
     if request.method == "POST":
         getcat = request.form.get('category')
         cat = Category(name=getcat)
@@ -156,7 +159,7 @@ def addcategory():
         flash(f'The Category {getcat} was added to your database', 'success')
         db.session.commit()
         return redirect(url_for('addbrand'))
-    return render_template('products/addbrand.html')
+    return render_template('products/addbrand.html', admin_there=admin_there)
 
 
 @app.route('/updatecat/<int:id>', methods=['GET', 'POST'])

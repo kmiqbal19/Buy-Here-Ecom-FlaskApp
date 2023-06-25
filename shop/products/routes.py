@@ -3,8 +3,8 @@ from flask import redirect, render_template, url_for, flash, request, session, c
 from flask_login import current_user
 from sqlalchemy import func
 from shop import db, app, photos
-from .models import Brand, Category, Addproduct, DiscountExpiredOffer, Messagea
-from .forms import Addproducts, Message
+from .models import Brand, Category, Addproduct, DiscountExpiredOffer, Messagea, Messagea
+from .forms import Addproducts, Message, Message
 import secrets
 import os
 # ---- ROUTES ----

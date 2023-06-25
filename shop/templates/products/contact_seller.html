@@ -1,3 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Seller</title>
+    <a href="{{ url_for('contactseller') }}"></a>
+</head>
+<body>
+    <section class="container py-8">
+        <div class="container">
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="col-md-6">
+                        <div class="text-center bg-info p-2 h4">Contact Seller</div>
+            {% from "_formhelpers.html" import render_field %}
+        <form method="post" enctype="multipart/form-data">
+            <div>
+                {{ render_field(form.name, class="form-control") }}
+                {{ render_field(form.email, class="form-control") }}
+                {{ render_field(form.message, class='form-control') }}
+            </div>
+            <p><input type=submit value="Send" class="btn btn-info"></p>
+        </form>
+        </div>
+            </section>
+        
+    
+</body>
+</html>
 {% extends "layout.html" %}
 {% block content %}
 <html lang="en">

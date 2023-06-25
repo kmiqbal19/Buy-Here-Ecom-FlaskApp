@@ -11,33 +11,31 @@
       body {
         background-color: black;
       }
-      .container {
+      .container_custom-singlepage {
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
-
+       
         flex-direction: column;
-        background-image: url("../../static/images/ImagesForWeb/josh-calabrese-XXpbdU_31Sg-unsplash.jpg");
+        background-color: white;
         padding: 2rem;
       }
-      .container a {
+      .container_custom-singlepage a {
         padding: 0.5rem 1rem;
         border-radius: 5px;
         background-color: rgb(244, 238, 232);
       }
-      .container a:hover {
+      .container_custom-singlepage a:hover {
         background-color: #bcc0be;
-       
-       
       }
       .container-img-desc div#b_image img {
-        
         width: calc(50vw + 250px);
         height: calc(40vh + 250px);
         border-radius: 0.5rem;
         box-shadow: 2px 2px 5px rgb(206, 198, 198);
-        object-fit: cover;
+        object-fit: contain;
+        margin-left: 10rem;
       }
       .row {
         margin-bottom: 20px;
@@ -80,11 +78,20 @@
   </head>
 
   <body>
-    <div class="container">
-      <a href="{{url_for('products')}}" style="position: absolute; left: 30px; top: 30px; border: none; text-decoration: none;" >
+    <div class="container_custom-singlepage">
+      <a
+        href="{{url_for('products')}}"
+        style="
+          position: absolute;
+          left: 30px;
+          top: 30px;
+          border: none;
+          text-decoration: none;
+        "
+      >
         🔙 Go Back
       </a>
-   
+
       <div class="container-img-desc">
         <div id="b_image">
           <img
@@ -126,7 +133,6 @@
               font-weight: normal;
             "
           >
-           
             <span
               style="
                 font-size: 1.5rem;
@@ -198,7 +204,9 @@
           <form action="{{url_for('AddCart')}}" method="post">
             <input type="hidden" name="product_id" value="{{product.id}}" />
             <button class="btn-addcart" type="submit">Add to Cart</button>
-            <label style="margin-left: 1rem ; font-size: 1.2rem;" for="">Quantity: </label>
+            <label style="margin-left: 1rem; font-size: 1.2rem" for=""
+              >Quantity:
+            </label>
             <input
               type="number"
               name="quantity"
@@ -207,7 +215,9 @@
               max="{{product.stock}}"
             />
             {% set colors = product.colors.split(',') %}
-            <label style="margin-left: 1rem ;font-size: 1.2rem;" for="colors">Colors: </label>
+            <label style="margin-left: 1rem; font-size: 1.2rem" for="colors"
+              >Colors:
+            </label>
             <select name="colors" id="colors">
               {% for color in colors %} {% set col = color.split(':') %}
               <option value="{{col[0]}}">{{col[0] | capitalize }}</option>

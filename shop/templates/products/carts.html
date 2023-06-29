@@ -1,69 +1,61 @@
-{% extends 'layout.html' %} {% block content %}
-<div style=" height: 60vh;" class="container mt-4">
+{% extends 'layout.html' %}
+{% block content %}
+<div style="min-height: 100vh; padding: 5rem auto; margin: 2rem;" class="container mt-4">
   {% include '_messages.html' %}
   <div class="row">
-    <div class="col-md-12">
-      <table class="table table-sm">
-        <thead>
-          <th>Sr</th>
-          <th>Name</th>
-          <th>Image</th>
-          <th>Color</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Discount</th>
-          <th>Subtotal</th>
-          <th>Update</th>
-          <th>Remove</th>
-        </thead>
-        <tbody>
-          {% for key, product in session['Shoppingcart'].items() %} 
-          {% set discount =(product.discount/100) * product.price|float %}
-          <tr>
-            <td>{{loop.index}}</td>
-            <td>{{product.name}}</td>
-            <td><img src="{{url_for('static',filename='images/'+ product.image)}}" alt="{{product.name}}" width="50" height="45"></td>
-            <form action="{{url_for('updatecart', code=key)}}" method="post">
-            <td>
+    {% for key, product in session['Shoppingcart'].items() %}
+    {% set discount = (product.discount / 100) * product.price | float %}
+    <div class="col-md-3 mb-3" >
+      <div class="card" style="border-radius: 10px ; box-shadow: 2px 2px 5px 0px rgb(81, 73, 73); overflow: hidden;">
+        <img src="{{ url_for('static', filename='images/' + product.image) }}" class="card-img-top" alt="{{ product.name }}">
+        <div class="card-body">
+          <h3 class="card-title" style="padding: 0.3rem 0.5rem; background-color: rgb(223, 242, 242); border-radius: 5px; color: rgb(66, 61, 61); text-align: center; border: 1px solid rgb(186, 182, 182)">{{ product.name }}</h3>
+          <p class="card-text">Color: {{ product.color | capitalize }}</p>
+          <p class="card-text">Price: <span style="color: rgb(16, 129, 16)">${{ "%.2f" | format(product.price) }}</span></p>
+          <p class="card-text">Quantity: {{ product.quantity }}</p>
+          {% if product.discount > 0 %}
+          <p class="card-text">Discount: {{ product.discount }}%</p>
+          {% else %}
+          <p class="card-text">Discount: 0%</p>
+          {% endif %}
+          {% set subtotal = product.quantity | int * product.price | float %}
+          <p class="card-text">Subtotal: <span style="color: rgb(31, 168, 31); text-decoration: underline;">${{ "%.2f" | format(subtotal - discount | round(1, 'floor')) }}</span></p>
+          <form action="{{ url_for('updatecart', code=key) }}" method="post">
+            <div class="form-group">
+              <label for="color">Colors:</label>
+              <select class="form-control" name="color" id="color">
                 {% set colors = product.colors.split(',') %}
-                <label for="colors">Colors: </label>
-                <select name="color" id="color">
-                    <option value="{{product.color}}" style="display: none;">{{product.color|capitalize}}</option>
-                    {% for color in colors %}
-                    {% set col = color.split(':') %}
-                    <option value="{{col[0]}}">{{col[0] | capitalize }}</option>
-                    {% endfor %}
-                </select>
-            
-            </td>
-            <td>${{"%.2f"|format(product.price)}}</td>
-            <td> <input type="number" name="quantity" min="1" max="10" value="{{product.quantity}}"> </td>
-            {% if product.discount > 0 %}
-            <td>{{product.discount}} %</td>
-            {% else %}
-            <td> 0 %
-            </td>
-            {% endif %}
-            {% set subtotal = product.quantity|int * product.price|float %}
-            <td>${{"%.2f"|format(subtotal - discount|round(1,'floor')) }}</td>
-            <td><button type="submit" class="btn btn-sm btn-info">Update</button></td>
-         </form>
-         <td> <a href="{{url_for('deletecartitem', id=key)}}" class="btn btn-sm btn-danger">Delete</a></td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <table class="table table-sm">
-        <tr>
-          
-            <td><a href="/"><i class="fa-solid fa-cart-shopping"></i> Continue Shopping</a></td>
-            <td><a class="btn btn-sm btn-success" href="{{url_for('get_order')}}"> Order Now</a></td>
-            <td> <h5>Tax: ${{tax}}</h5></td>
-            <td> <h5>Grand total: ${{grandtotal}}</h3> </td>
-            <td> <a href="{{url_for('clearcart')}}"  class="btn btn-sm btn-danger">Clear Cart</h3> </td>
-     
-        </tr>
-     </table>
+                {% for color in colors %}
+                {% set col = color.split(':') %}
+                <option value="{{ col[0] }}">{{ col[0] | capitalize }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity:</label>
+              <input type="number" class="form-control" name="quantity" min="1" max="10" value="{{ product.quantity }}">
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+
+            <button type="submit" class="btn btn-info">Update</button>
+          </form>
+          <a href="{{ url_for('deletecartitem', id=key) }}" class="btn btn-danger">Delete</a>
+        </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <hr/>
+  <div class="row">
+    <div class="col-md-12 mt-4">
+      <div class="d-flex justify-content-between">
+        <a href="/" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i> Continue Shopping</a>
+        <a href="{{ url_for('get_order') }}" class="btn btn-success">Order Now</a>
+        <h5>Tax: ${{ tax }}</h5>
+        <h5>Total: ${{ grandtotal }}</h5>
+        <a href="{{ url_for('clearcart') }}" class="btn btn-danger">Clear Cart</a>
+      </div>
     </div>
   </div>
 </div>

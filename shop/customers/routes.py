@@ -162,6 +162,49 @@ def get_pdf(invoice):
             return response
     return request(url_for('orders'))
 
+# RATING PRODUCT
+@app.route('/rate_product/<invoice>/<product_id>', methods=['GET', 'POST'])
+@login_required
+def rate_product(invoice, product_id):
+    order = CustomerOrder.query.filter_by(
+        invoice=invoice, customer_id=current_user.id).first()
+    if not order:
+        flash('Invalid order or product.', 'danger')
+        return redirect(url_for('home'))
+
+    # Check if the product exists in the order
+    if product_id not in order.orders:
+        flash('Invalid product.', 'danger')
+        return redirect(url_for('home'))
+
+    if current_user.is_authenticated:
+        form = RatingForm()
+        try:
+            if form.validate_on_submit():
+                rating = form.rating.data
+                review = form.review.data
+
+                # Create a new Rating object
+                product_rating = ProductRating(
+                    customer_order_id=order.id,
+                    product_id=product_id,
+                    rating=rating,
+                    review=review
+                )
+                # Save the product rating to the database
+                db.session.add(product_rating)
+                db.session.commit()
+
+                flash('Thank you for rating the product!', 'success')
+                return redirect(url_for('home'))
+        except Exception as e:
+            print(e)
+            flash('Something went wrong while rating!', 'danger')
+            return redirect(url_for('home'))
+    a = ProductRating(customer_order_id=2, product_id=2, rating=3, review='good')
+    print(a)
+    rate = ProductRating.query.all()
+    return render_template('customer/thanks.html', a=a)
 
 @app.route('/customer/<customer_id>')
 @login_required

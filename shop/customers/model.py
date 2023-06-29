@@ -83,8 +83,7 @@ class ProductRating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     customer_order_id = db.Column(db.Integer, db.ForeignKey(
         'customer_order.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey(
-        'addproduct.id'), nullable=False)
+    product_id = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     review = db.Column(db.Text)
     customer_order_rel = db.relationship('CustomerOrder', backref=db.backref('product_ratings_rel', lazy=True), foreign_keys=[customer_order_id],overlaps='order,ratings')

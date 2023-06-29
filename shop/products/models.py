@@ -1,7 +1,7 @@
 from sqlalchemy import func
 from shop import db, app
 from datetime import datetime, timedelta, date
-
+from shop.customers.model import Register
 
 class Addproduct(db.Model):
     __searchable__ = ['name', 'desc']
@@ -63,6 +63,7 @@ class ProductRating(db.Model):
     rating = db.Column(db.Integer, nullable=False)
     review = db.Column(db.Text)
     product_id = db.Column(db.Integer, db.ForeignKey('addproduct.id'), nullable=False)
+    customer_name =  db.Column(db.String(100), nullable=True)
 
 with app.app_context():
     db.create_all()

@@ -212,7 +212,7 @@
         <!-- Rating Display -->
         <h4>Rate this product:</h4>
         {% from "_formhelpers.html" import render_field %}
-        <form method="post" enctype="multipart/form-data" action="{{url_for('rate_product', product_id=product.id)}}">
+        <form method="post" enctype="multipart/form-data" action="{{url_for('rate_product', product_id=product.id, customer_name=customer_name)}}">
           <div>
             <div>
               <input type="text" name="review" style="margin-bottom: 10px;  padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 100%;" placeholder="Enter your review">

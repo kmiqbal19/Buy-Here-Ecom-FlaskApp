@@ -170,4 +170,5 @@ def get_pdf(invoice):
 def customer_page(customer_id):
     form = ProductRatingForm()
     customer_orders = CustomerOrder.query.filter_by(customer_id=customer_id)
-    return render_template('customer/customerPage.html', customer_id=customer_id, customer_orders=customer_orders , form =form)
+    customer_name = db.session.query(Register.name).filter(Register.id == customer_id).scalar()
+    return render_template('customer/customerPage.html', customer_id=customer_id, customer_orders=customer_orders , form =form, customer_name=customer_name)

@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Seller</title>
+</head>
+<body>
+    <section class="container py-8">
+  
+          <div class="text-center bg-info p-2 h4">Rate Product</div>
+            {% from "_formhelpers.html" import render_field %}
+        <form method="post" enctype="multipart/form-data">
+            <div>
+                {{ render_field(form.review, class="form-control") }}
+                {{ render_field(form.rating, class="form-control") }}
+                {{ render_field(form.send, class="form-control") }}
+            </div>
+
+        </form>
+        </div>
+            </section>
+
+</body>
+</html>

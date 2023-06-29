@@ -4,6 +4,7 @@ from flask_login import current_user
 from sqlalchemy import func
 from shop import db, app, photos
 from .models import Brand, Category, Addproduct, DiscountExpiredOffer, Messagea , ProductRating
+from shop.customers.model import Register
 from .forms import Addproducts, Message, ProductRatingForm
 import secrets
 import os
@@ -80,8 +81,9 @@ def single_page(id):
     if current_user.is_authenticated:
         customer_id = current_user.id
         invoice = secrets.token_hex(5)
-    ratings = ProductRating.query.join(Addproduct, (ProductRating.product_id == id))
+    ratings = list(ProductRating.query.join(Addproduct, (ProductRating.product_id == id)))
     product = Addproduct.query.get_or_404(id)
+    
     discount_expired = product.is_discount_expired()
     return render_template('products/single_page.html', product=product, brands=brands(), categories=categories(), discount_expired=discount_expired, invoice=invoice, ratings=ratings)
 
@@ -322,11 +324,11 @@ def deleteproduct(id):
     flash(f'Can not delete the product', 'success')
     return redirect(url_for('admin'))
 
-@app.route('/rate_product/<int:product_id>', methods=['GET', 'POST'])
-def rate_product(product_id):
+@app.route('/rate_product/<int:product_id>/<customer_name>', methods=['GET', 'POST'])
+def rate_product(product_id, customer_name):
     form = ProductRatingForm()
     if request.method == 'POST':
-        rating = ProductRating(rating=form.rating.data, review=form.review.data, product_id=product_id)
+        rating = ProductRating(rating=form.rating.data, review=form.review.data, product_id=product_id,  customer_name=customer_name)
         db.session.add(rating)
         db.session.commit()
         return render_template('customer/thanks.html')

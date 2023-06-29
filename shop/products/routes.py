@@ -80,9 +80,10 @@ def single_page(id):
     if current_user.is_authenticated:
         customer_id = current_user.id
         invoice = secrets.token_hex(5)
+    ratings = ProductRating.query.join(Addproduct, (ProductRating.product_id == id))
     product = Addproduct.query.get_or_404(id)
     discount_expired = product.is_discount_expired()
-    return render_template('products/single_page.html', product=product, brands=brands(), categories=categories(), discount_expired=discount_expired, invoice=invoice)
+    return render_template('products/single_page.html', product=product, brands=brands(), categories=categories(), discount_expired=discount_expired, invoice=invoice, ratings=ratings)
 
 
 @app.route('/brand/<int:id>')

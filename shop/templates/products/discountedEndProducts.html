@@ -55,6 +55,7 @@ h1::after {
     <table class="offer-table">
       <thead>
         <th>Nr</th>
+        <th>Product Image</th>
         <th>Product Name</th>
         <th>Discount</th>
         <th>Offer Ended On</th>
@@ -64,11 +65,17 @@ h1::after {
         {% for previous_discount in previous_discounts %}
         <tr>
           <td>{{loop.index}}</td>
-     
+          
+          <td>  {% for product in products %}
+            {% if product.id == previous_discount.product_id %}
+            <img style="width: 100px; height: 100px; border-radius: 5px; box-shadow: 1px 1px 3px gray;" src="{{url_for('static', filename='images/' + product.image_1)}}" />
+            {% endif %}
+            {% endfor%}</td>
           <td>{{previous_discount.product_name}}</td>
+        
           <td>{{previous_discount.discount_percentage}} %</td>
           <td>{{previous_discount.discount_ended.strftime('%d %B %Y')}}</td>
-          <td><a href="{{url_for('single_page', id=previous_discount.product_id)}}">Check Product</a></td>
+          <td><a style="padding: 0.5rem 1rem; background-color: #2196f3; color: white;cursor: pointer; border-radius: 5px;"  href="{{url_for('single_page', id=previous_discount.product_id)}}">Check Product</a></td>
         {% endfor %}
       </tbody>
     </table>

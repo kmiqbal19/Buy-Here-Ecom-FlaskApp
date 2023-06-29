@@ -1,6 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
-<div style="min-height: 100vh; padding: 5rem auto; margin: 2rem;" class="container mt-4">
+<div style="display: flex; flex-direction: column; align-items: center;">
+
+
+<div style="min-height: 100vh; padding: 5rem auto; margin: 2rem;  width: 70vw;" >
   {% include '_messages.html' %}
   <div class="row">
     {% for key, product in session['Shoppingcart'].items() %}
@@ -58,5 +61,6 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 {% endblock content %}

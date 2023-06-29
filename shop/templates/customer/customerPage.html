@@ -212,20 +212,23 @@
         <!-- Rating Display -->
         <h4>Rate this product:</h4>
         {% from "_formhelpers.html" import render_field %}
-        <form
-          method="post"
-          enctype="multipart/form-data"
-          action="{{url_for('rate_product', product_id=product.id)}}"
-        >
+        <form method="post" enctype="multipart/form-data" action="{{url_for('rate_product', product_id=product.id)}}">
           <div>
-            {{ render_field(form.review, class="form-control") }} {{
-            render_field(form.rating, class="form-control") }}
+            <div>
+              <input type="text" name="review" style="margin-bottom: 10px;  padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 100%;" placeholder="Enter your review">
+            </div>
+            <div>
+              <input type="number" name="rating" min="1" max="5" style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 100%;" placeholder="Enter your rating (1-5)">
+            </div>
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Submit</button>
         </form>
+        
+        
       </div>
     </div>
     {% endif %}
+    <hr/>
     {% endfor %}
   </div>
   {% endfor %}

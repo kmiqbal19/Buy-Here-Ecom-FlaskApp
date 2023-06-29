@@ -25,4 +25,3 @@ class Message(Form):
 class ProductRatingForm(FlaskForm):
     rating = IntegerField('Rating', validators=[DataRequired(), NumberRange(min=1, max=5)])
     review = TextAreaField('Review')
-   

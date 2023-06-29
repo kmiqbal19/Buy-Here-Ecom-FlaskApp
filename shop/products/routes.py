@@ -3,8 +3,8 @@ from flask import redirect, render_template, url_for, flash, request, session, c
 from flask_login import current_user
 from sqlalchemy import func
 from shop import db, app, photos
-from .models import Brand, Category, Addproduct, DiscountExpiredOffer, Messagea, Messagea
-from .forms import Addproducts, Message, Message
+from .models import Brand, Category, Addproduct, DiscountExpiredOffer, Messagea , ProductRating
+from .forms import Addproducts, Message, ProductRatingForm
 import secrets
 import os
 # ---- ROUTES ----
@@ -320,3 +320,12 @@ def deleteproduct(id):
         return redirect(url_for('admin'))
     flash(f'Can not delete the product', 'success')
     return redirect(url_for('admin'))
+
+@app.route('/rate_product/<int:product_id>', methods=['GET', 'POST'])
+def rate_product(product_id):
+    form = ProductRatingForm()
+    if request.method == 'POST':
+        rating = ProductRating(rating=form.rating.data, review=form.review.data, product_id=product_id)
+        db.session.add(rating)
+        db.session.commit()
+        return render_template('customer/thanks.html')

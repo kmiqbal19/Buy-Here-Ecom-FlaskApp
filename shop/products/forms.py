@@ -1,6 +1,7 @@
 from wtforms import Form, SubmitField, IntegerField, FloatField, StringField,DateField, TextAreaField, validators
 from flask_wtf.file import FileField, FileRequired, FileAllowed
-
+from wtforms.validators import DataRequired, NumberRange
+from flask_wtf import FlaskForm
 
 class Addproducts(Form):
     name = StringField('Name', [validators.DataRequired()])
@@ -20,3 +21,8 @@ class Message(Form):
     name = StringField('Your Name', [validators.DataRequired()])
     email = StringField('Your Email', [validators.DataRequired()])
     message = StringField('Message', [validators.DataRequired()])
+
+class ProductRatingForm(FlaskForm):
+    rating = IntegerField('Rating', validators=[DataRequired(), NumberRange(min=1, max=5)])
+    review = TextAreaField('Review')
+   

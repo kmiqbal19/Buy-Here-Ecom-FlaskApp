@@ -30,7 +30,3 @@ class CustomerLoginFrom(FlaskForm):
     email = StringField('Email: ', [validators.Email(), validators.DataRequired()])
     password = PasswordField('Password: ', [validators.DataRequired()])
     
-class RatingForm(FlaskForm):
-    rating = SelectField('Rating', choices=[('5', '5 stars'), ('4', '4 stars'), ('3', '3 stars'), ('2', '2 stars'), ('1', '1 star')], validators=[InputRequired()])
-    review = TextAreaField('Review')
-    submit = SubmitField('Submit')

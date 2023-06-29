@@ -58,7 +58,11 @@ class Messagea(db.Model):
     email = db.Column(db.String(100), nullable=False)
     message = db.Column(db.Text)
 
-
+class ProductRating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    rating = db.Column(db.Integer, nullable=False)
+    review = db.Column(db.Text)
+    product_id = db.Column(db.Integer, db.ForeignKey('addproduct.id'), nullable=False)
 
 with app.app_context():
     db.create_all()

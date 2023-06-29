@@ -71,25 +71,13 @@ class CustomerOrder(db.Model):
     date_created = db.Column(
         db.DateTime, default=datetime.utcnow, nullable=False)
     orders = db.Column(JsonEcodedDict)
-    # Define the relationship with ProductRating
-    ratings = db.relationship('ProductRating', backref='order', lazy=True,
-                              foreign_keys='ProductRating.customer_order_id', overlaps='customer_order,ratings')
+
 
     def __repr__(self):
         return '<CustomerOrder %r>' % self.invoice
 
 
-class ProductRating(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    customer_order_id = db.Column(db.Integer, db.ForeignKey(
-        'customer_order.id'), nullable=False)
-    product_id = db.Column(db.Integer, nullable=False)
-    rating = db.Column(db.Integer, nullable=False)
-    review = db.Column(db.Text)
-    customer_order_rel = db.relationship('CustomerOrder', backref=db.backref('product_ratings_rel', lazy=True), foreign_keys=[customer_order_id],overlaps='order,ratings')
 
-    def __repr__(self):
-        return '<ProductRating %r>' % self.id
 
 
 with app.app_context():

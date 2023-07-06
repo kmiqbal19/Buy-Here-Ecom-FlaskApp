@@ -141,7 +141,11 @@
               "
               >Rating :</span
             >
+            {% if ratingAvg != 0 %}
            {{ratingAvg}} / 5 ⭐
+           {% else %}
+           No ratings yet ☹️ Please purchase and add rating 😉
+           {% endif %}
           </h4>
           <h4
             style="

@@ -121,37 +121,6 @@
   }
 </style>
 
-<script>
-  function setRating(starsContainer, rating) {
-    const stars = starsContainer.children;
-
-    for (let i = stars.length - 1; i >= 0; i--) {
-      /* Update the loop direction */
-      if (stars.length - i <= rating) {
-        /* Update the condition */
-        stars[i].classList.add("rated");
-      } else {
-        stars[i].classList.remove("rated");
-      }
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const ratingContainers = document.getElementsByClassName("rating");
-    for (let i = 0; i < ratingContainers.length; i++) {
-      const stars = ratingContainers[i].children;
-      for (let j = 0; j < stars.length; j++) {
-        stars[j].addEventListener("click", function () {
-          const rating = stars.length - j;
-          setRating(ratingContainers[i], rating);
-        });
-      }
-
-      const rating = parseInt(ratingContainers[i].dataset.rating) || 0;
-      setRating(ratingContainers[i], rating);
-    }
-  });
-</script>
 <div
   style="
     width: 100%;
@@ -159,7 +128,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    min-height: 150vh;
     margin: 4rem 0rem;
   "
 >
@@ -212,23 +181,61 @@
         <!-- Rating Display -->
         <h4>Rate this product:</h4>
         {% from "_formhelpers.html" import render_field %}
-        <form method="post" enctype="multipart/form-data" action="{{url_for('rate_product', product_id=product.id, customer_name=customer_name)}}">
+        <form
+          method="post"
+          enctype="multipart/form-data"
+          action="{{url_for('rate_product', product_id=product.id, customer_name=customer_name)}}"
+        >
           <div>
             <div>
-              <input type="text" name="review" style="margin-bottom: 10px;  padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 100%;" placeholder="Enter your review">
+              <input
+                type="text"
+                name="review"
+                style="
+                  margin-bottom: 10px;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                  width: 100%;
+                "
+                placeholder="Enter your review"
+              />
             </div>
             <div>
-              <input type="number" name="rating" min="1" max="5" style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 100%;" placeholder="Enter your rating (1-5)">
+              <input
+                type="number"
+                name="rating"
+                min="1"
+                max="5"
+                style="
+                  margin-bottom: 10px;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                  width: 100%;
+                "
+                placeholder="Enter your rating (1-5)"
+              />
             </div>
           </div>
-          <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Submit</button>
+          <button
+            type="submit"
+            style="
+              padding: 10px 20px;
+              background-color: #4caf50;
+              color: #fff;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+            "
+          >
+            Submit
+          </button>
         </form>
-        
-        
       </div>
     </div>
     {% endif %}
-    <hr/>
+    <hr />
     {% endfor %}
   </div>
   {% endfor %}

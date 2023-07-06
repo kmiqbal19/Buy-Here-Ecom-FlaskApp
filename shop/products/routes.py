@@ -81,11 +81,17 @@ def single_page(id):
     if current_user.is_authenticated:
         customer_id = current_user.id
         invoice = secrets.token_hex(5)
+    
     ratings = list(ProductRating.query.join(Addproduct, (ProductRating.product_id == id)))
     product = Addproduct.query.get_or_404(id)
     
+    rating_sum = sum(rating.rating for rating in ratings)
+    rating_avg = round(rating_sum / len(ratings), 2) if ratings else 0
+    
     discount_expired = product.is_discount_expired()
-    return render_template('products/single_page.html', product=product, brands=brands(), categories=categories(), discount_expired=discount_expired, invoice=invoice, ratings=ratings)
+    
+    return render_template('products/single_page.html', product=product, brands=brands(), categories=categories(), discount_expired=discount_expired, invoice=invoice, ratings=ratings, ratingAvg=rating_avg)
+
 
 
 @app.route('/brand/<int:id>')

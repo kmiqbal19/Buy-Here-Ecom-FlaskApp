@@ -2,18 +2,30 @@ from flask import render_template, request, session, redirect, url_for, flash
 from shop import app, db, bcrypt
 from .forms import RegistrationForm, LoginForm
 from .models import User
-from shop.products.models import Addproduct,Category,Brand, Messagea, Messagea
+from shop.products.models import Addproduct, Category, Brand, Messagea, Messagea
 
 # ---- ROUTES ------
+
+
 @app.route('/')
 def home():
     admin_there = True
     if 'email' not in session:
         admin_there = False
     products = Addproduct.query.all()
-    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
-    categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-    return render_template('admin/index.html', title='Buy Here', admin_there=admin_there ,products=products, brands=brands, categories=categories)
+    brands = Brand.query.join(
+        Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    categories = Category.query.join(
+        Addproduct, (Category.id == Addproduct.category_id)).all()
+    admin_email = None
+    admin_sell_count = None
+    if 'email' in session:
+        admin_email = session['email']
+        admin = User.query.filter(User.email == admin_email).first()
+        if admin:
+            admin_sell_count = admin.sell_count
+    return render_template('admin/index.html', title='Buy Here', admin_there=admin_there, products=products, brands=brands, categories=categories, sell_count=admin_sell_count)
+
 
 @app.route('/chat')
 def chat():
@@ -23,9 +35,8 @@ def chat():
         flash('Opps! You are not an Admin.')
         return redirect(url_for('home'))
     messages = Messagea.query.all()
-    
-    return render_template('admin/chat.html', messages=messages, admin_there=admin_there)
 
+    return render_template('admin/chat.html', messages=messages, admin_there=admin_there)
 
 
 @app.route('/admin')
@@ -36,9 +47,18 @@ def admin():
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     products = Addproduct.query.all()
-    brands = Brand.query.join(Addproduct, (Brand.id == Addproduct.brand_id)).all()
-    categories = Category.query.join(Addproduct, (Category.id == Addproduct.category_id)).all()
-    return render_template('admin/admin.html', title='Admin page', products=products, brands=brands, categories=categories , admin_there=admin_there)
+    brands = Brand.query.join(
+        Addproduct, (Brand.id == Addproduct.brand_id)).all()
+    categories = Category.query.join(
+        Addproduct, (Category.id == Addproduct.category_id)).all()
+    admin_email = None
+    admin_sell_count = None
+    if 'email' in session:
+        admin_email = session['email']
+        admin = User.query.filter(User.email == admin_email).first()
+        if admin:
+            admin_sell_count = admin.sell_count
+    return render_template('admin/admin.html', title='Admin page', products=products, brands=brands, categories=categories, admin_there=admin_there, sell_count=admin_sell_count)
 
 
 @app.route('/brands')
@@ -60,7 +80,8 @@ def categories():
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     categories = Category.query.order_by(Category.id.desc()).all()
-    return render_template('admin/category.html', title='categories',categories=categories, admin_there=admin_there)
+    return render_template('admin/category.html', title='categories', categories=categories, admin_there=admin_there)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -74,6 +95,7 @@ def register():
         flash(f'Welcome {form.name.data} Thank you for registering', 'success')
         return redirect(url_for('login'))
     return render_template('admin/register.html', form=form, title="Registration page")
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

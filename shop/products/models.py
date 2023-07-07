@@ -24,7 +24,7 @@ class Addproduct(db.Model):
     image_1 = db.Column(db.String(150), nullable=False, default='image1.jpg')
     image_2 = db.Column(db.String(150), nullable=False, default='image2.jpg')
     image_3 = db.Column(db.String(150), nullable=False, default='image3.jpg')
-
+    seller_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     
     def __repr__(self):
         return '<Addproduct %r>' % self.name

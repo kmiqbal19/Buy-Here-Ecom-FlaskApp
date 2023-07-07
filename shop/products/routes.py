@@ -1,10 +1,11 @@
 from datetime import datetime
 from flask import redirect, render_template, url_for, flash, request, session, current_app
 from flask_login import current_user
-from sqlalchemy import func
+from sqlalchemy import func, text
 from shop import db, app, photos
 from .models import Brand, Category, Addproduct, DiscountExpiredOffer, Messagea , ProductRating
 from shop.customers.model import Register
+from shop.admin.models import User
 from .forms import Addproducts, Message, ProductRatingForm
 import secrets
 import os
@@ -208,6 +209,8 @@ def addproduct():
         admin_there = False
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
+    seller_email = session['email']
+    seller_id = User.query.filter(User.email == seller_email).first().id
     brands = Brand.query.all()
     categories = Category.query.all()
     form = Addproducts(request.form)
@@ -233,7 +236,7 @@ def addproduct():
 
         product = Addproduct(name=name, price=price, discount=discount, stock=stock,
                              colors=colors, desc=desc, category_id=category, brand_id=brand,
-                             image_1=image_1, image_2=image_2, image_3=image_3, discount_expiration=discount_expiration)
+                             image_1=image_1, image_2=image_2, image_3=image_3, discount_expiration=discount_expiration, seller_id=seller_id)
         db.session.add(product)
         db.session.commit()
         if product.is_discount_expired():

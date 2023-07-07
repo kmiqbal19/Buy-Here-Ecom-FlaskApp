@@ -1,37 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <!-- basic -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <!-- mobile metas -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-      <!-- site metas -->
-      <title>Buy Here Now</title>
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <!-- bootstrap css -->
-      <link rel="stylesheet" href="./static/css/bootstrap.min.css">
-      <link rel="stylesheet" href="./static/css/bootstrap.min_new.css">
-      <!-- style css -->
-      <link rel="stylesheet" href="./static/css/style.css">
-      <!-- Responsive-->
-      <link rel="stylesheet" href="./static/css/responsive.css">
-      <!-- fevicon -->
-      <link rel="icon" href="./static/images/fevicon.png" type="image/gif"/>
-      <!-- Scrollbar Custom CSS -->
-      <link rel="stylesheet" href="./static/css/jquery.mCustomScrollbar.min.css">
-      <!-- Tweaks for older IEs-->
-      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-      <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-   </head>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Buy Here Now</title>
+    <link rel="stylesheet" href="./static/css/custom.css" />
+    <link rel="icon" href="./static/images/fevicon.png" type="image/gif" />
+    <style>
+      body {
+        background-color: rgb(250, 240, 240);
+      }
+      .container_custom-singlepage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+       
+        flex-direction: column;
+        background-color: white;
+        padding: 2rem;
+      }
+      .container_custom-singlepage a {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        background-color: rgb(244, 238, 232);
+      }
+      .container_custom-singlepage a:hover {
+        background-color: #bcc0be;
+      }
+      .container-img-desc div#b_image img {
+        width: calc(50vw + 250px);
+        height: calc(40vh + 250px);
+        border-radius: 0.5rem;
+        box-shadow: 2px 2px 5px rgb(206, 198, 198);
+        object-fit: contain;
+        margin-left: 10rem;
+      }
+      .row {
+        margin-bottom: 20px;
+        margin-top: 1rem;
+      }
 
+      .col-md-6 {
+        width: 50%;
+        float: left;
+      }
 
+      #s_image img {
+        width: 100px;
+        height: 100px;
+        margin-left: 2rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        box-shadow: 2px 2px 5px rgb(206, 198, 198);
+      }
+      #s_image img:hover {
+        transform: scale(1.1);
+        box-shadow: 2px 2px 5px rgb(18, 18, 18);
+      }
+      .btn-addcart {
+        background-color: orange;
+        border: none;
+        padding: 0.5rem 1rem;
+        color: white;
+        border-radius: 5px;
+        font-size: 1.2rem;
+      }
+      .btn-addcart:hover {
+        background-color: green;
+
+        transition: all 0.4s ease;
+        cursor: pointer;
+      }
+      .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .navbar {
+      background-color: #e6dddd;
+      color: #b18686;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: "Open Sans", sans-serif;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .navbar ul li {
+      margin-right: 50px;
+    }
+
+    .navbar ul li a {
+      color: #0e0d0d;
+      text-decoration: none;
+      }
+
+    .navbar ul li a:hover {
+      transform: scale(1.1);
+        color: rgb(255, 132, 0);
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f6eff1;
+      min-width: 160px;
+      box-shadow: 0 8px 16px 0 rgba(245, 237, 237, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content a {
+      color: rgb(236, 231, 231);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f7f2f2;
+    }
+
+    .cart-icon {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .cart-icon::before {
+      content: "\1F6D2"; 
+      font-family: "Font Awesome\ 6 Free";
+      font-size: 20px;
+      margin-right: 5px;
+    }
+
+  </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <ul>
+        <li class="logo">
+          <a href="/"
+            ><img
+              src="../static/images/ImagesForWeb/logo Cropped.png"
+              width="70px"
+              height="70px"
+              style="border-radius: 1rem;"
+              alt="Buy Here Now"
+          /></a>
+        </li>
+        {% if admin_there %}
+        <li class="nav-item"><a class="nav-link" 
+        style="border: 2px solid  rgb(217, 140, 24);
+                            border-radius: 4px;"
+        href="/admin">Admin</a></li>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/brands">Brands</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/categories">Categories</a>
+      </li>
+      {% endif %}
+
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+
+      {% if current_user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="/products">Products</a>
+      </li>
+      <li class="dropdown">
+        <a
+        class="nav-link dropdown-toggle"
+        role="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Brands</a
+      >
+        <div class="dropdown-content">
+          {% for brand in brands%}
+          <a
+          class="dropdown-item"
+          href="{{url_for('get_brand', id=brand.id)}}">
+          {{brand.name}}</a>
+          {% endfor %}
+        </div>
+      </li>
+      <li class="dropdown">
+        <a
+        class="nav-link dropdown-toggle"
+        role="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Categories</a
+      >
+        <div class="dropdown-content">
+          {% for category in categories%}
+          <a
+          class="dropdown-item"
+          href="{{url_for('get_category', id=category.id)}}"
+            >{{category.name}}</a>
+          {% endfor %}
+        </div>
+      </li>
+      
+      {% endif %} {% if admin_there %}
+      <li class="dropdown">
+        <a
+        class="nav-link dropdown-toggle"
+        role="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Modify</a
+      >
+        <div class="dropdown-content">
+          <a
+                            class="dropdown-item"
+                            href="{{url_for('addproduct')}}"
+                            >Add product</a
+                          >
+                          <a
+                            class="dropdown-item"
+                            href="{{url_for('addbrand')}}"
+                            >Add brand</a
+                          >
+                          <a
+                            class="dropdown-item"
+                            href="{{url_for('addcategory')}}"
+                            >Add category</a
+                          >
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/chat">Messages</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/empty">Logout</a>
+      </li>
+      {% endif %}{% if current_user.is_authenticated %}
+
+      <li class="nav-item">
+        <form style="display: flex" action="{{url_for('result')}}">
+          <input style="
+                padding: 0.1rem 1rem;
+                border-radius: 5px;
+                background-color: rgb(255, 255, 255);
+                border: none;
+                outline: none;
+                width: 180px;
+              " type="search" placeholder="Search Products" aria-label="Search" name="q" />
+          <button class="submit-search-btn" style="
+                margin-left: 5px;
+                padding: 0rem 0.5rem;
+                border-radius: 5px;
+              " type="submit">
+            Search
+          </button>
+        </form>
+      </li>
+      <li class="nav-item">
+        <a href="{{url_for('getCart')}}" class="nav-link">
+          <div class="cart-icon" style="
+                display: flex;
+                justify-content: center;
+                align-items: center;  
+              " href="#">
+             <i class="fa fa-shopping-cart"></i>
+            {{session['Shoppingcart']|length }}
+          </div>
+        </a>
+      </li>
+      <li class="dropdown">
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Discounts</a>
+        <div class="dropdown-content">
+          <a class="dropdown-item" href="{{url_for('discount_products')}}">Offers</a>
+          <a class="dropdown-item" href="{{url_for('discount_end_products')}}">Offers Ended</a>
+        </div>
+      </li>
+      {% endif %} {% if current_user.is_authenticated %}
+      <li class="nav-item" style="width: 50px">
+        <a class="nav-link" style="
+              padding: 0.2rem 0.3rem;
+              background-color: rgb(247, 240, 240);
+              border-radius: 5px;
+              text-align: center;
+              margin-bottom: 1rem;
+            "
+          href="{{url_for('customer_page' , customer_id = current_user.id)}}">{{current_user.name}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('customer_logout')}}">Logout</a>
+      </li>
+      {% else %}
+      
+      {% endif %}
+      </ul>
+    </div>
+    </body>
    {% block content %}
    <section class="container py-5">
    <div class="container">
@@ -50,7 +348,7 @@
    
            <div class="card-body"></div>
            {%if b.discount > 0%}
-           <h5 style="text-shadow: 1px 1px 2px #000; color: #F00; position:bottom;">
+           <h5 style="text-shadow: 1px 1px 2px #f0ecec; color: #F00; position:bottom;">
                Discount {{b.discount}} %</h5>
            {%endif%}
                 <h5 class="text-center">{{b.name}}</h5>

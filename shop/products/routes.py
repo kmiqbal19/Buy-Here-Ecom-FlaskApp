@@ -97,7 +97,7 @@ def single_page(id):
 
 @app.route('/brand/<int:id>')
 def get_brand(id):
-    brand = Addproduct.query.filter_by(brand_id=id).first_or_404()
+    brand = Addproduct.query.filter_by(brand_id=id)
     return render_template('products/index.html', brand=brand, brands=brands(), categories=categories())
 
 

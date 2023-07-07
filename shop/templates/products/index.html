@@ -66,9 +66,8 @@
                  name="quantity"
                  value="1"
                  min="1"
-                 max="{{product.stock}}"
                />
-                   <input type="hidden" name="quantity" value="1" min="1" max="{{b.stock}}">
+                   <input type="hidden" name="quantity" value="1" min="1">
                    {% set colors = b.colors.split(',') %}
                    <select name="colors" id="colors" style="visibility: hidden;">
                        {% for color in colors %}

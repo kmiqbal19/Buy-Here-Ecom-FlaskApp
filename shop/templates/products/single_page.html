@@ -33,11 +33,11 @@
       }
       .container-img-desc div#b_image img {
         width: calc(20vw + 150px);
-        height: calc(20vh + 250px);
+        height: calc(30vh + 250px);
         border-radius: 0.5rem;
         box-shadow: 2px 2px 5px rgb(206, 198, 198);
         object-fit: contain;
-        margin-left: 10rem;
+        margin-right: 70px;
       }
       .row {
         margin-bottom: 20px;
@@ -69,10 +69,10 @@
         color: white;
         border-radius: 5px;
         font-size: 1.2rem;
+        margin: 1rem 1rem 1rem 0rem;
       }
       .btn-addcart:hover {
         background-color: green;
-
         transition: all 0.4s ease;
         cursor: pointer;
       }
@@ -85,7 +85,7 @@
     .navbar {
       background-color: #e6dddd;
       color: #b18686;
-      padding: 10px;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -361,15 +361,15 @@
       >
         🔙 Go Back
       </a>
-
-      <div class="container-img-desc">
-        <div id="b_image">
-          <img
-            src="{{url_for('static',filename='images/' + product.image_1)}}"
-            alt="{{product.name}}"
-            width="150"
-            height="150"
-          />
+      <div style="display: flex; margin-right: 10px;">
+        <div class="container-img-desc">
+          <div id="b_image">
+            <img
+              src="{{url_for('static',filename='images/' + product.image_1)}}"
+              alt="{{product.name}}"
+              width="150"
+              height="150"
+            />      
         </div>
         <div class="row">
           <div class="col-md-12" id="s_image">
@@ -395,112 +395,113 @@
             />
           </div>
         </div>
-        <div>
-          <h4
-            style="
-              font-size: 1.2rem;
-              font-family: Arial, Helvetica, sans-serif;
-              font-weight: normal;
-            "
-          >
-            <span
-              style="
-                font-size: 1.3rem;
-                font-family: Arial, Helvetica, sans-serif;
-                font-weight: bold;
-              "
-              >Rating :</span
-            >
-            {% if ratingAvg != 0 %}
-           {{ratingAvg}} / 5 ⭐
-           {% else %}
-           No ratings yet ☹️
-           {% endif %}
-          </h4>
-          <h4
-            style="
-              font-size: 1.2rem;
-              font-family: Arial, Helvetica, sans-serif;
-              font-weight: normal;
-            "
-          >
-            Product name:
-            <span
-              style="
-                font-size: 1.2rem;
-                font-family: Arial, Helvetica, sans-serif;
-                font-weight: bold;
-              "
-              >{{product.name}}</span
-            >
-          </h4>
-          <hr />
-          <p
-            style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
-          >
-            Product price:
-            <span
-              style="
-                font-size: 1.2rem;
-                font-family: Arial, Helvetica, sans-serif;
-                color: green;
-                font-weight: bold;
-              "
-              >${{product.price}}</span
-            >
-          </p>
-          <hr />
-          {% if product.discount > 0 and discount_expired == False %}
-          <p
-            style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
-          >
-            Discount: {{product.discount}} %
-          </p>
-          {% else %}
-          <p
-            style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
-          >
-            Discount: No Discount Available
-          </p>
-          {% endif %}
-          <hr />
-          <p
-            style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
-          >
-            Product description:
-          </p>
-          <p
-            style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
-          >
-            {{product.desc}}
-          </p>
-          <hr />
-          <form action="{{url_for('AddCart')}}" method="post">
-            <input type="hidden" name="product_id" value="{{product.id}}" />
-            <button class="btn-addcart" type="submit">Add to Cart</button>
-            <label style="margin-left: 1rem; font-size: 1.2rem" for=""
-              >Quantity:
-            </label>
-            <input
-              type="number"
-              name="quantity"
-              value="1"
-              min="1"
-              max="{{product.stock}}"
-            />
-            {% set colors = product.colors.split(',') %}
-            <label style="margin-left: 1rem; font-size: 1.2rem" for="colors"
-              >Colors:
-            </label>
-            <select name="colors" id="colors">
-              {% for color in colors %} {% set col = color.split(':') %}
-              <option value="{{col[0]}}">{{col[0] | capitalize }}</option>
-              {% endfor %}
-            </select>
-          </form>
-        </div>
       </div>
-      <hr />
+      <div class="container">
+        <h4
+          style="
+            font-size: 1.6rem;
+            font-family: Montserrat, sans-serif;
+            font-weight: normal;
+          "
+        >
+          <span
+            style="
+              font-size: 2rem;
+              font-family: Cambria, sans-seriff;
+              font-weight: bold;
+            "
+            >{{product.name}}</span
+          >
+        </h4>
+        <hr />
+        <p
+          style="font-size: 1.2rem; font-family: Cambria, sans-seriff"
+        >
+          <span
+            style="
+              font-size: 1.2rem;
+              font-family: Cambria, sans-serif;
+              color: rgb(7, 7, 7);
+              font-weight: bold;
+            "
+            >${{product.price}}</span
+          >
+        </p>
+        <hr />
+        {% if product.discount > 0 and discount_expired == False %}
+        <p
+          style="font-size: 1.2rem; font-family: Cambria, sans-seriff; color: red; font-weight: bold;"
+        >
+          Discount: {{product.discount}} %
+        </p>
+        {% else %}
+        <p
+          style="font-size: 1.2rem; font-family: Cambria, sans-seriff"
+        >
+          Discount: No Discount Available
+        </p>
+        {% endif %}
+        
+        <h4
+          style="
+            font-size: 1.2rem;
+            font-family: Cambria, sans-seriff;
+            font-weight: normal;
+          "
+        >
+          <span
+            style="
+              font-size: 1.2rem;
+              font-family: Cambria, sans-seriff;
+              font-weight: bold;
+            "
+            >Rating :</span
+          >
+        {% if ratingAvg != 0 %}
+         {{ratingAvg}} / 5 ⭐
+         {% else %}
+         No ratings yet ☹️
+         {% endif %}
+        </h4>
+        <hr />
+        <h4
+          style="
+            font-size: 1.2rem;
+            font-family: Cambria, sans-seriff;
+            font-weight: normal;
+          "
+        >
+        <span
+          style="font-size: 1.2rem; font-family: Cambria, sans-seriff; font-weight: bold;"
+        >
+          Product Description:
+      </span>
+          {{product.desc}}
+        </h4>
+        <hr />
+        <form action="{{url_for('AddCart')}}" method="post">
+          <label style="font-size: 1.2rem" for=""
+            >Quantity:
+          </label>
+          <input
+            type="number"
+            name="quantity"
+            value="1"
+            min="1"
+            max="{{product.stock}}"
+          />
+          {% set colors = product.colors.split(',') %}
+          <label style="margin-left: 1rem; font-size: 1.2rem; margin-right: 1rem;" for="colors"
+            >Colors:
+          </label>
+          <select name="colors" id="colors">
+            {% for color in colors %} {% set col = color.split(':') %}
+            <option value="{{col[0]}}">{{col[0] | capitalize }}</option>
+            {% endfor %}
+          </select>
+          <input type="hidden" name="product_id" value="{{product.id}}" />
+          <button class="btn-addcart" type="submit">Add to Cart</button>
+        </form>
       <h1>Reviews</h1>
       <hr/>
       {% if ratings|length == 0 %}
@@ -509,12 +510,23 @@
       {% if ratings|length > 0 %}
       {% for rating in ratings %}
       
-      <p>Customer Name: {{rating.customer_name}}</p>
-      <div style="display: flex;">
-        <span>Rating:  </span>
+      <h4
+          style="
+            font-size: 1.2rem;
+            font-family: Georgia, sans-seriff;
+            font-weight: normal;
+          "
+        >
+        <span
+          style="font-size: 1.3rem; font-family:'Franklin Gothic Medium'; margin-left: 5px;"
+        >  {{rating.customer_name}} </span>
+        </h4>
+      <div style="display: flex; font-size: 1rem; font-family:  Georgia, sans-seriff;">
+        <span> Rating:  </span>
         {% for i in range(rating.rating) %}
         <span>⭐</span>
         {% endfor %}
+        <span>({{rating.rating}}/5)</span>
       </div>
  
       <p style="font-size: 16px; color: #333; margin-top: 10px; padding: 5px; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 5px;">
@@ -523,177 +535,25 @@
       {% endfor %}
       {% endif %}
     </div>
-    <div class="row">
-      <div class="col-md-12" id="s_image">
-        <img
-          src="{{url_for('static',filename='images/'+ product.image_1)}}"
-          alt="{{product.name}}"
-          width="100"
-          height="100"
-        />
-        <img
-          src="{{url_for('static',filename='images/'+ product.image_2)}}"
-          alt="{{product.name}}"
-          width="100"
-          height="100"
-          class="ml-5"
-        />
-        <img
-          src="{{url_for('static',filename='images/'+ product.image_3)}}"
-          alt="{{product.name}}"
-          width="100"
-          height="100"
-          class="ml-5"
-        />
-      </div>
     </div>
-
-  </div>
-  <div style="border: 1px solid red">
-    <div>
-      <h4
-        style="
-          font-size: 1.5rem;
-          font-family: Arial, Helvetica, sans-serif;
-          font-weight: normal;
-        "
-      >
-        <span
-          style="
-            font-size: 1.5rem;
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: bold;
-          "
-          >Rating :</span
-        >
-        {% if ratingAvg != 0 %}
-       {{ratingAvg}} / 5 ⭐
-       {% else %}
-       No ratings yet ☹️
-       {% endif %}
-      </h4>
-      <h4
-        style="
-          font-size: 1.5rem;
-          font-family: Arial, Helvetica, sans-serif;
-          font-weight: normal;
-        "
-      >
-        Product name:
-        <span
-          style="
-            font-size: 1.5rem;
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: bold;
-          "
-          >{{product.name}}</span
-        >
-      </h4>
-      <hr />
-      <p
-        style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
-      >
-        Product price:
-        <span
-          style="
-            font-size: 1.5rem;
-            font-family: Arial, Helvetica, sans-serif;
-            color: green;
-            font-weight: bold;
-          "
-          >${{product.price}}</span
-        >
-      </p>
-      <hr />
-      {% if product.discount > 0 and discount_expired == False %}
-      <p
-        style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
-      >
-        Discount: {{product.discount}} %
-      </p>
-      {% else %}
-      <p
-        style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
-      >
-        Discount: No Discount Available
-      </p>
-      {% endif %}
-      <hr />
-      <p
-        style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
-      >
-        Product description:
-      </p>
-      <p
-        style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
-      >
-        {{product.desc}}
-      </p>
-      <hr />
-      <form action="{{url_for('AddCart')}}" method="post">
-        <input type="hidden" name="product_id" value="{{product.id}}" />
-        <button class="btn-addcart" type="submit">Add to Cart</button>
-        <label style="margin-left: 1rem; font-size: 1.2rem" for=""
-          >Quantity:
-        </label>
-        <input
-          type="number"
-          name="quantity"
-          value="1"
-          min="1"
-          max="{{product.stock}}"
-        />
-        {% set colors = product.colors.split(',') %}
-        <label style="margin-left: 1rem; font-size: 1.2rem" for="colors"
-          >Colors:
-        </label>
-        <select name="colors" id="colors">
-          {% for color in colors %} {% set col = color.split(':') %}
-          <option value="{{col[0]}}">{{col[0] | capitalize }}</option>
-          {% endfor %}
-        </select>
-      </form>
     </div>
-    <hr />
-    <h1>Reviews</h1>
-    <hr/>
-    {% if ratings|length == 0 %}
-    <p>No reviews yet! 🙄</p>
-    {% endif %}
-    {% if ratings|length > 0 %}
-    {% for rating in ratings %}
-    
-    <p>Customer Name: {{rating.customer_name}}</p>
-    <div style="display: flex;">
-      <span>Rating:  </span>
-      {% for i in range(rating.rating) %}
-      <span>⭐</span>
-      {% endfor %}
-    </div>
-
-    <p style="font-size: 16px; color: #333; margin-top: 10px; padding: 5px; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 5px;">
-    Review:  {{rating.review}}</p>
-
-    {% endfor %}
-    {% endif %}
   </div>
-  </div>
-</div>
 
       
-    <script>
-      var b_image = document.getElementById("b_image");
-      var s_image = document
-        .getElementById("s_image")
-        .getElementsByTagName("img");
-      for (var i = 0; i < s_image.length; i++) {
-        s_image[i].addEventListener("click", full_image);
-      }
-      function full_image() {
-        var ImageSRC = this.getAttribute("src");
-        b_image.innerHTML =
-          "<img src=" + ImageSRC + " width='400' height='400'>";
-      }
-    </script>
-  </body>
+  <script>
+    var b_image = document.getElementById("b_image");
+    var s_image = document
+      .getElementById("s_image")
+      .getElementsByTagName("img");
+    for (var i = 0; i < s_image.length; i++) {
+      s_image[i].addEventListener("click", full_image);
+    }
+    function full_image() {
+      var ImageSRC = this.getAttribute("src");
+      b_image.innerHTML =
+        "<img src=" + ImageSRC + " width='400' height='400'>";
+    }
+  </script>
+  </body>
 </html>
+  

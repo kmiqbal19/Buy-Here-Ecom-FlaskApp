@@ -7,6 +7,7 @@ from .models import Brand, Category, Addproduct, DiscountExpiredOffer, Messagea 
 from shop.customers.model import Register
 from shop.admin.models import User
 from .forms import Addproducts, Message, ProductRatingForm
+from operator import itemgetter
 import secrets
 import os
 # ---- ROUTES ----
@@ -60,6 +61,21 @@ def products():
     products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=1)
     return render_template('products/products.html', products=products, brands=brands(), categories=categories(), current_date=current_date)
 
+@app.route('/sort_products', methods=['POST'])
+def sort_products():
+    sort_option = request.form['sort-option']
+    current_date = datetime.today()
+    page = request.args.get('page', 1, type=int)
+    
+    if sort_option == 'price-low':
+        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.price.asc()).paginate(page=page, per_page=1)
+    elif sort_option == 'price-high':
+        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.price.desc()).paginate(page=page, per_page=1)
+    elif sort_option == 'name':
+        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.name.asc()).paginate(page=page, per_page=1)
+    else:
+        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=1)
+    return render_template('products/products.html', products=products, brands=brands(), categories=categories(), current_date=current_date)
 
 @app.route('/dicountedproducts')
 def discount_products():

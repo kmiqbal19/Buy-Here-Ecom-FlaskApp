@@ -22,6 +22,8 @@
     }
       .container {
         min-height: 30vh;
+        display: flex;
+        justify-content: center;
       }
       .card {
         overflow: hidden;
@@ -34,6 +36,7 @@
         transition: all 0.3s ease;
         filter: sepia(50%);
         margin-bottom: 0.5rem;
+        object-fit: contain;
       }
       .card img:hover {
         filter: none;
@@ -130,7 +133,7 @@
       padding: 10px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+     
       font-family: "Open Sans", sans-serif;
     }
 
@@ -141,6 +144,7 @@
       display: flex;
       align-items: center;
       font-weight: 600;
+ 
     }
 
     .navbar ul li {
@@ -203,18 +207,19 @@
   </style>
   </head>
   <body style="background-color: #eeeeee">
-    <div class="navbar">
+    <div class="navbar" >
+      <li class="logo">
+        <a href="/"
+          ><img
+            src="../static/images/ImagesForWeb/logo Cropped.png"
+            width="70px"
+            height="70px"
+            style="border-radius: 1rem;"
+            alt="Buy Here Now"
+        /></a>
+      </li>
       <ul>
-        <li class="logo">
-          <a href="/"
-            ><img
-              src="../static/images/ImagesForWeb/logo Cropped.png"
-              width="70px"
-              height="70px"
-              style="border-radius: 1rem;"
-              alt="Buy Here Now"
-          /></a>
-        </li>
+     
         {% if admin_there %}
         <li class="nav-item"><a class="nav-link" 
         style="border: 2px solid  rgb(217, 140, 24);
@@ -288,10 +293,7 @@
         Modify</a
       >
         <div class="dropdown-content">
-          <a
-                            class="dropdown-item"
-                            href="{{url_for('addproduct')}}"
-                            >Add product</a
+          <a class="dropdown-item" href="{{url_for('addproduct')}}" >Add product</a
                           >
                           <a
                             class="dropdown-item"
@@ -433,7 +435,7 @@
             cursor: pointer"
           >Details</a>
           <button 
-          onclick="location.href='{{ url_for('contactseller') }}'"
+          onclick="location.href={{ url_for('contactseller') }}"
           style="
           background-color: #13a1e8; 
           color: #fff; 

@@ -99,14 +99,15 @@ def single_page(id):
 @app.route('/brand/<int:id>')
 def get_brand(id):
     brand = Addproduct.query.filter_by(brand_id=id)
-    return render_template('products/index.html', brand=brand, brands=brands(), categories=categories())
+    current_date = datetime.today()
+    return render_template('products/index.html', brand=brand, brands=brands(), categories=categories(), current_date=current_date)
 
 
 @app.route('/categories/<int:id>')
 def get_category(id):
     get_cat_prod = Addproduct.query.filter_by(category_id=id)
-
-    return render_template('products/index.html', get_cat_prod=get_cat_prod, categories=categories(), brands=brands())
+    current_date = datetime.today()
+    return render_template('products/index.html', get_cat_prod=get_cat_prod, categories=categories(), brands=brands(), current_date=current_date)
 
 
 @app.route('/addbrand', methods=['GET', 'POST'])

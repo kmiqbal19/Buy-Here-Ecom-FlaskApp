@@ -143,6 +143,29 @@
         </div>
       </div>
     </section>
+    <div class="row mt-4" style="margin: 2rem;">
+      <div class="col text-center">
+        {% if products.has_prev %}
+          <a href="{{url_for('products', page=products.prev_num)}}"class="btn btn-outline-success">Previous</a>
+        {% endif %}
+        {% if products.total > 1 %}
+       {% for page_num in products.iter_pages(left_edge=1, right_edge=2, left_current=1,right_current=2) %}
+       {% if page_num %}
+         {% if products.page == page_num %}
+         <a href="{{url_for('products', page=page_num)}}" class="btn btn-success">{{page_num}}</a>
+         {% else %}
+         <a href="{{url_for('products', page=page_num)}}" class="btn btn-outline-success">{{page_num}}</a>
+          {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+       {% endfor %}
+       {% endif %}
+       {% if products.has_next %}
+       <a href="{{url_for('products', page=products.next_num)}}"class="btn btn-outline-success">Next</a>
+        {% endif %}
+      </div>
+    </div>
   </body>
 </html>
 {% endblock content %}

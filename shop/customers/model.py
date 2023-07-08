@@ -72,7 +72,6 @@ class CustomerOrder(db.Model):
         db.DateTime, default=datetime.utcnow, nullable=False)
     orders = db.Column(JsonEcodedDict)
 
-
     def __repr__(self):
         return '<CustomerOrder %r>' % self.invoice
 

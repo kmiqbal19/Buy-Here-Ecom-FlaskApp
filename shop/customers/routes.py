@@ -1,6 +1,7 @@
 from flask import redirect, render_template, url_for, flash, request, session, current_app, make_response
 from flask_login import login_required, current_user, logout_user, login_user
 from shop import db, app, photos, search, bcrypt, login_manager
+from shop.admin.models import User
 from .forms import CustomerRegisterForm, CustomerLoginFrom
 from .model import Register, CustomerOrder
 from shop.products.forms import ProductRatingForm
@@ -32,6 +33,9 @@ def payment():
     orders = CustomerOrder.query.filter_by(
         customer_id=current_user.id, invoice=invoice).order_by(CustomerOrder.id.desc()).first()
     orders.status = 'Paid'
+    for _key, product in orders.orders.items():  
+        seller = User.query.filter(User.id == product['product_seller_id']).first()
+        seller.sell_count = seller.sell_count + 1
     db.session.commit()
     return redirect(url_for('thanks'))
 
@@ -52,7 +56,7 @@ def customer_register():
         flash(
             f'Welcome {form.name.data}! Thank you for registering 🎉', 'success')
         db.session.commit()
-        return redirect(url_for('home'))
+        return redirect(url_for('customerLogin'))
     return render_template('customer/register.html', form=form)
 
 
@@ -127,6 +131,7 @@ def orders(invoice):
             subTotal -= discount
             tax = ("%.2f" % (.06 * float(subTotal)))
             grandTotal = ("%.2f" % (1.06 * float(subTotal)))
+            
 
     else:
         return redirect(url_for('customerLogin'))

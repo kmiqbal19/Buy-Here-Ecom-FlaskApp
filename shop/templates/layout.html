@@ -20,7 +20,7 @@
     <!-- Responsive-->
     <link rel="stylesheet" href="./static/css/responsive.css" />
     <!-- fevicon -->
-    <link rel="icon" href="./static/images/fevicon.png" type="image/gif" />
+    <link rel="icon" href="../static/images/ImagesForWeb/favicon.ico" type="icon" />
     <!-- Scrollbar Custom CSS -->
     <link
       rel="stylesheet"
@@ -43,7 +43,7 @@
     ></script>
     <script src="../static/js/slider.js"></script>
     <style>
-      :root{
+      :root {
         overflow-x: hidden;
       }
       .nav-link {
@@ -54,10 +54,9 @@
         color: rgb(255, 132, 0) !important;
       }
       @media screen and (max-width: 1920px) {
-        .nav-link{
+        .nav-link {
           font-size: 16px !important;
         }
-        
       }
       .submit-search-btn:hover {
         background-color: black;
@@ -84,7 +83,7 @@
                           src="../static/images/ImagesForWeb/logo Cropped.png"
                           width="70px"
                           height="70px"
-                          style="border-radius: 1rem;"
+                          style="border-radius: 1rem"
                           alt="Buy Here Now"
                       /></a>
                     </div>
@@ -97,22 +96,63 @@
                   style="align-items: center; justify-content: center"
                 >
                   <div class="collapse navbar-collapse" id="navbarsExample04">
-                    <ul class="navbar-nav mr-auto">
+                    <ul
+                      class="navbar-nav mr-auto"
+                      style="justify-content: center"
+                    >
                       {% if admin_there %}
-                      <li class="nav-item">
-                        <a
-                          class="nav-link"
-                          style="
-                           
-                           
-                            border: 2px solid  rgb(217, 140, 24);
-                            border-radius: 4px;
-                            
-                          "
-                          href="/admin"
-                          >Admin</a
-                        >
-                      </li>
+                      <div
+                        style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          position: relative;
+                          width: 13rem;
+                          height: 0rem;
+                          bottom: 1px ;
+                        "
+                      >
+                        {% if sell_count > 1 and sell_count <= 3 %}
+                        <img
+                          width="40px"
+                          height="40px"
+                          style="margin-right: 5px; position: absolute ; left: 50px;
+                          bottom: -46px;"
+                          src="../static/images/ImagesForWeb/silver.png"
+                          title="You achieved silver badge"
+                        />
+                        {% endif %} {% if sell_count > 3 and sell_count <=5 %}
+                        <img
+                          width="40px"
+                          height="40px"
+                          style="margin-right: 5px; position: absolute ; left: 50px;
+                          bottom: -46px;"
+                          src="../static/images/ImagesForWeb/gold_badge.png"
+                          title="You have achieved golden badge for selling more than 3 products"
+                        />
+                        {% endif %} {% if sell_count > 5 %}
+                        <img
+                          width="40px"
+                          height="40px"
+                          style="margin-right: 5px; position: absolute ; left: 50px;
+                          bottom: -46px;"
+                          src="../static/images/ImagesForWeb/topBadge.png"
+                          title="You have achieved golden badge for selling more than 5 products"
+                        />
+                        {% endif %}
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            style="
+                              border: 2px solid rgb(217, 140, 24);
+                              border-radius: 4px;
+                              position: absolute;
+                            "
+                            href="/admin"
+                            >Admin
+                          </a>
+                        </li>
+                      </div>
                       <li class="nav-item">
                         <a class="nav-link" href="/brands">Brands</a>
                       </li>
@@ -125,9 +165,9 @@
                       </li>
                       {% if current_user.is_authenticated %}
 
-                    <li class="nav-item">
-                      <a class="nav-link" href="/products">Products</a>
-                    </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/products">Products</a>
+                      </li>
 
                       <li class="nav-item dropdown" style="cursor: pointer">
                         <a
@@ -221,92 +261,169 @@
                       </li>
                       {% endif %} {% if current_user.is_authenticated %}
 
-                    <li class="nav-item">
-                      <form style="display: flex" action="{{url_for('result')}}">
-                        <input style="
+                      <li class="nav-item">
+                        <form
+                          style="display: flex"
+                          action="{{url_for('result')}}"
+                        >
+                          <input
+                            style="
                               padding: 0.1rem 1rem;
                               border-radius: 5px;
                               background-color: rgb(255, 255, 255);
                               border: none;
                               outline: none;
                               width: 180px;
-                            " type="search" placeholder="Search Products" aria-label="Search" name="q" />
-                        <button class="submit-search-btn" style="
+                            "
+                            type="search"
+                            placeholder="Search Products"
+                            aria-label="Search"
+                            name="q"
+                          />
+                          <button
+                            class="submit-search-btn"
+                            style="
                               margin-left: 5px;
                               padding: 0rem 0.5rem;
                               border-radius: 5px;
-                            " type="submit">
-                          Search
-                        </button>
-                      </form>
-                    </li>
-                    <li class="nav-item">
-                      <a href="{{url_for('getCart')}}" class="nav-link">
-                        <div class="nav-link" style="
+                            "
+                            type="submit"
+                          >
+                            Search
+                          </button>
+                        </form>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{url_for('getCart')}}" class="nav-link">
+                          <div
+                            class="nav-link"
+                            style="
                               display: flex;
                               justify-content: center;
                               align-items: center;
-                            " href="#">
-                          <i class="fa fa-fw fa-cart-arrow-down mr-1" aria-hidden="true"></i>
-                          {{session['Shoppingcart']|length }}
-                        </div>
-                      </a>
-                    </li>
-                    <li class="nav-item dropdown" style="cursor: pointer">
-                      <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        Discounts</a>
-                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{url_for('discount_products')}}">Offers</a>
-                        <a class="dropdown-item" href="{{url_for('discount_end_products')}}">Offers Ended</a>
-                      </ul>
-                    </li>
-                    {% endif %} {% if current_user.is_authenticated %}
-                    <li class="nav-item" style="width: 100px">
-                      <a class="nav-link" style="
+                            "
+                            href="#"
+                          >
+                            <i
+                              class="fa fa-fw fa-cart-arrow-down mr-1"
+                              aria-hidden="true"
+                            ></i>
+                            {{session['Shoppingcart']|length }}
+                          </div>
+                        </a>
+                      </li>
+                      <li class="nav-item dropdown" style="cursor: pointer">
+                        <a
+                          class="nav-link dropdown-toggle"
+                          role="button"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          Discounts</a
+                        >
+                        <ul
+                          class="dropdown-menu"
+                          aria-labelledby="navbarDropdownMenuLink"
+                        >
+                          <a
+                            class="dropdown-item"
+                            href="{{url_for('discount_products')}}"
+                            >Offers</a
+                          >
+                          <a
+                            class="dropdown-item"
+                            href="{{url_for('discount_end_products')}}"
+                            >Offers Ended</a
+                          >
+                        </ul>
+                      </li>
+                      {% endif %} {% if current_user.is_authenticated %}
+                      <li class="nav-item" style="width: 100px">
+                        <a
+                          class="nav-link"
+                          style="
                             padding: 0.2rem 0.3rem;
                             background-color: white;
                             border-radius: 5px;
                             text-align: center;
                             margin-bottom: 1rem;
                           "
-                        href="{{url_for('customer_page' , customer_id = current_user.id)}}">{{current_user.name}}</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{url_for('customer_logout')}}">Logout</a>
-                    </li>
-                    {% else %}
+                          href="{{url_for('customer_page' , customer_id = current_user.id)}}"
+                          >{{current_user.name}}</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a
+                          class="nav-link"
+                          href="{{url_for('customer_logout')}}"
+                          >Logout</a
+                        >
+                      </li>
+                      {% else %}
 
-                    <li class="nav-item dropdown" style="cursor: pointer">
-                      <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        Login</a>
-                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{url_for('customerLogin')}}">Customer</a>
-                        <a class="dropdown-item" href="{{url_for('login')}}">Admin</a>
-                      </ul>
-                    </li>
-                    <li class="nav-item dropdown" style="cursor: pointer">
-                      <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        Register</a>
-                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{url_for('register')}}">For Admin</a>
-                        <a class="dropdown-item" href="{{url_for('customer_register')}}">For Customer</a>
-                      </ul>
-                    </li>
-                    {% endif %}
-                  </ul>
-                </div>
-              </nav>
+                      <li class="nav-item dropdown" style="cursor: pointer">
+                        <a
+                          class="nav-link dropdown-toggle"
+                          role="button"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          Login</a
+                        >
+                        <ul
+                          class="dropdown-menu"
+                          aria-labelledby="navbarDropdownMenuLink"
+                        >
+                          <a
+                            class="dropdown-item"
+                            href="{{url_for('customerLogin')}}"
+                            >Customer</a
+                          >
+                          <a class="dropdown-item" href="{{url_for('login')}}"
+                            >Admin</a
+                          >
+                        </ul>
+                      </li>
+                      <li class="nav-item dropdown" style="cursor: pointer">
+                        <a
+                          class="nav-link dropdown-toggle"
+                          role="button"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          Register</a
+                        >
+                        <ul
+                          class="dropdown-menu"
+                          aria-labelledby="navbarDropdownMenuLink"
+                        >
+                          <a
+                            class="dropdown-item"
+                            href="{{url_for('register')}}"
+                            >For Admin</a
+                          >
+                          <a
+                            class="dropdown-item"
+                            href="{{url_for('customer_register')}}"
+                            >For Customer</a
+                          >
+                        </ul>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                </nav>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </header>
-    <!-- end header inner -->
+      </header>
+      <!-- end header inner -->
 
-    {% block content %} {% endblock content %}
+      {% block content %} {% endblock content %}
 
     <!--  footer -->
     <footer>
@@ -391,9 +508,8 @@
   <!-- end footer -->
   <!-- Javascript files-->
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
-</body>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+  </body>
 </html>

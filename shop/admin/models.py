@@ -9,7 +9,7 @@ class User(db.Model):
     password = db.Column(db.String(180), unique=False, nullable=False)
     profile = db.Column(db.String(180), unique=False,
                         nullable=False, default='profile.jpg')
-
+    sell_count = db.Column(db.Integer, nullable=True, default=0)
     def __repr__(self):
         return '<User %r>' % self.username
 

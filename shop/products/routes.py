@@ -342,4 +342,4 @@ def rate_product(product_id, customer_name):
         rating = ProductRating(rating=form.rating.data, review=form.review.data, product_id=product_id,  customer_name=customer_name)
         db.session.add(rating)
         db.session.commit()
-        return render_template('customer/thanks.html')
+        return render_template('customer/thanksRating.html')

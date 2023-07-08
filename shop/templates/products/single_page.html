@@ -20,6 +20,7 @@
         flex-direction: column;
         background-color: white;
         padding: 2rem;
+        min-height: 100vh;
       }
       .container_custom-singlepage a {
         padding: 0.5rem 1rem;
@@ -30,8 +31,8 @@
         background-color: #bcc0be;
       }
       .container-img-desc div#b_image img {
-        width: calc(50vw + 250px);
-        height: calc(40vh + 250px);
+        width: calc(20vw + 150px);
+        height: calc(20vh + 250px);
         border-radius: 0.5rem;
         box-shadow: 2px 2px 5px rgb(206, 198, 198);
         object-fit: contain;
@@ -75,7 +76,7 @@
         cursor: pointer;
       }
       .container {
-      max-width: 800px;
+      max-width: 400px;
       margin: 0 auto;
       padding: 20px;
     }
@@ -365,8 +366,8 @@
           <img
             src="{{url_for('static',filename='images/' + product.image_1)}}"
             alt="{{product.name}}"
-            width="400"
-            height="400"
+            width="150"
+            height="150"
           />
         </div>
         <div class="row">
@@ -396,14 +397,14 @@
         <div>
           <h4
             style="
-              font-size: 1.5rem;
+              font-size: 1.2rem;
               font-family: Arial, Helvetica, sans-serif;
               font-weight: normal;
             "
           >
             <span
               style="
-                font-size: 1.5rem;
+                font-size: 1.3rem;
                 font-family: Arial, Helvetica, sans-serif;
                 font-weight: bold;
               "
@@ -412,12 +413,12 @@
             {% if ratingAvg != 0 %}
            {{ratingAvg}} / 5 ⭐
            {% else %}
-           No ratings yet ☹️ Please purchase and add rating 😉
+           No ratings yet ☹️
            {% endif %}
           </h4>
           <h4
             style="
-              font-size: 1.5rem;
+              font-size: 1.2rem;
               font-family: Arial, Helvetica, sans-serif;
               font-weight: normal;
             "
@@ -425,7 +426,7 @@
             Product name:
             <span
               style="
-                font-size: 1.5rem;
+                font-size: 1.2rem;
                 font-family: Arial, Helvetica, sans-serif;
                 font-weight: bold;
               "
@@ -434,12 +435,12 @@
           </h4>
           <hr />
           <p
-            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+            style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
           >
             Product price:
             <span
               style="
-                font-size: 1.5rem;
+                font-size: 1.2rem;
                 font-family: Arial, Helvetica, sans-serif;
                 color: green;
                 font-weight: bold;
@@ -450,20 +451,20 @@
           <hr />
           {% if product.discount > 0 and discount_expired == False %}
           <p
-            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+            style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
           >
             Discount: {{product.discount}} %
           </p>
           {% else %}
           <p
-            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+            style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
           >
             Discount: No Discount Available
           </p>
           {% endif %}
           <hr />
           <p
-            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+            style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
           >
             Product description:
           </p>

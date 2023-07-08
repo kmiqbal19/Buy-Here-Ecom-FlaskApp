@@ -11,6 +11,56 @@
       body {
         background-color: rgb(250, 240, 240);
       }
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .button-container button {
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+      .container {
+        min-height: 30vh;
+      }
+      .card {
+        overflow: hidden;
+        background-color: #fbfbfb;
+        border: none;
+        border-radius: 5px 5px 0 0;
+        justify-content: center;
+      }
+      .card img {
+        transition: all 0.3s ease;
+        filter: sepia(50%);
+        margin-bottom: 0.5rem;
+      }
+      .card img:hover {
+        filter: none;
+        transform: scale(1.08);
+      }
+      .card-footer {
+        background-color: white;
+        height: 60px;
+        display: flex;
+        flex-wrap: wrap;
+        height: 100%;
+        justify-content: center;
+      }
+      .card-footer a {
+        margin-bottom: 0.7rem;
+      }
+      .card-footer a:nth-child(1) {
+        background-color: rgb(4, 155, 4);
+        margin-left: 1rem;
+        border: 1px solid rgb(4, 155, 4);
+      }
+      .card-footer a:nth-child(1):hover {
+        background-color: rgb(30, 181, 30);
+      }
+      .card-footer a:nth-child(2) {
+        margin-left: 1rem;
+      }
       .container_custom-singlepage {
         display: flex;
         align-items: center;
@@ -74,12 +124,6 @@
         transition: all 0.4s ease;
         cursor: pointer;
       }
-      .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
     .navbar {
       background-color: #e6dddd;
       color: #b18686;
@@ -156,10 +200,9 @@
       font-size: 20px;
       margin-right: 5px;
     }
-
   </style>
   </head>
-  <body>
+  <body style="background-color: #eeeeee">
     <div class="navbar">
       <ul>
         <li class="logo">
@@ -336,43 +379,91 @@
      <div class="row">
        {% if brand %}
        {% for b in brand%}
-       <div class="col-md-3 mt-3">
-         <div class="card">
-                <img
-               src="{{url_for('static', filename='images/' + b.image_1)}}"
-               class="card-img-top"
-               alt="{{b.name}}"
-               height="200"
-               width="300"
-             />
-   
-           <div class="card-body"></div>
-           {%if b.discount > 0%}
-           <h5 style="text-shadow: 1px 1px 2px #f0ecec; color: #F00; position:bottom;">
-               Discount {{b.discount}} %</h5>
+       <div class="col-md-3 mt-3"
+    style="
+      padding: 0;
+      margin-left: 1.5rem;
+      height: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 2px 2px 5px rgb(118, 112, 112);
+      width: 250px;
+    ">
+      <div class="card">
+        <img src="{{url_for('static', filename='images/' + b.image_1)}}"
+         class="card-img-top" 
+         alt="{{b.name}}" 
+         height="250" 
+         width="250"
+        />
+        {% if b.discount > 0  and b.discount_expiration > current_date %}
+        <h5 style="
+        text-shadow: 1px 1px 2px #000;
+         color: #F00; 
+         position: bottom;
+         text-align: center;
+         margin: 0.3rem;
+      ">
+        🎉 Discount {{b.discount}} %
+      </h5>
            {%endif%}
-                <h5 class="text-center">{{b.name}}</h5>
-           <p class="text-center">Price ${{b.price}}</p>
-           <div class="card-footer">
-             <a href="{{url_for('single_page', id=b.id)}}"
-                class="float-left btn btn-sm btn-primary"> Details</a>
-             <form action="{{url_for('AddCart')}}" method="POST">
-                   <input type="hidden" name="product_id" value="{{b.id}}">
-                   <button type="submit" class="btn btn-sm btn-warning float-right">Add to Cart</button>
-                  <input
-                 type="hidden"
-                 name="quantity"
-                 value="1"
-                 min="1"
-               />
-                   <input type="hidden" name="quantity" value="1" min="1">
-                   {% set colors = b.colors.split(',') %}
-                   <select name="colors" id="colors" style="visibility: hidden;">
-                       {% for color in colors %}
-                       {% set col = color.split(':') %}
-                       <option value="{{col[0]}}">{{col[0] | capitalize }}</option>
-                       {% endfor %}
-                   </select>
+           <h5
+          style="font-size: 15px; font-weight: bold;
+          text-align: center;"
+
+        >{{b.name}}</h5>
+        <p style="color: teal; 
+        display: block;
+        text-align: center;"
+        >
+          Price - ${{b.price}}
+        </p>
+      </div>
+        <div class="button-container">
+          <button 
+          onclick=location.href="{{url_for('single_page', id=b.id)}}"
+          style= "
+           padding: 10px 20px;
+           margin-right: 15px;
+           font-size: 14px;
+           border: none; 
+          border-radius: 4px;
+           background-color: #12e42e;
+            color: #fff;
+            cursor: pointer"
+          >Details</a>
+          <button 
+          onclick="location.href='{{ url_for('contactseller') }}'"
+          style="
+          background-color: #13a1e8; 
+          color: #fff; 
+          border: none; 
+          padding: 10px 20px; 
+          margin-right: 10px;
+          border-radius: 4px; 
+          font-size: 14px;
+          cursor: pointer;"
+          >Contact Seller</button>   
+           <form action="{{url_for('AddCart')}}" method="POST">
+                <input type="hidden" name="product_id" value="{{b.id}}" />
+                <button 
+                type="submit"
+                style="background-color: #e8ce0b; 
+                color: #fff;
+                float: left; 
+                padding: 10px 20px;
+                margin-right: 15px; 
+                font-size: 14px; 
+                border: none; 
+                border-radius: 4px; 
+                cursor: pointer;">Add to Cart</button>
+                <input
+                  type="hidden"
+                  name="quantity"
+                  value="1"
+                  min="1"
+                  max="{{b.stock}}"
+                />
              </form>
            </div>
          </div>
@@ -382,18 +473,92 @@
     {% elif get_cat_prod %}
 
     {% for get_cat in get_cat_prod %}
-    <div class="col-md-3 mt-3">
+    <div class="col-md-3 mt-3"
+    style="
+      padding: 0;
+      margin-left: 1.5rem;
+      height: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 2px 2px 5px rgb(118, 112, 112);
+      width: 250px;
+    ">
       <div class="card">
-        <img src="{{url_for('static', filename='images/' + get_cat.image_1)}}" class="card-img-top" alt="{{get_cat.name}}" height="200" width="200">
-        <div class="card-body"></div>
-        {% if get_cat.discount > 0%}
-        <h5 style="text-shadow: 1px 1px 2px #000; color: #F00; position:bottom;"> Discount {{get_cat.discount}} %</h5>
+        <img src="{{url_for('static', filename='images/' + get_cat.image_1)}}"
+         class="card-img-top" 
+         alt="{{get_cat.name}}" 
+         height="250" 
+         width="250"
+        />
+
+        {% if get_cat.discount > 0  and get_cat.discount_expiration > current_date %}
+        <h5 style="
+        text-shadow: 1px 1px 2px #000;
+         color: #F00; 
+         position: bottom;
+         text-align: center;
+         margin: 0.3rem;
+      ">
+        🎉 Discount {{get_cat.discount}} %
+      </h5>
         {% endif %}
-        <h5 class="text-center">{{get_cat.name}}</h5>
-        <p class="text-center">Price ${{get_cat.price}}</p>
-        <div class="card-footer">
-          <a href="{{url_for('single_page', id=get_cat.id)}}" class="float-left btn btn-sm btn-primary"> details</a>
-          <a href="#" class="float-right btn btn-sm btn-primary"> Add to cart</a>
+        <h5
+          style="font-size: 15px; font-weight: bold;
+          text-align: center;"
+
+        >{{get_cat.name}}</h5>
+        <p style="color: teal; 
+        display: block;
+        text-align: center;"
+        >
+          Price - ${{get_cat.price}}
+        </p>
+      </div>
+        <div class="button-container">
+          <button 
+          onclick=location.href="{{url_for('single_page', id=get_cat.id)}}"
+          style= "
+           padding: 10px 20px;
+           margin-right: 15px;
+           font-size: 14px;
+           border: none; 
+          border-radius: 4px;
+           background-color: #12e42e;
+            color: #fff;
+            cursor: pointer"
+          >Details</a>
+          <button 
+          onclick="location.href='{{ url_for('contactseller') }}'"
+          style="
+          background-color: #13a1e8; 
+          color: #fff; 
+          border: none; 
+          padding: 10px 20px; 
+          margin-right: 10px;
+          border-radius: 4px; 
+          font-size: 14px;
+          cursor: pointer;"
+          >Contact Seller</button>   
+           <form action="{{url_for('AddCart')}}" method="POST">
+                <input type="hidden" name="product_id" value="{{get_cat.id}}" />
+                <button 
+                type="submit"
+                style="background-color: #e8ce0b;
+                color: #fff;
+                float: left; 
+                padding: 10px 20px;
+                margin-right: 15px; 
+                font-size: 14px; 
+                border: none; 
+                border-radius: 4px;">Add to Cart</button>
+                <input
+                  type="hidden"
+                  name="quantity"
+                  value="1"
+                  min="1"
+                  max="{{get_cat.stock}}"
+                />
+              </form>
         </div>
       </div>
     </div>

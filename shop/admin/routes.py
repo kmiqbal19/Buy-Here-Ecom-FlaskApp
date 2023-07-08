@@ -6,6 +6,17 @@ from shop.products.models import Addproduct, Category, Brand, Messagea, Messagea
 
 # ---- ROUTES ------
 
+def get_admin_sell_count():
+    admin_email = None
+    admin_sell_count = None
+    if 'email' in session:
+        admin_email = session['email']
+        admin = User.query.filter(User.email == admin_email).first()
+        if admin:
+            admin_sell_count = admin.sell_count
+        return admin_sell_count
+    else:
+        return 0
 
 @app.route('/')
 def home():
@@ -17,14 +28,8 @@ def home():
         Addproduct, (Brand.id == Addproduct.brand_id)).all()
     categories = Category.query.join(
         Addproduct, (Category.id == Addproduct.category_id)).all()
-    admin_email = None
-    admin_sell_count = None
-    if 'email' in session:
-        admin_email = session['email']
-        admin = User.query.filter(User.email == admin_email).first()
-        if admin:
-            admin_sell_count = admin.sell_count
-    return render_template('admin/index.html', title='Buy Here', admin_there=admin_there, products=products, brands=brands, categories=categories, sell_count=admin_sell_count)
+
+    return render_template('admin/index.html', title='Buy Here', admin_there=admin_there, products=products, brands=brands, categories=categories, sell_count=get_admin_sell_count())
 
 
 @app.route('/chat')
@@ -36,7 +41,7 @@ def chat():
         return redirect(url_for('home'))
     messages = Messagea.query.all()
 
-    return render_template('admin/chat.html', messages=messages, admin_there=admin_there)
+    return render_template('admin/chat.html', messages=messages, admin_there=admin_there, sell_count=get_admin_sell_count())
 
 
 @app.route('/admin')
@@ -51,14 +56,8 @@ def admin():
         Addproduct, (Brand.id == Addproduct.brand_id)).all()
     categories = Category.query.join(
         Addproduct, (Category.id == Addproduct.category_id)).all()
-    admin_email = None
-    admin_sell_count = None
-    if 'email' in session:
-        admin_email = session['email']
-        admin = User.query.filter(User.email == admin_email).first()
-        if admin:
-            admin_sell_count = admin.sell_count
-    return render_template('admin/admin.html', title='Admin page', products=products, brands=brands, categories=categories, admin_there=admin_there, sell_count=admin_sell_count)
+
+    return render_template('admin/admin.html', title='Admin page', products=products, brands=brands, categories=categories, admin_there=admin_there, sell_count=get_admin_sell_count())
 
 
 @app.route('/brands')
@@ -69,7 +68,7 @@ def brands():
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     brands = Brand.query.order_by(Brand.id.desc()).all()
-    return render_template('admin/brand.html', title='brands', brands=brands, admin_there=admin_there)
+    return render_template('admin/brand.html', title='brands', brands=brands, admin_there=admin_there, sell_count=get_admin_sell_count())
 
 
 @app.route('/categories')
@@ -80,7 +79,7 @@ def categories():
         flash(f'Please login first', 'danger')
         return redirect(url_for('login'))
     categories = Category.query.order_by(Category.id.desc()).all()
-    return render_template('admin/category.html', title='categories', categories=categories, admin_there=admin_there)
+    return render_template('admin/category.html', title='categories', categories=categories, admin_there=admin_there, sell_count=get_admin_sell_count())
 
 
 @app.route('/register', methods=['GET', 'POST'])

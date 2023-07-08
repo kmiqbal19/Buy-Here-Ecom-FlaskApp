@@ -20,6 +20,7 @@
         flex-direction: column;
         background-color: white;
         padding: 2rem;
+        min-height: 100vh;
       }
       .container_custom-singlepage a {
         padding: 0.5rem 1rem;
@@ -91,168 +92,174 @@
       >
         🔙 Go Back
       </a>
-
-      <div class="container-img-desc">
-        <div id="b_image">
-          <img
-            src="{{url_for('static',filename='images/' + product.image_1)}}"
-            alt="{{product.name}}"
-            width="400"
-            height="400"
-          />
-        </div>
-        <div class="row">
-          <div class="col-md-12" id="s_image">
-            <img
-              src="{{url_for('static',filename='images/'+ product.image_1)}}"
-              alt="{{product.name}}"
-              width="100"
-              height="100"
-            />
-            <img
-              src="{{url_for('static',filename='images/'+ product.image_2)}}"
-              alt="{{product.name}}"
-              width="100"
-              height="100"
-              class="ml-5"
-            />
-            <img
-              src="{{url_for('static',filename='images/'+ product.image_3)}}"
-              alt="{{product.name}}"
-              width="100"
-              height="100"
-              class="ml-5"
-            />
-          </div>
-        </div>
-        <div>
-          <h4
-            style="
-              font-size: 1.5rem;
-              font-family: Arial, Helvetica, sans-serif;
-              font-weight: normal;
-            "
-          >
-            <span
-              style="
-                font-size: 1.5rem;
-                font-family: Arial, Helvetica, sans-serif;
-                font-weight: bold;
-              "
-              >Rating :</span
-            >
-            {% if ratingAvg != 0 %}
-           {{ratingAvg}} / 5 ⭐
-           {% else %}
-           No ratings yet ☹️
-           {% endif %}
-          </h4>
-          <h4
-            style="
-              font-size: 1.5rem;
-              font-family: Arial, Helvetica, sans-serif;
-              font-weight: normal;
-            "
-          >
-            Product name:
-            <span
-              style="
-                font-size: 1.5rem;
-                font-family: Arial, Helvetica, sans-serif;
-                font-weight: bold;
-              "
-              >{{product.name}}</span
-            >
-          </h4>
-          <hr />
-          <p
-            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
-          >
-            Product price:
-            <span
-              style="
-                font-size: 1.5rem;
-                font-family: Arial, Helvetica, sans-serif;
-                color: green;
-                font-weight: bold;
-              "
-              >${{product.price}}</span
-            >
-          </p>
-          <hr />
-          {% if product.discount > 0 and discount_expired == False %}
-          <p
-            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
-          >
-            Discount: {{product.discount}} %
-          </p>
-          {% else %}
-          <p
-            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
-          >
-            Discount: No Discount Available
-          </p>
-          {% endif %}
-          <hr />
-          <p
-            style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
-          >
-            Product description:
-          </p>
-          <p
-            style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
-          >
-            {{product.desc}}
-          </p>
-          <hr />
-          <form action="{{url_for('AddCart')}}" method="post">
-            <input type="hidden" name="product_id" value="{{product.id}}" />
-            <button class="btn-addcart" type="submit">Add to Cart</button>
-            <label style="margin-left: 1rem; font-size: 1.2rem" for=""
-              >Quantity:
-            </label>
-            <input
-              type="number"
-              name="quantity"
-              value="1"
-              min="1"
-              max="{{product.stock}}"
-            />
-            {% set colors = product.colors.split(',') %}
-            <label style="margin-left: 1rem; font-size: 1.2rem" for="colors"
-              >Colors:
-            </label>
-            <select name="colors" id="colors">
-              {% for color in colors %} {% set col = color.split(':') %}
-              <option value="{{col[0]}}">{{col[0] | capitalize }}</option>
-              {% endfor %}
-            </select>
-          </form>
-        </div>
-      </div>
-      <hr />
-      <h1>Reviews</h1>
-      <hr/>
-      {% if ratings|length == 0 %}
-      <p>No reviews yet! 🙄</p>
-      {% endif %}
-      {% if ratings|length > 0 %}
-      {% for rating in ratings %}
-      
-      <p>Customer Name: {{rating.customer_name}}</p>
-      <div style="display: flex;">
-        <span>Rating:  </span>
-        {% for i in range(rating.rating) %}
-        <span>⭐</span>
-        {% endfor %}
-      </div>
- 
-      <p style="font-size: 16px; color: #333; margin-top: 10px; padding: 5px; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 5px;">
-      Review:  {{rating.review}}</p>
-
-      {% endfor %}
-      {% endif %}
+<div style="display: flex;">
+  <div class="container-img-desc">
+    <div id="b_image">
+      <img
+        src="{{url_for('static',filename='images/' + product.image_1)}}"
+        alt="{{product.name}}"
+        width="400"
+        height="400"
+      />
     </div>
+    <div class="row">
+      <div class="col-md-12" id="s_image">
+        <img
+          src="{{url_for('static',filename='images/'+ product.image_1)}}"
+          alt="{{product.name}}"
+          width="100"
+          height="100"
+        />
+        <img
+          src="{{url_for('static',filename='images/'+ product.image_2)}}"
+          alt="{{product.name}}"
+          width="100"
+          height="100"
+          class="ml-5"
+        />
+        <img
+          src="{{url_for('static',filename='images/'+ product.image_3)}}"
+          alt="{{product.name}}"
+          width="100"
+          height="100"
+          class="ml-5"
+        />
+      </div>
+    </div>
+
+  </div>
+  <div style="border: 1px solid red">
+    <div>
+      <h4
+        style="
+          font-size: 1.5rem;
+          font-family: Arial, Helvetica, sans-serif;
+          font-weight: normal;
+        "
+      >
+        <span
+          style="
+            font-size: 1.5rem;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+          "
+          >Rating :</span
+        >
+        {% if ratingAvg != 0 %}
+       {{ratingAvg}} / 5 ⭐
+       {% else %}
+       No ratings yet ☹️
+       {% endif %}
+      </h4>
+      <h4
+        style="
+          font-size: 1.5rem;
+          font-family: Arial, Helvetica, sans-serif;
+          font-weight: normal;
+        "
+      >
+        Product name:
+        <span
+          style="
+            font-size: 1.5rem;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+          "
+          >{{product.name}}</span
+        >
+      </h4>
+      <hr />
+      <p
+        style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+      >
+        Product price:
+        <span
+          style="
+            font-size: 1.5rem;
+            font-family: Arial, Helvetica, sans-serif;
+            color: green;
+            font-weight: bold;
+          "
+          >${{product.price}}</span
+        >
+      </p>
+      <hr />
+      {% if product.discount > 0 and discount_expired == False %}
+      <p
+        style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+      >
+        Discount: {{product.discount}} %
+      </p>
+      {% else %}
+      <p
+        style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+      >
+        Discount: No Discount Available
+      </p>
+      {% endif %}
+      <hr />
+      <p
+        style="font-size: 1.5rem; font-family: Arial, Helvetica, sans-serif"
+      >
+        Product description:
+      </p>
+      <p
+        style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
+      >
+        {{product.desc}}
+      </p>
+      <hr />
+      <form action="{{url_for('AddCart')}}" method="post">
+        <input type="hidden" name="product_id" value="{{product.id}}" />
+        <button class="btn-addcart" type="submit">Add to Cart</button>
+        <label style="margin-left: 1rem; font-size: 1.2rem" for=""
+          >Quantity:
+        </label>
+        <input
+          type="number"
+          name="quantity"
+          value="1"
+          min="1"
+          max="{{product.stock}}"
+        />
+        {% set colors = product.colors.split(',') %}
+        <label style="margin-left: 1rem; font-size: 1.2rem" for="colors"
+          >Colors:
+        </label>
+        <select name="colors" id="colors">
+          {% for color in colors %} {% set col = color.split(':') %}
+          <option value="{{col[0]}}">{{col[0] | capitalize }}</option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+    <hr />
+    <h1>Reviews</h1>
+    <hr/>
+    {% if ratings|length == 0 %}
+    <p>No reviews yet! 🙄</p>
+    {% endif %}
+    {% if ratings|length > 0 %}
+    {% for rating in ratings %}
+    
+    <p>Customer Name: {{rating.customer_name}}</p>
+    <div style="display: flex;">
+      <span>Rating:  </span>
+      {% for i in range(rating.rating) %}
+      <span>⭐</span>
+      {% endfor %}
+    </div>
+
+    <p style="font-size: 16px; color: #333; margin-top: 10px; padding: 5px; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 5px;">
+    Review:  {{rating.review}}</p>
+
+    {% endfor %}
+    {% endif %}
+  </div>
+  </div>
+</div>
+
+      
     <script>
       var b_image = document.getElementById("b_image");
       var s_image = document

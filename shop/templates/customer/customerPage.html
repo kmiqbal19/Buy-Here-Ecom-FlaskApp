@@ -24,6 +24,7 @@
     filter: sepia(40%);
     transition: all 0.4s ease-in-out;
   }
+
   .order-product img:hover {
     filter: sepia(0%);
   }
@@ -36,37 +37,38 @@
     margin-top: 8px;
   }
 
-  .rating > span {
+  .rating>span {
     display: inline-block;
     position: relative;
     width: 1.1em;
     color: silver;
   }
 
-  .rating > span:before {
+  .rating>span:before {
     content: "\2605";
     position: absolute;
     color: rgb(181, 165, 165);
   }
 
-  .rating > span.rated:before {
+  .rating>span.rated:before {
     content: "\2605";
     color: gold;
   }
 
-  .rating > span:hover:before,
-  .rating > span:hover ~ span:before {
+  .rating>span:hover:before,
+  .rating>span:hover~span:before {
     content: "\2605";
     color: gold;
   }
 
   .review-form {
-    margin-top: 8px;
+    margin-top: 16px;
   }
 
   .review-form label {
     display: block;
     margin-bottom: 4px;
+    font-weight: bold;
   }
 
   .review-form textarea {
@@ -81,8 +83,17 @@
     border: 1px solid gray;
   }
 
+  .review-form input[type="number"] {
+    width: 100px;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid gray;
+    padding: 4px;
+    font-size: 0.9rem;
+  }
+
   .review-form button {
-    margin-top: 8px;
+    margin-top: 16px;
     padding: 0.5rem 1rem;
     background-color: green;
     border: none;
@@ -95,6 +106,7 @@
   .review-form button:hover {
     background-color: rgb(69, 151, 69);
   }
+
   .paynow_btn-custom {
     padding: 0.5rem 1rem;
     text-decoration: none;
@@ -102,9 +114,11 @@
     color: white;
     border-radius: 5px;
   }
+
   .paynow_btn-custom:hover {
     background-color: rgb(77, 77, 165);
   }
+
   .go_back-link {
     padding: 0.5rem 1rem;
     text-decoration: none;
@@ -116,129 +130,106 @@
     left: 4rem;
     font-family: Arial, Helvetica, sans-serif;
   }
+
   .go_back-link:hover {
     background-color: rgb(77, 77, 165);
   }
 </style>
 
 <div
-  style="
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 150vh;
-    margin: 4rem 0rem;
-  "
->
+  style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 4rem 0rem;">
   <a class="go_back-link" href="{{url_for('products')}}">⬅️ Go Back</a>
+
+  {% if customer_orders %}
   {% for customer_order in customer_orders %}
   <div class="order-card">
     <p style="font-weight: bold">
-      Nr:
+      Order Number:
       <span style="font-weight: normal">{{ loop.index }}</span>
     </p>
+
     {% for key, product in customer_order.orders.items() %}
     <div class="order-product">
-      <img
-        src="{{ url_for('static', filename='images/' + product.image) }}"
-        alt="{{ product.name }}"
-      />
+      <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}" />
+
       <div>
-        <p style="font-weight: bold">
-          Invoice:
-          <span style="font-weight: normal">{{ customer_order.invoice }}</span>
-        </p>
         <p style="font-weight: bold">
           Product Name:
           <span style="font-weight: normal">{{ product.name }}</span>
         </p>
+
         <p style="font-weight: bold">
           Price:
-          <span style="font-weight: normal; color: rgb(132, 132, 181)"
-            >${{ product.price }}</span
-          >
+          <span style="font-weight: normal">$ {{ product.price }}</span>
         </p>
+
+        <p style="font-weight: bold">
+          Invoice:
+          <span style="font-weight: normal">{{ customer_order.invoice }}</span>
+        </p>
+
         {% if customer_order.status == "Paid" %}
         <p style="font-weight: bold">
           Payment Status:
           <span style="font-weight: normal; color: rgb(69, 151, 69)">
-            {{ customer_order.status }}</span
-          >
+            {{ customer_order.status }}
+          </span>
         </p>
+
+        <!-- Rating Display -->
+
+        <form method="post" enctype="multipart/form-data"
+          action="{{url_for('rate_product', product_id=product.id, customer_name=customer_name)}}">
+          <div>
+            <div>
+              <input type="text" name="review" style="
+                margin-bottom: 10px;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                width: 100%;
+              " placeholder="Enter your review" />
+            </div>
+            <div>
+              <input type="number" name="rating" min="1" max="5" style="
+                margin-bottom: 10px;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                width: 100%;
+              " placeholder="Enter your rating (1-5)" />
+            </div>
+          </div>
+          <button type="submit" style="
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          ">
+            Submit
+          </button>
+        </form>
+
         {% else %}
         <p style="font-weight: bold">
           Payment Status:
           <span style="font-weight: normal; color: rgb(221, 33, 26)">
-            {{ customer_order.status }}</span
-          >
+            {{ customer_order.status }}
+          </span>
         </p>
-        <a
-          class="paynow_btn-custom"
-          href="{{url_for('orders', invoice=customer_order.invoice)}}"
-          >Pay Now</a
-        >
-        {% endif %} {% if customer_order.status == "Paid" %}
-        <!-- Rating Display -->
-        <h4>Rate this product:</h4>
-        {% from "_formhelpers.html" import render_field %}
-        <form
-          method="post"
-          enctype="multipart/form-data"
-          action="{{url_for('rate_product', product_id=product.id, customer_name=customer_name)}}"
-        >
-          <div>
-            <div>
-              <input
-                type="text"
-                name="review"
-                style="
-                  margin-bottom: 10px;
-                  padding: 10px;
-                  border: 1px solid #ccc;
-                  border-radius: 5px;
-                  width: 100%;
-                "
-                placeholder="Enter your review"
-              />
-            </div>
-            <div>
-              <input
-                type="number"
-                name="rating"
-                min="1"
-                max="5"
-                style="
-                  margin-bottom: 10px;
-                  padding: 10px;
-                  border: 1px solid #ccc;
-                  border-radius: 5px;
-                  width: 100%;
-                "
-                placeholder="Enter your rating (1-5)"
-              />
-            </div>
-          </div>
-          <button
-            type="submit"
-            style="
-              padding: 10px 20px;
-              background-color: #4caf50;
-              color: #fff;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-            "
-          >
-            Submit
-          </button>
-        </form>
+
+        <a class="paynow_btn-custom" href="{{url_for('orders', invoice=customer_order.invoice)}}">Pay Now</a>
+        {% endif %}
       </div>
     </div>
-    {% endif %}
+
     <hr />
     {% endfor %}
   </div>
   {% endfor %}
+  {% else %}
+  <p>No customer orders found.</p>
+  {% endif %}
 </div>

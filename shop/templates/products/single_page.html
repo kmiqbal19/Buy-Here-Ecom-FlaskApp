@@ -33,11 +33,11 @@
       }
       .container-img-desc div#b_image img {
         width: calc(20vw + 150px);
-        height: calc(20vh + 250px);
+        height: calc(30vh + 250px);
         border-radius: 0.5rem;
         box-shadow: 2px 2px 5px rgb(206, 198, 198);
         object-fit: contain;
-        margin-left: 10rem;
+        margin-right: 70px;
       }
       .row {
         margin-bottom: 20px;
@@ -69,10 +69,10 @@
         color: white;
         border-radius: 5px;
         font-size: 1.2rem;
+        margin: 1rem 1rem 1rem 0rem;
       }
       .btn-addcart:hover {
         background-color: green;
-
         transition: all 0.4s ease;
         cursor: pointer;
       }
@@ -85,7 +85,7 @@
     .navbar {
       background-color: #e6dddd;
       color: #b18686;
-      padding: 10px;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -361,7 +361,7 @@
       >
         🔙 Go Back
       </a>
-      <div style="display: flex; float: left;">
+      <div style="display: flex; margin-right: 10px;">
         <div class="container-img-desc">
           <div id="b_image">
             <img
@@ -399,14 +399,14 @@
       <div class="container">
         <h4
           style="
-            font-size: 1.2rem;
+            font-size: 1.6rem;
             font-family: Montserrat, sans-serif;
             font-weight: normal;
           "
         >
           <span
             style="
-              font-size: 1.6rem;
+              font-size: 2rem;
               font-family: Cambria, sans-seriff;
               font-weight: bold;
             "
@@ -415,7 +415,7 @@
         </h4>
         <hr />
         <p
-          style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
+          style="font-size: 1.2rem; font-family: Cambria, sans-seriff"
         >
           <span
             style="
@@ -428,56 +428,59 @@
           >
         </p>
         <hr />
+        {% if product.discount > 0 and discount_expired == False %}
+        <p
+          style="font-size: 1.2rem; font-family: Cambria, sans-seriff; color: red; font-weight: bold;"
+        >
+          Discount: {{product.discount}} %
+        </p>
+        {% else %}
+        <p
+          style="font-size: 1.2rem; font-family: Cambria, sans-seriff"
+        >
+          Discount: No Discount Available
+        </p>
+        {% endif %}
+        
         <h4
           style="
             font-size: 1.2rem;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Cambria, sans-seriff;
             font-weight: normal;
           "
         >
           <span
             style="
               font-size: 1.2rem;
-              font-family: Arial, Helvetica, sans-serif;
+              font-family: Cambria, sans-seriff;
               font-weight: bold;
             "
             >Rating :</span
           >
-          {% if ratingAvg != 0 %}
+        {% if ratingAvg != 0 %}
          {{ratingAvg}} / 5 ⭐
          {% else %}
          No ratings yet ☹️
          {% endif %}
         </h4>
-        {% if product.discount > 0 and discount_expired == False %}
-        <p
-          style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif; color: red;"
-        >
-          Discount: {{product.discount}} %
-        </p>
-        {% else %}
-        <p
-          style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
-        >
-          Discount: No Discount Available
-        </p>
-        {% endif %}
         <hr />
-        <p
-          style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
+        <h4
+          style="
+            font-size: 1.2rem;
+            font-family: Cambria, sans-seriff;
+            font-weight: normal;
+          "
+        >
+        <span
+          style="font-size: 1.2rem; font-family: Cambria, sans-seriff; font-weight: bold;"
         >
           Product Description:
-        </p>
-        <p
-          style="font-size: 1.2rem; font-family: Arial, Helvetica, sans-serif"
-        >
+      </span>
           {{product.desc}}
-        </p>
+        </h4>
         <hr />
         <form action="{{url_for('AddCart')}}" method="post">
-          <input type="hidden" name="product_id" value="{{product.id}}" />
-          <button class="btn-addcart" type="submit">Add to Cart</button>
-          <label style="margin-left: 1rem; font-size: 1.2rem" for=""
+          <label style="font-size: 1.2rem" for=""
             >Quantity:
           </label>
           <input
@@ -488,7 +491,7 @@
             max="{{product.stock}}"
           />
           {% set colors = product.colors.split(',') %}
-          <label style="margin-left: 1rem; font-size: 1.2rem" for="colors"
+          <label style="margin-left: 1rem; font-size: 1.2rem; margin-right: 1rem;" for="colors"
             >Colors:
           </label>
           <select name="colors" id="colors">
@@ -496,6 +499,8 @@
             <option value="{{col[0]}}">{{col[0] | capitalize }}</option>
             {% endfor %}
           </select>
+          <input type="hidden" name="product_id" value="{{product.id}}" />
+          <button class="btn-addcart" type="submit">Add to Cart</button>
         </form>
       <h1>Reviews</h1>
       <hr/>
@@ -505,12 +510,23 @@
       {% if ratings|length > 0 %}
       {% for rating in ratings %}
       
-      <p>Customer Name: {{rating.customer_name}}</p>
-      <div style="display: flex;">
-        <span>Rating:  </span>
+      <h4
+          style="
+            font-size: 1.2rem;
+            font-family: Georgia, sans-seriff;
+            font-weight: normal;
+          "
+        >
+        <span
+          style="font-size: 1.3rem; font-family:'Franklin Gothic Medium'; margin-left: 5px;"
+        >  {{rating.customer_name}} </span>
+        </h4>
+      <div style="display: flex; font-size: 1rem; font-family:  Georgia, sans-seriff;">
+        <span> Rating:  </span>
         {% for i in range(rating.rating) %}
         <span>⭐</span>
         {% endfor %}
+        <span>({{rating.rating}}/5)</span>
       </div>
  
       <p style="font-size: 16px; color: #333; margin-top: 10px; padding: 5px; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 5px;">

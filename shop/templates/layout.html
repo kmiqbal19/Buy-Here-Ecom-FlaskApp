@@ -96,41 +96,63 @@
                   style="align-items: center; justify-content: center"
                 >
                   <div class="collapse navbar-collapse" id="navbarsExample04">
-                    <ul class="navbar-nav mr-auto">
-                      {% if admin_there %} 
-                      {% if sell_count > 1 %}
-                      <img
-                        width="40px"
-                        height="40px"
-                        style="margin-right: 5px"
-                        src="../static/images/ImagesForWeb/silver.png"
-                      />
-                      {% endif %} {% if sell_count > 5 %}
-                      <img
-                        width="40px"
-                        height="40px"
-                        style="margin-right: 5px"
-                        src="../static/images/ImagesForWeb/gold_badge.png"
-                      />
-                      {% endif %} {% if sell_count > 10 %}
-                      <img
-                        width="40px"
-                        height="40px"
-                        style="margin-right: 5px"
-                        src="../static/images/ImagesForWeb/topBadge.png"
-                      />
-                      {% endif %}
-                      <li class="nav-item">
-                        <a
-                          class="nav-link"
-                          style="
-                            border: 2px solid rgb(217, 140, 24);
-                            border-radius: 4px;
-                          "
-                          href="/admin"
-                          >Admin</a
-                        >
-                      </li>
+                    <ul
+                      class="navbar-nav mr-auto"
+                      style="justify-content: center"
+                    >
+                      {% if admin_there %}
+                      <div
+                        style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          position: relative;
+                          width: 13rem;
+                          height: 0rem;
+                          bottom: 1px ;
+                        "
+                      >
+                        {% if sell_count > 1 and sell_count <= 3 %}
+                        <img
+                          width="40px"
+                          height="40px"
+                          style="margin-right: 5px; position: absolute ; left: 50px;
+                          bottom: -46px;"
+                          src="../static/images/ImagesForWeb/silver.png"
+                          title="You achieved silver badge"
+                        />
+                        {% endif %} {% if sell_count > 3 and sell_count <=5 %}
+                        <img
+                          width="40px"
+                          height="40px"
+                          style="margin-right: 5px; position: absolute ; left: 50px;
+                          bottom: -46px;"
+                          src="../static/images/ImagesForWeb/gold_badge.png"
+                          title="You have achieved golden badge for selling more than 3 products"
+                        />
+                        {% endif %} {% if sell_count > 5 %}
+                        <img
+                          width="40px"
+                          height="40px"
+                          style="margin-right: 5px; position: absolute ; left: 50px;
+                          bottom: -46px;"
+                          src="../static/images/ImagesForWeb/topBadge.png"
+                          title="You have achieved golden badge for selling more than 5 products"
+                        />
+                        {% endif %}
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            style="
+                              border: 2px solid rgb(217, 140, 24);
+                              border-radius: 4px;
+                              position: absolute;
+                            "
+                            href="/admin"
+                            >Admin
+                          </a>
+                        </li>
+                      </div>
                       <li class="nav-item">
                         <a class="nav-link" href="/brands">Brands</a>
                       </li>

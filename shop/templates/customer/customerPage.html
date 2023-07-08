@@ -147,16 +147,18 @@
       />
       <div>
         <p style="font-weight: bold">
+          Invoice:
+          <span style="font-weight: normal">{{ customer_order.invoice }}</span>
+        </p>
+        <p style="font-weight: bold">
           Product Name:
           <span style="font-weight: normal">{{ product.name }}</span>
         </p>
         <p style="font-weight: bold">
-          Product Name:
-          <span style="font-weight: normal">Price - ${{ product.price }}</span>
-        </p>
-        <p style="font-weight: bold">
-          Invoice:
-          <span style="font-weight: normal">{{ customer_order.invoice }}</span>
+          Price:
+          <span style="font-weight: normal; color: rgb(132, 132, 181)"
+            >${{ product.price }}</span
+          >
         </p>
         {% if customer_order.status == "Paid" %}
         <p style="font-weight: bold">

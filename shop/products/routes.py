@@ -23,6 +23,18 @@ def categories():
         Addproduct, (Category.id == Addproduct.category_id)).all()
     return categories
 
+def get_admin_sell_count():
+    admin_email = None
+    admin_sell_count = None
+    if 'email' in session:
+        admin_email = session['email']
+        admin = User.query.filter(User.email == admin_email).first()
+        if admin:
+            admin_sell_count = admin.sell_count
+        return admin_sell_count
+    else:
+        return 0
+
 @app.route('/contactseller', methods=['GET', 'POST'])
 def contactseller():
     form = Message(request.form)
@@ -124,7 +136,7 @@ def addbrand():
         flash(f'The Brand {getbrand} was added to your database', 'success')
         db.session.commit()
         return redirect(url_for('brands'))
-    return render_template('products/addbrand.html', brands='brand' , admin_there=admin_there)
+    return render_template('products/addbrand.html', brands='brand' , admin_there=admin_there, sell_count=get_admin_sell_count())
 
 
 @app.route('/updatebrand/<int:id>', methods=['GET', 'POST'])
@@ -171,7 +183,7 @@ def addcategory():
         flash(f'The Category {getcat} was added to your database', 'success')
         db.session.commit()
         return redirect(url_for('addbrand'))
-    return render_template('products/addbrand.html', admin_there=admin_there)
+    return render_template('products/addbrand.html', admin_there=admin_there, sell_count=get_admin_sell_count())
 
 
 @app.route('/updatecat/<int:id>', methods=['GET', 'POST'])
@@ -252,7 +264,7 @@ def addproduct():
         db.session.commit()
         return redirect(url_for('admin'))
 
-    return render_template('products/addproduct.html', form=form, title='Add Product', brands=brands, categories=categories, admin_there=admin_there)
+    return render_template('products/addproduct.html', form=form, title='Add Product', brands=brands, categories=categories, admin_there=admin_there, sell_count=get_admin_sell_count())
 
 
 @app.route('/updateproduct/<int:id>', methods=['GET', 'POST'])
@@ -311,7 +323,7 @@ def updateproduct(id):
     form.description.data = product.desc
     brand = product.brand.name
     category = product.category.name
-    return render_template('products/updateproduct.html', form=form, title='Update Product', getproduct=product, brands=brands, categories=categories)
+    return render_template('products/updateproduct.html', form=form, title='Update Product', getproduct=product, brands=brands, categories=categories, sell_count=get_admin_sell_count())
 
 
 @app.route('/deleteproduct/<int:id>', methods=['POST'])

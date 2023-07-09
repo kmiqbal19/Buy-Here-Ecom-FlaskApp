@@ -58,7 +58,7 @@ def contactseller():
 def products():
     current_date = datetime.today()
     page = request.args.get('page',1, type=int)
-    products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=1)
+    products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=6)
     return render_template('products/products.html', products=products, brands=brands(), categories=categories(), current_date=current_date)
 
 @app.route('/sort_products', methods=['POST'])
@@ -68,13 +68,13 @@ def sort_products():
     page = request.args.get('page', 1, type=int)
     
     if sort_option == 'price-low':
-        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.price.asc()).paginate(page=page, per_page=1)
+        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.price.asc()).paginate(page=page, per_page=6)
     elif sort_option == 'price-high':
-        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.price.desc()).paginate(page=page, per_page=1)
+        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.price.desc()).paginate(page=page, per_page=6)
     elif sort_option == 'name':
-        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.name.asc()).paginate(page=page, per_page=1)
+        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.name.asc()).paginate(page=page, per_page=6)
     else:
-        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=1)
+        products = Addproduct.query.filter(Addproduct.stock > 0).order_by(Addproduct.id.desc()).paginate(page=page, per_page=6)
     return render_template('products/products.html', products=products, brands=brands(), categories=categories(), current_date=current_date)
 
 @app.route('/dicountedproducts')

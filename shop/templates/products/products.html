@@ -1,6 +1,11 @@
 {% extends 'layout.html' %} {% block content %}
 <html>
   <head>
+        <!-- Font Awesome Kit -->
+        <script
+        src="https://kit.fontawesome.com/4fc7ed2663.js"
+        crossorigin="anonymous"
+      ></script>
     <style>
       .container {
         min-height: 70vh;
@@ -63,7 +68,7 @@
       {% endif %} {% endwith %}
 
       <form action="{{ url_for('sort_products') }}" method="POST">
-        <label for="sort-select">Sort By:</label>
+        <label for="sort-select"><i class="fa-solid fa-arrow-down-wide-short"></i> Sort By :</label>
         <select id="sort-select" name="sort-option">
           <option value="default">Default</option>
           <option value="price-low">Price Low to High</option>
@@ -73,8 +78,8 @@
         <button
                   type="submit"
                   class="btn btn-sm btn-warning"
-                  style="color: white"
-                >Sort</button>
+                  style="color: white; padding: 0.2rem 0.8rem;"
+                > Sort</button>
       </form>
 
       <div class="container">

@@ -1,8 +1,8 @@
 venv
 migrations
+__pycache__
 shop/__pycache__
 shop/products/__pycache__
 shop/admin/__pycache__
 shop/carts/__pycache__
 shop/customers/__pycache__
-__pycache__

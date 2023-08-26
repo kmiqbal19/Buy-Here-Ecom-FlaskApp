@@ -1,4 +1,4 @@
-myvenv
+venv
 migrations
 shop/__pycache__
 shop/products/__pycache__

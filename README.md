@@ -1,6 +1,8 @@
 # ISEE  E-Commerce
 
-
+# RUN PROJECT
+First install requirements ``` pip install -r requirements.txt ```
+Secondly run ``` python run.py ```
 
 ## Getting started
 

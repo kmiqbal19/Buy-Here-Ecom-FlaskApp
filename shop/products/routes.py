@@ -110,7 +110,7 @@ def result():
 def single_page(id):
     if not current_user.is_authenticated:
         flash(f'Please login first!')
-        return redirect(url_for('login'))
+        return redirect(url_for('customerLogin'))
         
     if current_user.is_authenticated:
         customer_id = current_user.id

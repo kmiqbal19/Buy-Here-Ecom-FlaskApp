@@ -108,6 +108,10 @@ def result():
 
 @app.route('/product/<int:id>')
 def single_page(id):
+    if not current_user.is_authenticated:
+        flash(f'Please login first!')
+        return redirect(url_for('login'))
+        
     if current_user.is_authenticated:
         customer_id = current_user.id
         invoice = secrets.token_hex(5)

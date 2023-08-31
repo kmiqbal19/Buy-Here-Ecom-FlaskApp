@@ -1,4 +1,4 @@
-# ISEE  E-Commerce
+# ISEE  E-Commerce (Buy Here)
 
 # RUN PROJECT
 First install requirements ``` pip install -r requirements.txt ```

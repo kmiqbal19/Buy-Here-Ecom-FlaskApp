@@ -1,5 +1,5 @@
 # ISEE  E-Commerce (Buy Here)
-
+ONLY DESKTOP VERSION - NOT RESPONSIVE
 # RUN PROJECT
 First install requirements ``` pip install -r requirements.txt ```
 Secondly run ``` python run.py ```
